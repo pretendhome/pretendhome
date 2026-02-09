@@ -1,0 +1,17 @@
+{
+  "name": "@mythfall/shared",
+  "version": "0.1.0",
+  "description": "Shared protocol types and documentation for MythFall",
+  "main": "types/game-protocol.ts",
+  "types": "types/game-protocol.ts",
+  "scripts": {
+    "lint": "echo 'No linting configured yet'"
+  },
+  "keywords": [
+    "protocol",
+    "types",
+    "shared"
+  ],
+  "author": "Adam Neill & Mical",
+  "license": "MIT"
+}

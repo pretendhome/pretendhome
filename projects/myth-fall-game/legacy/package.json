@@ -1,0 +1,10 @@
+{
+  "name": "sixty-second-showdown-root",
+  "private": true,
+  "scripts": {
+    "dev:client": "cd client && npm run dev",
+    "dev:worker": "cd worker && wrangler dev",
+    "build:client": "cd client && npm run build",
+    "deploy:worker": "cd worker && wrangler deploy"
+  }
+}
