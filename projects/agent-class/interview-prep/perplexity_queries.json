@@ -1,0 +1,92 @@
+{
+  "task_1_structure_research": {
+    "queries": [
+      {
+        "id": "q1",
+        "text": "YAML schema design best practices hierarchical taxonomy 2024",
+        "purpose": "Learn modern YAML structure patterns for taxonomies"
+      },
+      {
+        "id": "q2", 
+        "text": "company mapping database schema startup ecosystem tracking",
+        "purpose": "See how others structure company-to-category mappings"
+      },
+      {
+        "id": "q3",
+        "text": "multi-dimensional taxonomy design use case clustering",
+        "purpose": "Understand how to handle multiple grouping dimensions"
+      }
+    ],
+    "perplexity_config": {
+      "endpoint": "sonar",
+      "method": "POST",
+      "payload": {
+        "top_k": 10,
+        "max_tokens": 2048,
+        "include_citations": true,
+        "source": "web_only",
+        "mode": "deep_research"
+      }
+    }
+  },
+  "task_2_company_research": {
+    "queries": [
+      {
+        "id": "q4",
+        "text": "YC W24 S24 W25 S25 AI startups complete list",
+        "purpose": "Get recent YC AI companies"
+      },
+      {
+        "id": "q5",
+        "text": "agentic AI companies multi-agent systems 2024 2025",
+        "purpose": "Find agentic-native companies"
+      },
+      {
+        "id": "q6",
+        "text": "a16z AI portfolio companies 2024 2025 investments",
+        "purpose": "Get a16z AI portfolio"
+      },
+      {
+        "id": "q7",
+        "text": "AI startup landscape report 2024 2025 categories",
+        "purpose": "Get comprehensive landscape view"
+      },
+      {
+        "id": "q8",
+        "text": "AI agent orchestration platforms LangChain competitors",
+        "purpose": "Find agent orchestration companies"
+      },
+      {
+        "id": "q9",
+        "text": "AI customer support automation startups funding 2024",
+        "purpose": "Customer support use case companies"
+      },
+      {
+        "id": "q10",
+        "text": "AI data pipeline observability monitoring startups",
+        "purpose": "Data/ops use case companies"
+      },
+      {
+        "id": "q11",
+        "text": "AI compliance governance risk management startups enterprise",
+        "purpose": "Governance use case companies"
+      },
+      {
+        "id": "q12",
+        "text": "Sequoia Greylock Benchmark AI investments 2024 2025",
+        "purpose": "Other top-tier VC AI portfolios"
+      }
+    ],
+    "perplexity_config": {
+      "endpoint": "sonar",
+      "method": "POST", 
+      "payload": {
+        "top_k": 15,
+        "max_tokens": 3000,
+        "include_citations": true,
+        "source": "web_only",
+        "mode": "deep_research"
+      }
+    }
+  }
+}
