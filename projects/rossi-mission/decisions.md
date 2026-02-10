@@ -178,6 +178,7 @@ Argy (research) → Rex (architecture) → Yuty (narrative) → Anky (validation
 **Case Study Patterns Applied**: All 6 patterns throughout
 **Impressions**: 10 success, 0 fail, 10 fail_gap  
 **Agent Status**: WORKING (promoted 2026-02-10 - first agent to reach Tier 2)
+**Note**: Auto-sync hook installed 2026-02-10
 
 ### Ankylosaurus (Anky) - Validation Phase
 
