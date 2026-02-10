@@ -68,8 +68,8 @@ These will be flagged by Rex during architecture phase and presented to Rossi te
 6. ✅ Revenue models
 
 **Artifacts**: 6 research reports in `/research/argy/`  
-**Impressions**: 6 success, 0 fail, 6 fail_gap  
-**Agent Status**: UNVALIDATED (needs 4 more successes for Tier 2)
+**Impressions**: 7 success, 0 fail, 7 fail_gap  
+**Agent Status**: UNVALIDATED (needs 3 more successes for Tier 2)
 
 ---
 
