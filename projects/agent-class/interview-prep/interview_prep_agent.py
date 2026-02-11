@@ -478,37 +478,6 @@ For Executive: "AI in digital transformation? Employee experience in competitive
     print(result)
     return result
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: python3 interview_prep_agent.py <job_description_file>")
-        print("\nExample:")
-        print("  python3 interview_prep_agent.py gap_inc_job.txt")
-        sys.exit(1)
-    
-    job_file = Path(sys.argv[1])
-    if not job_file.exists():
-        print(f"ERROR: File not found: {job_file}")
-        sys.exit(1)
-    
-    job_desc = job_file.read_text()
-    
-    # Demo intro
-    print("\n" + "="*70)
-    print("  INTERVIEW PREP AGENT - Palette Framework")
-    print("  Emulating Interview Kickstart Methodology")
-    print("="*70)
-    print(f"\nJob: {job_file.name}")
-    print("✅ Prep strategy refined (Interview Kickstart methodology)")
-    print("✅ Company research complete (Gap Inc. AI landscape)")
-    print("✅ Interview strategy built (90-day plan + frameworks)")
-    print("✅ STAR stories written (7 behavioral categories)")
-    print("✅ Readiness validated (gap analysis + probability)")
-    print("\n🎯 You're ready to ace this interview.\n")
-
-if __name__ == "__main__":
-    main()
-
-
 def theri_stories(job_desc, interview_strategy):
     """Phase 4: Theri writes STAR stories"""
     print_section("PHASE 4: THERI (BUILD) - STAR Stories")
@@ -598,3 +567,34 @@ def anky_validate(job_desc, star_stories):
     
     print(result)
     return result
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python3 interview_prep_agent.py <job_description_file>")
+        print("\nExample:")
+        print("  python3 interview_prep_agent.py gap_inc_job.txt")
+        sys.exit(1)
+    
+    job_file = Path(sys.argv[1])
+    if not job_file.exists():
+        print(f"ERROR: File not found: {job_file}")
+        sys.exit(1)
+    
+    job_desc = job_file.read_text()
+    
+    # Demo intro
+    print("\n" + "="*70)
+    print("  INTERVIEW PREP AGENT - Palette Framework")
+    print("  Emulating Interview Kickstart Methodology")
+    print("="*70)
+    print(f"\nJob: {job_file.name}")
+    print("✅ Prep strategy refined (Interview Kickstart methodology)")
+    print("✅ Company research complete (Gap Inc. AI landscape)")
+    print("✅ Interview strategy built (90-day plan + frameworks)")
+    print("✅ STAR stories written (7 behavioral categories)")
+    print("✅ Readiness validated (gap analysis + probability)")
+    print("\n🎯 You're ready to ace this interview.\n")
+
+if __name__ == "__main__":
+    main()
+
+
