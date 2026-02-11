@@ -227,18 +227,16 @@ def main():
     # Demo intro
     print("\n" + "="*70)
     print("  LIVE DEMO: Palette Framework in Action")
-    print("  Finding Best Job Market Fit")
+    print("  'In today's job market, find me the best open positions")
+    print("   that fit my profile'")
     print("="*70)
     print(f"\nTimestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("\nDemo flow:")
+    print("\nPalette 4-Agent Workflow:")
     print("  1. Argy (Research) → Find top job matches")
     print("  2. Rex (Architecture) → Strategy + learning path")
     print("  3. Theri (Build) → Customized resume")
     print("  4. Anky (Validate) → Probability metrics")
-    print("\nStarting in 3 seconds...")
-    
-    import time
-    time.sleep(3)
+    print("\nExecuting...\n")
     
     # Phase 1: Research
     top_roles = argy_research(client)
@@ -247,7 +245,7 @@ def main():
     strategy = rex_strategy(client, top_roles)
     
     # Phase 3: Resume (for top role only)
-    print("\n[Extracting top role for resume generation...]")
+    print("\n[Generating resume for top role...]")
     theri_resume(client, top_roles.split('\n\n')[0])  # First role
     
     # Phase 4: Probability
@@ -263,7 +261,9 @@ def main():
     print("  - Multi-agent workflow (Argy → Rex → Theri → Anky)")
     print("  - Real problem solved in ~2 minutes")
     print("  - Structured output, actionable insights")
-    print("\nQuestions?\n")
+    print("\n" + "="*70)
+    print("  Ready to apply to these roles!")
+    print("="*70 + "\n")
 
 if __name__ == "__main__":
     main()
