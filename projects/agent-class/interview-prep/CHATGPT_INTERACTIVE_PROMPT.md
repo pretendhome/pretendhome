@@ -1,6 +1,34 @@
 # Interactive Interview Prep - ChatGPT Prompt
 
-**Copy/paste this entire prompt into ChatGPT to start your interactive interview prep session**
+**IMPORTANT: Read this first, then copy/paste the prompt below into ChatGPT**
+
+---
+
+## What This Is
+
+This is a **complete, ready-to-use prompt** for ChatGPT to help you practice for the Gap Inc. interview using Interview Kickstart's methodology.
+
+## How To Use
+
+1. **Copy everything from "You are my interview preparation coach" to the end**
+2. **Paste into ChatGPT** (GPT-4 or higher recommended)
+3. **ChatGPT will immediately start coaching you** - it will ask which category you want to practice
+4. **Answer the questions** - ChatGPT will give you feedback and help you improve
+
+## What ChatGPT Will Do
+
+- Ask you interview questions (behavioral + technical)
+- Let you answer
+- Give structured feedback (what worked, what to improve, revised answer)
+- Iterate until your answers are strong (<2 minutes, quantified impact)
+
+## No Setup Needed
+
+Everything ChatGPT needs is in the prompt below. Just copy and paste.
+
+---
+
+# COPY EVERYTHING BELOW THIS LINE INTO CHATGPT
 
 ---
 
@@ -140,10 +168,18 @@ Use Interview Kickstart's **Problem-Solution-Impact Framework**:
 
 ## READY TO START
 
-Ask me: "Which behavioral category or technical scenario would you like to practice first?"
+**Your first response should be:**
 
-Then let's iterate until I can answer confidently in <2 minutes with quantified impact.
+"Which behavioral category or technical scenario would you like to practice first?"
+
+**Then:**
+- I'll pick one (e.g., "Leadership & Influence")
+- You'll ask me a specific interview question
+- I'll answer
+- You'll give me structured feedback and help me improve
+
+Let's begin. Which category should we practice first?
 
 ---
 
-**END OF PROMPT - Copy everything above into ChatGPT**
+**END OF PROMPT - Everything above this line goes into ChatGPT**
