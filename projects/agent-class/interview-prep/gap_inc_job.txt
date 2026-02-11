@@ -1,0 +1,36 @@
+Senior Strategy Manager - AI & Employee Enablement
+Gap Inc. - San Francisco, CA (Hybrid)
+Salary: $169,200 - $220,000 USD
+
+ABOUT THE ROLE:
+The Office of AI at Gap Inc. is seeking a Sr. Manager, AI Strategy & Enterprise Enablement to shape and scale the enterprise AI capabilities and employee-facing tools that enable tens of thousands of employees across Old Navy, Gap, Banana Republic, and Athleta to work smarter, faster, and more creatively.
+
+In this role, you will define the strategy and roadmap for AI-enabled platforms, enterprise systems, and productivity experiences that support teams across merchandising, supply chain, marketing, store operations, finance, HR, and more.
+
+WHAT YOU'LL DO:
+- Collaborate with enterprise teams to deliver strategy, prioritization, and roadmap for AI driven enterprise enablement
+- Lead efforts across enterprise platforms: ChatGPT, Claude, CoPilot, intelligent search, Workday
+- Evaluate and prioritize enabling technologies (GenAI services, workflow automation, enterprise search)
+- Identify high-impact opportunities to enhance employee experience through automation and intelligent insights
+- Partner with HR, Technology, Data, Product, Business Operations to embed AI into workflows
+- Guide cross-functional pilot programs from opportunity framing to execution to enterprise scaling
+- Conduct build vs. buy analysis across use cases
+- Develop business cases, ROI narratives, and executive-level communications
+- Champion responsible, human-centered, inclusive AI enablement
+
+WHO YOU ARE:
+- 8-12+ years of experience in technology strategy, enterprise platforms, AI enablement
+- Deep understanding of enterprise technology ecosystems
+- Strong understanding of HR tech ecosystems (Workday, ServiceNow)
+- Proven ability to lead cross-functional, multi-stakeholder initiatives
+- Experience identifying and delivering enterprise platforms for large, diverse user groups
+- Skilled in strategic planning, Agile delivery, portfolio management
+- Exceptional communicator who translates complex AI concepts for executives
+- Passionate about empowering employees through technology
+
+PREFERRED QUALIFICATIONS:
+- Familiarity with GenAI platforms, RAG systems, LLMs, decision-support tools
+- Experience designing AI use cases in HR, employee experience, or productivity contexts
+- Experience with platform services, enterprise SaaS integrations
+- Strong analytical, synthesis, and presentation abilities
+- Experience leading multi-disciplinary teams
