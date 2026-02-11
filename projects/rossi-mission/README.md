@@ -51,22 +51,25 @@ Revenue growth IS a priority - the organization needs to maximize profit to surv
 ## Directory Structure
 
 ```
-rossi-mission-project/
+rossi-mission/
 ├── README.md (this file)
-├── research/
-│   ├── argy/ (Argentavis research outputs)
-│   └── sources/ (Source documents, citations)
-├── architecture/
-│   ├── rex/ (Rex architecture designs)
-│   └── financial/ (Financial models, projections)
-├── presentation/
-│   ├── yuty/ (Yuty working files)
-│   ├── slides/ (Final slide deck)
-│   └── brief/ (Final written brief)
-├── validation/
-│   └── anky/ (Anky validation reports)
-└── decisions/
-    └── decisions.md (ONE-WAY DOOR decisions log)
+├── decisions.md (ONE-WAY DOOR decisions log)
+├── artifacts/
+│   ├── research/argy/ (6 research reports)
+│   ├── architecture/rex/ (architecture designs)
+│   ├── narrative/yuty/ (10 business plan sections)
+│   └── validation/anky/ (validation reports)
+├── drop/                              ← NEW: MQ x Tie One Drop Package
+│   ├── README.md
+│   ├── decisions.md
+│   ├── phase-1-research/ (6 Argy research docs)
+│   ├── phase-2-architecture/ (4 Rex architecture docs)
+│   ├── phase-3-build-spec/ (5 Theri build specs)
+│   ├── phase-4-delivery/ (playbook, validation, checklists)
+│   └── assets/ (personas, pricing matrix)
+├── remediation/ (5 condition documents)
+├── garbage_collection/ (archived files)
+└── [various project-level documents]
 ```
 
 ---
@@ -147,7 +150,20 @@ rossi-mission-project/
 
 ## Current Status
 
-**Phase**: Research (Argy)  
-**Next Action**: Begin global market research  
-**Blockers**: None  
-**Last Updated**: 2026-02-06
+**Business Plan**: Complete — Validated 87-94/100. Ready for submission after baseline data population.
+**MQ x Tie One Drop Package**: Complete — 22 documents, validated 87/100. Awaiting 6 ONE-WAY DOOR decisions.
+**Next Action**: Review drop ONE-WAY DOOR decisions in `drop/phase-2-architecture/rex-one-way-doors.md`
+**Last Updated**: 2026-02-11
+
+---
+
+## MQ x Tie One Drop Package (NEW)
+
+Rossi Mission's first artist drop: a tribute collection by NYC graffiti legend MQ honoring Tie One (1979-1998).
+
+**Location**: `drop/`
+**Master playbook**: `drop/phase-4-delivery/MQ_X_TIE_ONE_DROP_PLAYBOOK.md`
+**Revenue target**: $51,520 (moderate scenario)
+**Status**: 6 ONE-WAY DOOR decisions pending human confirmation
+
+See `drop/README.md` for full package overview.

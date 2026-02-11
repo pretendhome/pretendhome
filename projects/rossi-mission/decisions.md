@@ -220,5 +220,52 @@ Argy (research) → Rex (architecture) → Yuty (narrative) → Anky (validation
 - Updates agents/README.md with maturity status
 - Git hook auto-syncs on commit + pushes to GitHub
 
-**Impressions**: 1 success, 0 fail, 1 fail_gap  
+**Impressions**: 1 success, 0 fail, 1 fail_gap
 **Agent Status**: UNVALIDATED (needs 9 more successes for Tier 2)
+
+---
+
+## MQ x Tie One Drop Package (2026-02-11)
+
+### Overview
+Complete operational package for Rossi Mission's first artist drop: MQ (MKUE/MQUE) tribute collection for Tie One (Jonathan See Lim, 1979-1998). 22 documents across 4 phases.
+
+**Location**: `drop/` subdirectory
+**Master deliverable**: `drop/phase-4-delivery/MQ_X_TIE_ONE_DROP_PLAYBOOK.md`
+**Validation score**: 87/100 (PASSED)
+
+### Agent Execution
+
+| Agent | Phase | Documents | Status |
+|-------|-------|-----------|--------|
+| Argentavis (Argy) | Phase 1: Research | 6 docs | ✅ COMPLETE |
+| Tyrannosaurus Rex (Rex) | Phase 2: Architecture | 4 docs | ✅ COMPLETE |
+| Therizinosaurus (Theri) | Phase 3: Build Specs | 5 docs | ✅ COMPLETE |
+| Yutyrannus (Yuty) | Phase 4: Assembly | 3 docs + 2 assets | ✅ COMPLETE |
+| Ankylosaurus (Anky) | Phase 4: Validation | 1 doc (87/100) | ✅ COMPLETE |
+
+### Key Research Findings
+- **MQ**: Verified 1980s NYC graffiti legend, DMS crew, Martinez Gallery. Keith Haring "1970s" claim FLAGGED — MQ started early 1980s, "painted alongside" is unverifiable. Reframed to verifiable claim.
+- **Tie One**: Jonathan See Lim, born 1979 Philippines, shot March 18 1998 at age 18, Tenderloin SF. Unarmed. Grand jury exonerated shooter.
+- **MQ-Tie One connection**: 25+ years of documented tribute art (stickers, merch, gallery partnerships).
+- **Revenue forecast**: $34K-$62K gross, $51.5K moderate target. Break-even at 32% sellthrough.
+
+### Pending ONE-WAY DOOR Decisions (6)
+All 6 require human confirmation before production:
+1. **Drop date** — Rec: March 21 (near anniversary)
+2. **Format** — Rec: Exhibition Hybrid (gallery + online)
+3. **Edition sizes** — Rec: Moderate (~1,264 units, ~$11.5K COGS)
+4. **Pricing** — Rec: Market-rate ($10-$2,500 ladder)
+5. **Narrative framing** — Rec: Brotherhood-led with justice context
+6. **Revenue allocation** — Rec: 10% to community cause + family outreach
+
+See `drop/phase-2-architecture/rex-one-way-doors.md` for full analysis.
+
+### Impressions (Drop Package)
+| Agent | Success | Fail | Fail_Gap |
+|-------|---------|------|----------|
+| Argy | +6 | 0 | +6 |
+| Rex | +4 | 0 | +4 |
+| Theri | +5 | 0 | +5 |
+| Yuty | +3 | 0 | +3 |
+| Anky | +1 | 0 | +1 |
