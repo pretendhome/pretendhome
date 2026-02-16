@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MissionCanvas | AI Website + Decision System</title>
+  <meta name="description" content="MissionCanvas helps you go from idea to execution with a simple question system connected to Palette logic." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="site-modern">
+  <div class="mesh"></div>
+  <div class="wrap">
+    <header class="topbar modern-topbar">
+      <a class="brand" href="index.html">Mission<span>Canvas</span></a>
+      <nav class="topnav">
+        <a class="chip" href="#how">How it works</a>
+        <a class="chip" href="#ask">Ask</a>
+        <a class="chip" href="for-business-owners.html">Business Owners</a>
+      </nav>
+      <a class="btn primary btn-small" href="#ask">Try it free</a>
+    </header>
+
+    <main>
+      <section class="hero-modern">
+        <div class="hero-copy">
+          <div class="eyebrow">Agentic planning system for real-world operators</div>
+          <h1>Describe what you need. <br />MissionCanvas routes the work.</h1>
+          <p class="lede">
+            Ask one clear question and get a routed plan: RIU match, recommended Palette agent,
+            next artifact, and immediate action steps.
+          </p>
+
+          <form id="heroAskForm" class="hero-prompt">
+            <input id="heroQuestion" name="heroQuestion" type="text" placeholder="I need a business plan and grant strategy for my store." required />
+            <button class="btn primary" type="submit">Generate Plan</button>
+          </form>
+
+          <div class="prompt-tags">
+            <button type="button" class="tag" data-q="Build a launch plan for a local business in 30 days.">Launch Plan</button>
+            <button type="button" class="tag" data-q="Find grant opportunities and draft first applications.">Grant Strategy</button>
+            <button type="button" class="tag" data-q="Turn my scattered notes into a single business roadmap.">Converge Notes</button>
+          </div>
+        </div>
+
+        <aside class="hero-panel card">
+          <div class="mini-label">Live Router Preview</div>
+          <div class="preview-chat">
+            <div class="bubble user"><strong>You:</strong> Who are you?</div>
+            <div class="bubble assistant"><strong>MissionCanvas:</strong> I use the Palette method to move you from context to outcome.</div>
+          </div>
+          <ul class="preview-list">
+            <li>Convergence before execution</li>
+            <li>RIU-style route selection</li>
+            <li>Agent + artifact recommendation</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section id="how" class="card section-modern">
+        <h2>How it works</h2>
+        <div class="modern-steps">
+          <article>
+            <div class="n">1</div>
+            <h3>Ask in plain language</h3>
+            <p>Type your goal, context, and constraints.</p>
+          </article>
+          <article>
+            <div class="n">2</div>
+            <h3>Palette route is selected</h3>
+            <p>System maps to RIU + recommended agent path.</p>
+          </article>
+          <article>
+            <div class="n">3</div>
+            <h3>Get a ready action brief</h3>
+            <p>Copy, email, or execute the next concrete step.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="ask" class="card ask-section modern-ask">
+        <h2>Ask MissionCanvas</h2>
+        <p class="muted">Simple question system connected to Palette router logic.</p>
+
+        <form id="askForm" class="form-grid">
+          <div class="full">
+            <label for="question">What are you trying to do?</label>
+            <textarea id="question" name="question" required placeholder="Example: I need a business plan and a grant application strategy for my store."></textarea>
+          </div>
+          <div>
+            <label for="context">Current context</label>
+            <textarea id="context" name="context" placeholder="What exists today? What has already been tried?"></textarea>
+          </div>
+          <div>
+            <label for="outcome">Desired outcome</label>
+            <input id="outcome" name="outcome" type="text" placeholder="A complete launch plan in 2 weeks" />
+          </div>
+          <div>
+            <label for="constraints">Constraints</label>
+            <input id="constraints" name="constraints" type="text" placeholder="Budget, time, team size" />
+          </div>
+          <div class="full">
+            <button class="btn primary" type="submit">Route Through Palette</button>
+          </div>
+        </form>
+
+        <div id="askResult" class="result hidden" aria-live="polite">
+          <h3>Recommended route</h3>
+          <p><strong>Primary RIU:</strong> <span id="rRiu"></span></p>
+          <p><strong>Primary Agent:</strong> <span id="rAgent"></span></p>
+          <p><strong>Why this route:</strong> <span id="rWhy"></span></p>
+          <p><strong>Next artifact:</strong> <span id="rArtifact"></span></p>
+          <p><strong>Suggested immediate action:</strong> <span id="rAction"></span></p>
+
+          <label for="briefOutput">Generated action brief</label>
+          <textarea id="briefOutput" readonly></textarea>
+
+          <div class="cta-row">
+            <button id="copyBrief" class="btn alt" type="button">Copy Brief</button>
+            <button id="emailBrief" class="btn alt" type="button">Email Brief</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="waitlist" class="card waitlist simple-waitlist">
+        <h2>Get early access</h2>
+        <p class="muted">Tell us your mission and we will follow up.</p>
+        <form id="waitlistForm" class="form-grid compact">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div class="full">
+            <label for="goal">Goal</label>
+            <textarea id="goal" name="goal" required></textarea>
+          </div>
+          <div class="full">
+            <button type="submit" class="btn primary">Join Waitlist</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      MissionCanvas | Powered by Palette routing logic
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
