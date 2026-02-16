@@ -1,0 +1,158 @@
+fde_problem_matrix:
+  - problem_type: Intake_and_Convergence
+    description: >
+      Turning vague, conflicting, or incomplete stakeholder input into a
+      shared, explicit understanding of what is actually being built.
+    common_signals:
+      - "We need AI here"
+      - Conflicting stakeholder goals
+      - No single source of truth
+      - Moving requirements
+    typical_artifacts:
+      - Convergence brief
+      - Scope boundaries
+      - Success criteria
+      - One-way vs two-way decision classification
+    palette_solution:
+      - Enforce convergence before execution
+      - Semantic blueprint creation
+      - Decision logging (why, not just what)
+    industries:
+      - Logistics
+      - Enterprise SaaS
+      - Fintech
+      - Healthcare
+      - Government
+
+  - problem_type: Human_to_System_Translation
+    description: >
+      Converting tribal knowledge, business rules, and human judgment
+      into deterministic or probabilistic system logic.
+    common_signals:
+      - Rules live in people's heads
+      - "It depends" logic
+      - Exception-heavy workflows
+    typical_artifacts:
+      - Rule catalogs
+      - Decision trees
+      - Prompt templates
+      - Policy-to-code mappings
+    palette_solution:
+      - RIU-based rule extraction
+      - Explicit ambiguity capture
+      - Reversible decision tagging
+    industries:
+      - Logistics
+      - Compliance
+      - Ads
+      - Customer support
+      - Operations
+
+  - problem_type: Systems_Integration
+    description: >
+      Making poorly documented, inconsistent, or legacy systems
+      interoperate reliably in production.
+    common_signals:
+      - Undocumented APIs
+      - Brittle integrations
+      - Manual glue code
+    typical_artifacts:
+      - Integration contracts
+      - Data schemas
+      - Failure-handling paths
+    palette_solution:
+      - Reverse-engineering playbooks
+      - Explicit interface contracts
+      - Integration RIUs
+    industries:
+      - Logistics
+      - Payments
+      - Enterprise IT
+      - Supply chain
+
+  - problem_type: Data_Semantics_and_Quality
+    description: >
+      Ensuring that data means what people think it means, and that models
+      are trained, evaluated, and operated on reliable inputs.
+    common_signals:
+      - Inconsistent labels
+      - Silent data drift
+      - Model performance degradation
+    typical_artifacts:
+      - Data dictionaries
+      - Evaluation harnesses
+      - Quality thresholds
+    palette_solution:
+      - Semantic validation RIUs
+      - Continuous evaluation loops
+      - Agent maturity tracking
+    industries:
+      - AI/ML
+      - Analytics
+      - Search
+      - Recommendations
+
+  - problem_type: Reliability_and_Failure_Handling
+    description: >
+      Managing systems that work most of the time, but fail in
+      non-obvious, high-impact ways.
+    common_signals:
+      - Works in staging, fails in prod
+      - Long MTTR
+      - No clear owner during incidents
+    typical_artifacts:
+      - Runbooks
+      - Escalation paths
+      - Failure taxonomies
+    palette_solution:
+      - Failure-class RIUs
+      - Glass-box reasoning
+      - Decision traceability
+    industries:
+      - Logistics
+      - Infrastructure
+      - AI platforms
+      - Fintech
+
+  - problem_type: Operationalization_and_Scaling
+    description: >
+      Turning a successful pilot into something that runs every day,
+      across customers, teams, and regions.
+    common_signals:
+      - One-off success
+      - Manual steps everywhere
+      - Hero-driven operations
+    typical_artifacts:
+      - SOPs
+      - Automation pipelines
+      - Training materials
+    palette_solution:
+      - Restartable execution logs
+      - Repeatable RIU chains
+      - Maturity promotion rules
+    industries:
+      - Enterprise SaaS
+      - Marketplaces
+      - Operations-heavy businesses
+
+  - problem_type: Trust_Governance_and_Adoption
+    description: >
+      Ensuring humans trust, adopt, and correctly use systems that
+      meaningfully affect their work.
+    common_signals:
+      - Shadow processes
+      - Resistance to automation
+      - Compliance concerns
+    typical_artifacts:
+      - Audit trails
+      - Explainability docs
+      - Governance frameworks
+    palette_solution:
+      - Transparency-first design
+      - Human-in-the-loop enforcement
+      - Immutable decision logs
+    industries:
+      - Finance
+      - Healthcare
+      - Government
+      - Enterprise operations

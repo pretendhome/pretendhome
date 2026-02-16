@@ -1,0 +1,177 @@
+Anchor Story: Enabling Sellers to Use AI to Perform, Not Just Consume Content
+Problem
+
+When I stepped into AWS Enablement, the infrastructure was fragmented and top-down:
+
+Static HQ pages
+
+Mass email notifications
+
+Broad sessions pushed to everyone
+
+Multiple tools (QuickSuite, Kiro, internal research systems) with no coherent adoption path
+
+Sellers stigmatized as “not technical enough” or “not adapting fast enough”
+
+At the same time:
+
+Compensation required precise form submission.
+
+Sales plays required tight narrative rehearsal.
+
+New products were launching weekly.
+
+AI tools existed, but sellers were hesitant to use them.
+
+The gap wasn’t model capability.
+It was confidence, clarity, and relevance.
+
+Leadership was pushing AI adoption.
+Sellers were overwhelmed.
+
+Solution
+
+I shifted enablement from broadcast to behavior change.
+
+1. I started with sellers, not tools.
+I met directly with PMs responsible for different sales motions.
+I mapped:
+
+SPIFs and compensation incentives
+
+Required internal forms
+
+Sales play documentation flows
+
+GEO and POD-specific motions
+
+Then I built enablement tied to their real incentives:
+
+How to fill forms correctly to receive full compensation
+
+How to rehearse pitches using AI before customer calls
+
+How to generate elevator narratives tied to specific sales motions
+
+2. I built agentic workflows before asking anyone else to use them.
+
+Before broad rollout:
+
+I automated my own reporting pipeline.
+
+Built GEO + Job Title + Sales Play analytics breakdowns.
+
+Created internal retrieval flows to generate contextualized enablement summaries.
+
+Used research agents to audit relevance and source citation quality.
+
+Identified impression bias in outputs and improved vector retrieval strategy.
+
+I never asked sellers to adopt something I hadn’t pressure-tested in production myself.
+
+3. I reduced fear through 5-minute “recipes.”
+
+AI adoption wasn’t blocked by intelligence.
+It was blocked by hesitation.
+
+So I built short, repeatable demos:
+
+“How to generate a sales play narrative in 5 minutes.”
+
+“How to audit your form submission before sending.”
+
+“How to use Kiro to rehearse a pitch.”
+
+These weren’t theoretical.
+They were live workflows sellers could copy immediately.
+
+Adoption shifted from abstract AI to usable workflows.
+
+4. I moved from mass promotion to targeted activation.
+
+Instead of pushing every session to everyone:
+
+I targeted specific PODs.
+
+Customized Slack channels.
+
+Narrowed enablement to cohort-specific needs.
+
+Coordinated QuickSuite and Kiro messaging per use case.
+
+Not everyone needed everything.
+Each group needed something specific.
+
+5. I reframed executive perception.
+
+There was a narrative circulating that:
+
+“Sellers don’t know how to sell when it’s not easy.”
+
+I disagreed with that framing.
+
+What I saw:
+
+Intelligent operators navigating fragmented systems.
+
+Incentives misaligned with enablement structure.
+
+Fear of new AI tools without safe practice environments.
+
+I humanized adoption:
+
+Joined cross-org meetings.
+
+Demonstrated AI live.
+
+Assumed high intelligence in stakeholders.
+
+Removed stigma by making usage normal.
+
+Impact
+
+Within the Improve Plan period alone:
+
++17% attendance increase (153 → 179 avg/session)
+
++50% increase in high-CSAT sessions (>4.9)
+
++67% increase in sales plays covered (133 → 222)
+
+Distribution infrastructure migrated to Zoom webinar
+
+Calendar holds eliminated
+
+Interactive HQ navigation deployed
+
+Automated analytics pipeline built
+
+More importantly:
+
+Sellers stopped asking:
+
+“What is this tool?”
+
+They started asking:
+
+“Can this help me win this deal?”
+
+That shift is behavior change.
+Not just enablement metrics.
+
+Why This Maps to the Gap Role
+
+This story shows:
+
+You enabled non-technical users to adopt AI confidently.
+
+You built systems that scaled across GEOs, roles, and sales motions.
+
+You said “no” to mass broadcast and built a better targeted path.
+
+You reframed ROI from “AI adoption” to “compensation accuracy and deal readiness.”
+
+You operationalized agentic systems before evangelizing them.
+
+This isn’t theory.
+You already did the work.

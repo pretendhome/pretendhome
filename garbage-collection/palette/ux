@@ -1,0 +1,708 @@
+main synthesis.
+Create UX engagement prompt for Kiro that applies cross-domain synthesis principle informally to test it
+
+plaintext
+# KIRO TASK: Palette UX Improvement Engagement (Testing Cross-Domain Synthesis)
+
+**Mission**: Improve Palette's UX using Palette itself, while testing a new validation principle (cross-domain synthesis) before formalizing it into Tier 1.
+
+**Meta-Context**: This engagement serves two purposes:
+1. **Primary**: Create better UX for Palette (GitHub repo, onboarding, visual identity)
+2. **Secondary**: Test whether mandatory cross-domain synthesis (Yuty + Anky validation pairing) actually improves outcomes
+
+**Duration**: ~3 hours (one round per agent)
+
+---
+
+## CONVERGENCE BRIEF (RIU-001)
+
+### Goal
+
+Create self-improving UX for Palette that makes the toolkit easier to use and understand out-of-the-box for builders using any AI system (Kiro, Copilot, Claude Code, etc.)
+
+**Success Criteria - Primary**:
+1. ✅ Clear GitHub repository structure with download/upload workflow
+2. ✅ Visual identity (glyph: programmer/builder with painter's palette of agents)
+3. ✅ Onboarding experience that communicates core principles in <5 minutes
+4. ✅ Self-improvement mechanism (users can contribute updates)
+5. ✅ 1-5 validated FDE use cases per prompt matrix item
+
+**Success Criteria - Meta** (Testing Cross-Domain Synthesis):
+1. ✅ Yuty can clearly explain what Palette does and why it's useful
+2. ✅ Yuty + Anky validation pairing identifies cross-domain patterns
+3. ✅ System improvements discovered (Taxonomy/Library/Prompts updates recommended)
+4. ✅ Validation protocol proves useful (or reveals flaws)
+
+---
+
+### Roles
+
+**Human (Mical)**:
+- Approves ONE-WAY DOOR decisions
+- Reviews each agent's output before next agent proceeds
+- Final validation of cross-domain synthesis effectiveness
+
+**Agents (Standard Execution)**:
+- **Argentavis (Argy)**: Research UX patterns, GitHub best practices, visual identity (15 min)
+- **Tyrannosaurus (Rex)**: Design repo structure, governance model, flag ONE-WAY DOORs (20 min)
+- **Therizinosaurus (Theri)**: Build repo structure, templates, contribution guidelines (30 min)
+- **Yutyrannus (Yuty)**: **PRIMARY OWNER** - Onboarding narrative + visual identity (45 min)
+
+**Agents (NEW - Cross-Domain Synthesis Validation)**:
+- **Parasaurolophus (Para)**: Organize/integrate outputs from Argy/Rex/Theri/Yuty (20 min)
+- **Velociraptor (Raptor)**: Debug issues flagged by Para (15 min)
+- **Ankylosaurus (Anky)**: **VALIDATION PARTNER** - Work with Yuty to validate quality + identify cross-domain patterns (30 min)
+
+---
+
+### Capabilities
+
+**Standard Palette**:
+- All 8 agent archetypes
+- Existing artifacts (Taxonomy v1.1, Library v1.0, Tier 1-3)
+- GitHub repository creation capabilities
+- Visual design tools
+
+**Experimental (Testing)**:
+- **Step 6: Cross-Domain Synthesis Validation** (Yuty + Anky pairing)
+- Post-execution pattern mining
+- System improvement recommendations
+
+---
+
+### Constraints
+
+**Binding Requirements**:
+1. **Convergence preserved**: Builder-Palette alignment (NOT autonomous)
+2. **Toolkit flexibility**: Must work with Kiro, Copilot, Claude Code, future systems
+3. **One round only**: Each agent gets ONE pass (discipline test)
+4. **Artifacts provisional**: Everything is improvable
+5. **Cross-domain synthesis MANDATORY**: Step 6 cannot be skipped
+
+**Governance**:
+- 🚨 ONE-WAY DOOR: Repository structure (hard to change after users clone)
+- 🚨 ONE-WAY DOOR: Visual identity/glyph (brand consistency)
+- TWO-WAY DOOR: Contribution workflow (can evolve)
+
+---
+
+### Non-Goals
+
+**Out of Scope**:
+- ❌ Standalone product (this is a toolkit)
+- ❌ Fully autonomous operation
+- ❌ Platform-specific implementation
+- ❌ Multi-round iteration (one pass only)
+- ❌ Complete artifact redesign (improvement only)
+
+---
+
+## AGENT EXECUTION SEQUENCE
+
+### Round 1: Argentavis (Research) - 15 minutes
+
+**Task**: Research UX patterns for developer toolkits
+
+**Specific Questions**:
+1. What makes developer toolkits easy to adopt? (Examples: Terraform, Kubernetes, LangChain)
+2. GitHub repo structure best practices for toolkit distribution
+3. Visual identity patterns for developer tools (logos, glyphs, color schemes)
+4. Self-improvement mechanisms in successful OSS projects
+5. Onboarding patterns that achieve <5 min to first success
+
+**Output Format**:
+```markdown
+# Argy Research Report
+
+## Finding 1: [Topic]
+- Pattern: [What works]
+- Source: [Reference]
+- Applicability: [How this applies to Palette]
+
+## Finding 2: ...
+
+[Continue for all 5 research questions]
+```
+
+**Constraints**:
+- Read-only (no recommendations yet)
+- Sources required for all claims
+- Route architecture decisions to Rex
+
+**Deliverable**: `argy_research_report.md`
+
+---
+
+### Round 2: Tyrannosaurus (Architecture) - 20 minutes
+
+**Task**: Design information architecture and governance model
+
+**Input**: Argy's research report
+
+**Specific Decisions**:
+1. GitHub repository structure (folders, files, naming conventions)
+2. Contribution workflow (fork/PR model vs direct push model)
+3. Versioning strategy for toolkit updates
+4. Governance model (who approves contributions?)
+5. Visual identity requirements (glyph specifications)
+
+**Output Format**:
+```markdown
+# Rex Architecture Proposal
+
+## Decision 1: Repository Structure
+**Proposal**: [Folder structure]
+**Rationale**: [Based on Argy's findings]
+**Reversibility**: 🚨 ONE-WAY DOOR / TWO-WAY DOOR
+
+## Decision 2: ...
+
+[Continue for all 5 decisions]
+
+## ONE-WAY DOORS Requiring Approval:
+1. [List each ONE-WAY DOOR decision]
+
+## Recommendation:
+[Routing to Theri with approved specifications]
+```
+
+**Constraints**:
+- Must flag ONE-WAY DOORs explicitly
+- Must provide rationale based on Argy's research
+- Cannot execute (design only)
+
+**Deliverable**: `rex_architecture_proposal.md`
+
+---
+
+### Round 3: Therizinosaurus (Build) - 30 minutes
+
+**Task**: Implement repo structure, templates, contribution guidelines
+
+**Input**: Rex's approved architecture
+
+**Artifacts to Create**:
+1. `/README.md` - Main entry point
+2. `/GETTING_STARTED.md` - <5 min onboarding guide
+3. `/CONTRIBUTING.md` - How to contribute improvements
+4. `/.github/PULL_REQUEST_TEMPLATE.md` - Standardize contributions
+5. `/assets/README.md` - Placeholder for visual identity
+6. `/examples/` - Directory structure for use cases
+
+**Output Format**:
+Create actual files with complete content (not templates)
+
+**Constraints**:
+- Follow Rex's architecture exactly (no scope expansion)
+- No design decisions (Rex owns those)
+- If unclear, route back to Rex
+
+**Deliverable**: Complete file structure ready for GitHub
+
+---
+
+### Round 4: Yutyrannus (Narrative + Visual) - 45 minutes ⭐ PRIMARY OWNER
+
+**Task**: Create onboarding narrative and visual identity (bread and butter)
+
+**Input**: Argy's research + Rex's architecture + Theri's structure
+
+**Yuty Owns**:
+
+#### Part A: Onboarding Narrative (<5 min to understand)
+1. **What is Palette?**
+   - Builder's toolkit, not autonomous system
+   - Three-tier decision system (Tier 1/2/3)
+   - Works with any AI system (Kiro, Copilot, Claude Code)
+
+2. **Why convergence matters**
+   - Not autonomous, requires builder-Palette alignment
+   - Decisions classified (ONE-WAY vs TWO-WAY DOOR)
+   - System learns and improves with use
+
+3. **Core artifacts**
+   - Taxonomy (111 RIUs - problem classification)
+   - Library (86+ questions - validated solutions)
+   - Agents (8 archetypes - bounded roles)
+
+4. **First success path**
+   - Clone → Read GETTING_STARTED.md → Run first engagement → Success
+
+#### Part B: Visual Identity
+1. **Glyph design**
+   - Programmer/builder figure
+   - Painter's palette with 8 agent colors:
+     * Argy (blue - research/water)
+     * Theri (orange - build/fire)
+     * Raptor (red - debug/alert)
+     * Rex (purple - design/vision)
+     * Yuty (green - narrative/growth)
+     * Anky (gray - validate/stone)
+     * Para (yellow - monitor/light)
+     * Orch (white - coordinate/air)
+
+2. **Color scheme** (professional, approachable, developer-friendly)
+3. **Typography** (monospace-friendly, readable)
+4. **Asset formats** (SVG primary, PNG fallback)
+
+#### Part C: Communication Strategy
+1. **README messaging** (hook → explain → get started)
+2. **Error messages** (helpful, not cryptic)
+3. **Success confirmations** (encouraging, informative)
+4. **Contribution acknowledgments** (welcoming, specific)
+
+**Output Format**:
+```markdown
+# Yuty Deliverables
+
+## Part A: Onboarding Narrative
+[Complete narrative text for README + GETTING_STARTED]
+
+## Part B: Visual Identity
+[Glyph description + color palette + design specs]
+[ASCII art mockup of glyph concept]
+
+## Part C: Communication Strategy
+[Message templates for errors, success, contributions]
+
+## Evidence Base:
+[All claims backed by Argy's research with citations]
+
+## Narrative Validation:
+Can I explain Palette clearly in <5 min? [YES/NO + explanation]
+```
+
+**Evidence Requirements**:
+- All claims backed by Argy's research
+- Visual designs described clearly (production-ready specs)
+- Narrative tested against "5-minute rule"
+
+**Yuty's Authority**: If she can't explain it clearly, something is wrong.
+
+**Deliverable**: `yuty_narrative_and_visual.md`
+
+---
+
+### Round 5: Parasaurolophus (Integration) - 20 minutes
+
+**Task**: Organize and integrate changes from Argy/Rex/Theri/Yuty
+
+**Input**: All previous outputs
+
+**Para Responsibilities**:
+1. **Verify artifacts in correct locations**
+   - Check file structure matches Rex's architecture
+   - Validate naming conventions consistent
+   - Confirm no missing files
+
+2. **Check for conflicts**
+   - Argy's research vs Rex's decisions (any mismatches?)
+   - Rex's architecture vs Theri's implementation (any deviations?)
+   - Theri's structure vs Yuty's narrative (any inconsistencies?)
+
+3. **Signal anomalies** (no remediation)
+   - Broken links in documentation
+   - Missing cross-references
+   - Inconsistent terminology
+   - File path errors
+
+**Output Format**:
+```markdown
+# Para Integration Report
+
+## Verification Results:
+- ✅ File structure matches architecture: [YES/NO]
+- ✅ Naming conventions consistent: [YES/NO]
+- ✅ All files present: [YES/NO]
+
+## Conflicts Detected:
+1. [Conflict description] - Between [Agent A] and [Agent B]
+2. ...
+
+## Anomalies (Routing to Raptor):
+1. ⚠️ [Issue] - Location: [File/Line] - Severity: [HIGH/MEDIUM/LOW]
+2. ...
+
+## Cross-References Validated:
+- Argy research → Rex rationale: [ALIGNED/MISALIGNED]
+- Rex architecture → Theri implementation: [ALIGNED/MISALIGNED]
+- Theri structure → Yuty narrative: [ALIGNED/MISALIGNED]
+
+## Status: [READY FOR VALIDATION / NEEDS DEBUGGING]
+```
+
+**Constraints**:
+- Signals only (no fixes)
+- If issues found, route to Raptor
+- If critical issues, block progress
+
+**Deliverable**: `para_integration_report.md`
+
+---
+
+### Round 6: Velociraptor (Debug) - 15 minutes
+
+**Task**: Fix issues flagged by Para
+
+**Input**: Para's integration report (anomalies only)
+
+**Raptor Responsibilities**:
+1. **Fix broken links** in documentation
+2. **Correct file path errors**
+3. **Resolve naming inconsistencies**
+4. **Fix template formatting issues**
+5. **Debug cross-reference mismatches**
+
+**Output Format**:
+```markdown
+# Raptor Debug Report
+
+## Issues Fixed:
+1. ⚠️ [Para's Issue #1]
+   - Root Cause: [Diagnosis]
+   - Fix Applied: [What changed]
+   - Verification: [How to confirm fix]
+
+2. ...
+
+## Issues Unable to Fix (Require Human):
+1. [Issue] - Reason: [Why can't fix]
+
+## Post-Mortem:
+- Were issues from: RIU routing? Library info? Agent quality?
+- Pattern detected: [Any recurring issue types?]
+```
+
+**Constraints**:
+- Fix only (no feature additions)
+- No architecture changes (route to Rex if needed)
+- Scope limited to Para's signals
+
+**Deliverable**: `raptor_debug_report.md` + Fixed files
+
+---
+
+### Round 7: Ankylosaurus (Validation + Cross-Domain Synthesis) - 30 minutes ⭐ NEW ROLE
+
+**Task**: Validate solution quality AND identify cross-domain patterns (partnership with Yuty)
+
+**Input**: All outputs + fixed artifacts
+
+**NEW PROTOCOL - Step 6: Cross-Domain Synthesis Validation**
+
+This is what we're testing. Anky works with Yuty in "game theory positioning" to validate:
+
+#### Part A: Solution Quality Validation (Standard Anky)
+
+**Questions**:
+1. **Did this solution work?**
+   - Does the UX actually improve Palette's usability?
+   - Are all success criteria met?
+
+2. **Is this the BEST solution we know?**
+   - What other approaches could have been used?
+   - Are there known UX patterns we didn't apply?
+
+3. **Gaps identified**:
+   - What's missing?
+   - What could be better?
+
+#### Part B: Cross-Domain Pattern Detection (NEW - Testing)
+
+**Questions** (Work with Yuty):
+1. **Does this reveal patterns applicable to other problems?**
+   - UX principle → Could it apply to agent coordination?
+   - Onboarding pattern → Could it apply to convergence briefs?
+   - Visual identity → Could it apply to RIU presentation?
+
+2. **What did we learn that should update our artifacts?**
+   - New Library entries? (UX patterns validated)
+   - RIU routing changes? (Better trigger signals discovered)
+   - Prompt updates? (Agent coordination improved)
+
+3. **Cross-domain synthesis examples**:
+   - Find 1-3 concrete examples where UX learnings could apply elsewhere
+   - Example format: "[UX Pattern] could improve [Other Domain] because [Reasoning]"
+
+#### Part C: Yuty Partnership (Game Theory Positioning)
+
+**Yuty asks** (Semantic):
+- Can I explain this solution clearly?
+- Does the narrative make sense?
+- Is this iteration defensible?
+
+**Anky asks** (Quality):
+- Did it work?
+- Is it the best we know?
+- What alternatives exist?
+
+**Both ask** (Cross-Domain):
+- Where else could this apply?
+- What should we update in the system?
+- Did we do the best iteration possible?
+
+#### Part D: FDE Use Case Validation (Standard Anky)
+
+**Create 1-5 use cases per Palette prompt matrix item**:
+
+1. **Intake and Convergence**
+   - Use case: Builder discovers Palette, unclear problem
+   - Entry point: README.md
+   - Expected outcome: Convergence achieved in <10 min
+
+2. **Architecture and Design**
+   - Use case: Builder needs system design help
+   - Entry point: Rex agent + RIU taxonomy
+   - Expected outcome: ONE-WAY DOOR flagged correctly
+
+3. **Implementation**
+   - Use case: Builder has spec, needs execution
+   - Entry point: Theri agent + fixture examples
+   - Expected outcome: Working artifact produced
+
+4. **Quality and Safety**
+   - Use case: Builder wants validation
+   - Entry point: Anky agent + validation protocol
+   - Expected outcome: Quality issues identified
+
+5. **Operations and Delivery**
+   - Use case: Builder monitoring production
+   - Entry point: Para agent + alerting setup
+   - Expected outcome: Anomalies detected
+
+6. **Adoption and Change**
+   - Use case: Team onboarding to Palette
+   - Entry point: GETTING_STARTED.md + examples
+   - Expected outcome: First success in <5 min
+
+**Output Format**:
+```markdown
+# Anky Validation Report
+
+## Part A: Solution Quality
+- ✅ Solution works: [YES/NO + evidence]
+- ✅ Best solution we know: [YES/NO + alternatives considered]
+- ⚠️ Gaps identified: [List]
+
+## Part B: Cross-Domain Patterns Detected
+
+### Pattern 1: [Name]
+- **Source Domain**: UX improvement
+- **Core Principle**: [What we learned]
+- **Applicable To**: [Other problem domains]
+- **Reasoning**: [Why it transfers]
+- **Recommendation**: [Update Library entry LIB-XXX / Create new RIU-XXX]
+
+### Pattern 2: ...
+
+## Part C: Yuty Partnership Results
+
+**Yuty's Semantic Validation**:
+- Can explain clearly: [YES/NO]
+- Narrative coherent: [YES/NO]
+- Iteration defensible: [YES/NO]
+**Anky's Quality Validation**:
+- Solution quality: [PASS/FAIL]
+- Best known approach: [YES/NO]
+- Alternatives considered: [List]
+
+**Joint Cross-Domain Synthesis**:
+- Patterns identified: [Count]
+- System improvements recommended: [Count]
+- Validation effective: [YES/NO + reasoning]
+
+## Part D: FDE Use Cases (1-5 per matrix item)
+
+### Use Case 1.1: Intake and Convergence
+- **Scenario**: [Description]
+- **Entry Point**: [File/Agent]
+- **Steps**: [1, 2, 3...]
+- **Expected Outcome**: [Success criteria]
+- **Validation**: [PASS/FAIL]
+
+[Continue for all 6 matrix items, 1-5 cases each]
+
+## Part E: System Improvement Recommendations
+
+**Library Updates**:
+1. Add LIB-XXX: "[UX Pattern Name]" → [Validated solution]
+2. Update LIB-003: Add cross-reference to UX onboarding pattern
+3. ...
+
+**Taxonomy Updates**:
+1. Update RIU-042 routing: Add Library entries for UX patterns
+2. Create RIU-XXX: "[New Pattern]" if validated
+3. ...
+
+**Prompt Updates**:
+1. Consider formalizing Step 6 (Cross-Domain Synthesis) into Tier 3
+2. Update Yuty definition: Add "System Coherence Guardian" role
+3. Update Anky definition: Add "Cross-Domain Pattern Validator" role
+
+## Part F: Meta-Validation (Testing Step 6)
+
+**Did the Yuty + Anky pairing work?**
+- Value added: [YES/NO + specific examples]
+- Patterns found: [Count + quality assessment]
+- Process efficiency: [Smooth / Clunky / Needs refinement]
+- Recommendation: [Formalize into Tier 1 / Refine further / Abandon]
+
+**Evidence for/against formalizing cross-domain synthesis**:
+- ✅ Pro: [Reasons to add to Tier 1]
+- ❌ Con: [Reasons not to add to Tier 1]
+- 🤔 Uncertain: [Areas needing more testing]
+
+## Status: [VALIDATED / NEEDS REVISION]
+```
+
+**Deliverable**: `anky_validation_report.md`
+
+---
+
+## EXPECTED ONE-WAY DOOR DECISIONS
+
+**These require Mical's approval before execution**:
+
+### Decision 1: Repository Structure
+
+**Proposed** (from Rex):
+```
+palette-framework/
+├── README.md
+├── GETTING_STARTED.md (<5 min)
+├── CONTRIBUTING.md
+├── tier1/
+│   └── palette-core.md
+├── tier2/
+│   └── assumptions.md
+├── tier3/
+│   └── decisions-template.md
+├── taxonomy/
+│   └── palette_taxonomy_v1_1.yaml
+├── library/
+│   └── palette_knowledge_library_v1_0.yaml
+├── agents/
+│   └── agent_implementation_manual.md
+├── assets/
+│   ├── palette-glyph.svg
+│   └── palette-colors.md
+├── examples/
+│   └── [6-30 use cases from Anky]
+└── docs/
+    └── [additional documentation]
+```
+
+**Why ONE-WAY DOOR**: Users will clone this; changing it breaks workflows
+
+**Approval**: ⬜ YES / ⬜ NO
+
+---
+
+### Decision 2: Visual Identity (Glyph)
+
+**Proposed** (from Yuty):
+- Programmer/builder with painter's palette
+- 8 colors representing agent archetypes
+- SVG format (scalable, professional)
+- Color palette documented in `/assets/palette-colors.md`
+
+**Why ONE-WAY DOOR**: Brand consistency; hard to change after distribution
+
+**Approval**: ⬜ YES / ⬜ NO
+
+---
+
+## FINAL DELIVERABLES
+
+**By end of engagement**:
+
+1. ✅ GitHub repository structure (Theri + Raptor)
+2. ✅ README + GETTING_STARTED (<5 min onboarding) (Yuty)
+3. ✅ CONTRIBUTING.md (self-improvement workflow) (Theri)
+4. ✅ Visual glyph specifications (Yuty)
+5. ✅ 6-30 FDE use cases (Anky)
+6. ✅ Research report (Argy)
+7. ✅ Architecture proposal (Rex)
+8. ✅ Integration report (Para)
+9. ✅ Debug report (Raptor)
+10. ✅ **Validation report with cross-domain patterns** (Anky + Yuty)
+
+---
+
+## SUCCESS METRICS
+
+### Primary (UX Improvement):
+- ✅ New user can understand Palette in <5 min
+- ✅ Contribution workflow is clear
+- ✅ Visual identity is professional
+- ✅ Use cases validate real FDE scenarios
+- ✅ GitHub repo is clone-ready
+
+### Meta (Testing Cross-Domain Synthesis):
+- ✅ Yuty can clearly explain what Palette does
+- ✅ Yuty + Anky pairing identifies 1-3 cross-domain patterns
+- ✅ System improvements recommended (Library/Taxonomy/Prompts)
+- ✅ Validation protocol proves useful (or reveals flaws to fix)
+- ✅ Evidence gathered to inform Tier 1 formalization decision
+
+---
+
+## EXECUTION INSTRUCTIONS FOR KIRO
+
+### Phase 1: Sequential Agent Execution
+
+Execute agents in order, pausing for human review after each:
+
+1. **Argy** (15 min) → Output: Research report → **PAUSE FOR REVIEW**
+2. **Rex** (20 min) → Output: Architecture + ONE-WAY DOORs → **PAUSE FOR APPROVAL**
+3. **Theri** (30 min) → Output: Repo structure + files → **PAUSE FOR REVIEW**
+4. **Yuty** (45 min) → Output: Narrative + visual → **PAUSE FOR REVIEW**
+5. **Para** (20 min) → Output: Integration report → **PAUSE FOR REVIEW**
+6. **Raptor** (15 min) → Output: Debug report + fixes → **PAUSE FOR REVIEW**
+7. **Anky** (30 min) → Output: Validation + cross-domain patterns → **FINAL REVIEW**
+
+### Phase 2: Document Assembly
+
+After all agents complete:
+1. Collect all outputs into `/mnt/user-data/outputs/palette_ux_engagement/`
+2. Create summary document with key findings
+3. Highlight cross-domain patterns discovered
+4. Present recommendation on formalizing Step 6 into Tier 1
+
+### Phase 3: Meta-Analysis
+
+**Critical questions to answer**:
+1. Did Yuty + Anky pairing add value?
+2. Were cross-domain patterns identified?
+3. Would formalizing this into Tier 1 improve Palette?
+4. What would need to change to formalize it?
+
+---
+
+## AGENT IMPRESSIONS TO LOG
+
+**After execution, log in decisions.md**:
+
+```
+argentavis: success=[0/1], fail=[0/1], fail_gap=[N], status=UNVALIDATED
+tyrannosaurus: success=[0/1], fail=[0/1], fail_gap=[N], status=UNVALIDATED
+therizinosaurus: success=[0/1], fail=[0/1], fail_gap=[N], status=UNVALIDATED
+yutyrannus: success=[0/1], fail=[0/1], fail_gap=[N], status=UNVALIDATED
+parasaurolophus: success=[0/1], fail=[0/1], fail_gap=[N], status=UNVALIDATED
+velociraptor: success=[0/1], fail=[0/1], fail_gap=[N], status=UNVALIDATED
+ankylosaurus: success=[0/1], fail=[0/1], fail_gap=[N], status=UNVALIDATED
+```
+
+---
+
+## CRITICAL REMINDERS
+
+**For Kiro**:
+1. ⚠️ This is a TEST of cross-domain synthesis - pay attention to whether it works
+2. ⚠️ Yuty + Anky pairing is experimental - document effectiveness
+3. ⚠️ ONE-WAY DOORs must be approved before proceeding
+4. ⚠️ Human review required after each agent (don't batch execute)
+5. ⚠️ Meta-goal is as important as primary goal (test the principle)
+
+**For Mical**:
+1. Review

@@ -1,0 +1,178 @@
+profile perplexity
+
+API = pplx-REDACTED
+
+Deep Research Prompt: Job Market Fit Analysis
+
+
+OBJECTIVE: Conduct comprehensive job market research to identify the highest-fit roles currently available for the candidate profile below. Prioritize roles where the candidate's existing skills are the core value proposition, not a stretch or pivot.
+
+
+CANDIDATE PROFILE:
+Current Status: Recently departed AWS (February 2026)
+Experience Summary:
+11+ years at Amazon across multiple roles
+Current/Recent: Technical Program Manager – End-to-End Agentic Enablement Systems Architect (AWS, March 2025 – Present)
+Sr. Knowledge Engineer – Artificial General Intelligence (Amazon, Nov 2023 – Mar 2025)
+Taxonomist/Ontologist – Alexa Automotive (Amazon, Apr 2019 – Nov 2023)
+Knowledge Engineer (Amazon, May 2017 – Apr 2019)
+Project Manager – Kaizen Team Representative (Amazon, Cagliari, Italy, Nov 2013 – May 2017)
+Earlier: Localization Project Manager (Italy), Lecturer/Maître de langue (France)
+Education:
+UC Berkeley Data Analytics Boot Camp (2019) – Python, SQL, ETL, ML fundamentals
+Master's Degree, Romance Languages, Literatures, and Linguistics – Université Paris-Sorbonne (2006-2009)
+BA Comparative Literature and Spanish – San Francisco State University (2001-2005)
+Languages:
+English (Native)
+French (Native/Fluent)
+Italian (Fluent)
+Spanish (Proficient)
+Technical Skills:
+AI/ML: RAG architectures, LLM grounding, agentic systems, multi-agent orchestration, memory systems, workflow DAGs, GenAI APIs (OpenAI, Anthropic, Amazon Bedrock)
+Programming: Python, SQL, regex, API integration, data pipelines
+Knowledge Systems: Taxonomy design, ontology, knowledge architecture, content governance, data quality monitoring
+Independent Project:
+Palette Framework: A three-tier agentic AI collaboration system featuring:
+Multi-agent orchestration with maturity tracking (UNVALIDATED → WORKING → PRODUCTION)
+111 Reusable Intervention Units (RIUs) – library of problem patterns matched to agents
+Enterprise memory layer architecture indexing SOPs, event logs, manual interventions
+RAG-based knowledge retrieval pipelines
+Human-in-the-loop quality controls, convergence-before-execution design
+Core Strengths:
+Translating complex AI/ML capabilities into business value for enterprise stakeholders
+Customer-facing technical work (discovery, scoping, deployment, iteration)
+Cross-functional collaboration across engineering, product, and GTM teams
+Building and fixing agentic systems in production (not just demos)
+Knowledge architecture and structured information systems
+Multilingual communication across European markets
+What the Candidate is NOT:
+Not a full-stack software engineer (no React, TypeScript, Node.js depth)
+Not DevOps/SRE (no Kubernetes, Docker, Terraform, Helm)
+Not a people manager (no direct reports, hiring/firing experience)
+Not a research scientist (no PhD, no publications, no patents)
+Not quota-carrying sales (enables sales, doesn't own pipeline)
+Geographic Preferences:
+San Francisco Bay Area (primary)
+Open to remote (US)
+Open to Europe (France, Italy) given language fluency and work history
+Compensation Target:
+Base: $160K-$220K
+Total Comp: $200K-$280K
+Contract: $125-$160/hour minimum
+
+
+PREVIOUSLY IDENTIFIED HIGH-FIT ROLE CATEGORIES (from prior analysis):
+RankRole CategoryFit ScoreWhy
+1
+AI Enablement Lead
+95
+Direct match to current work
+2
+TPM AI/ML
+92
+Title + domain alignment
+3
+AI Learning & Enablement Lead
+91
+Training + AI expertise
+4
+Context Engineering Manager
+90
+Linguistics + RAG advantage
+5
+Technical Product Enablement Lead
+89
+GTM + technical depth
+6
+AI Transformation Lead
+88
+Program management + AI
+7
+Forward Deployed Engineer (Agentic)
+85-88
+Customer-facing + AI systems
+8
+AI Governance Specialist
+86
+Responsible AI, frameworks
+9
+AI Implementation Lead
+84
+Deployment + enablement
+10
+Solutions Architect (AI/ML)
+80-85
+Technical + customer-facing
+ROLES ALREADY APPLIED TO OR IN PROGRESS:
+Pallet – Forward Deployed Engineer ($160K-$240K) – Applied, exceptional fit
+Chime – Program Manager, AI Enablement ($130K-$180K) – Applied
+Chime – Product Operations Manager, AI Enablement ($156K-$215K) – Applied
+Glean – AI Outcomes Manager ($150K-$212K) – Applied
+Teradata – Senior AI Industry Specialist, France – Applied with cover letter
+LinkedIn – Staff Technical Program Manager: Core AI ($139K-$229K) – Applied
+FriendliAI – Forward Deployed Engineer, Agentic (via recruiter Andrew Sell) – In conversation
+
+
+RESEARCH INSTRUCTIONS:
+Search current job postings (LinkedIn, Indeed, Lever, Greenhouse, company career pages) for roles matching the high-fit categories above.
+Prioritize roles where:
+Agentic AI, RAG, LLM, or knowledge systems are core requirements
+Customer-facing or GTM-adjacent positioning
+No hard requirements for: PhD, people management, full-stack engineering, DevOps/SRE
+Compensation aligns with $160K+ base / $200K+ total comp
+Location is SF Bay Area, remote US, or France/Italy
+For each role identified, provide:
+Company name and role title
+Location and remote policy
+Compensation (if listed)
+Key requirements
+Fit score (0-100) with reasoning
+Gaps or risks
+Application link
+Search keywords to use:
+"AI Enablement" + Lead/Manager
+"Forward Deployed Engineer" + AI/Agentic
+"Technical Program Manager" + AI/ML/GenAI
+"Context Engineer" OR "Knowledge Architecture" + AI
+"AI Transformation" + Lead/Manager
+"Solutions Architect" + AI/LLM/GenAI
+"AI Outcomes Manager"
+"Technical Enablement" + AI
+"RAG" + Engineer/Architect
+"Agentic AI" + Engineer/Lead
+Companies to specifically search:
+Anthropic, OpenAI, Cohere, AI21 Labs
+Databricks, Snowflake, MongoDB
+Salesforce, ServiceNow, Workday
+Palantir, C3.ai, Scale AI, Weights & Biases
+Notion, Figma, Canva
+Stripe, Square, Plaid
+Series B-D AI startups (Glean, Jasper, Writer, Copy.ai, Runway, Character.ai, Inflection, Adept, etc.)
+Output format:
+Ranked list of top 15-20 roles
+Tier 1 (85+ fit): Apply immediately
+Tier 2 (75-84 fit): Apply if time permits
+Tier 3 (65-74 fit): Consider if interested in pivot
+For each role: company, title, location, comp, fit score, 2-3 sentence rationale, link
+Exclude roles requiring:
+PhD or research publications
+3+ years people management
+Full-stack engineering (React, TypeScript, Node.js as hard requirements)
+DevOps/SRE (Kubernetes, Docker, Terraform as hard requirements)
+Quota-carrying sales with revenue targets
+Security clearance
+
+
+ADDITIONAL CONTEXT:
+The candidate's unique differentiators are:
+Rare combination: Deep AI/ML technical knowledge + customer-facing skills + linguistics/knowledge architecture background
+Multilingual: Native French, fluent Italian – rare among AI practitioners
+European experience: 8 years working in France and Italy
+Production agentic systems: Not just demos – built and fixed real systems in production
+Palette Framework: Independent proof of hands-on agentic AI system design
+The ideal role is one where:
+The candidate can work directly with customers/stakeholders
+AI/agentic systems expertise is the core value
+There's room to build and iterate, not just execute
+The company values translators between technical and business domains
+Compensation reflects senior IC or lead-level positioning

@@ -53,6 +53,8 @@ implementation-name/
 ├── decisions.md               # Palette decision log (ONE-WAY/TWO-WAY doors)
 ├── LEARNINGS.md               # Patterns, skills, RIUs to extract
 ├── .palette-meta.yaml         # Machine-readable metadata
+├── .kiro/steering/palette/    # Local Palette module pointers + overrides
+├── fde/                       # Local execution runtime (decisions, KGDRS)
 │
 ├── artifacts/                 # Final deliverables
 │   ├── deliverable-1.md
@@ -94,6 +96,8 @@ implementation-name/
    - Edit `README.md` (what, why, how)
    - Edit `.palette-meta.yaml` (metadata)
    - Create `decisions.md` (start logging decisions)
+   - Bootstrap local module in `.kiro/steering/palette/`
+   - Initialize local runtime in `fde/` (`fde/decisions.md`, `fde/kgdrs/kges.md`)
 
 3. **Work through Palette phases**:
    - **Research** (Argy) → outputs to `/research`
