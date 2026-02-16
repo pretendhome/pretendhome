@@ -1,0 +1,207 @@
+1️⃣ How would you prioritize AI use cases across merchandising, HR, supply chain, and stores?
+
+Executive Answer:
+
+I prioritize using three lenses: measurable business impact, workflow integration feasibility, and risk profile.
+
+First, I look for areas with clear economic signals — margin, inventory accuracy, markdown optimization, or time spent on repetitive tasks.
+
+Second, I assess whether the AI can embed directly into existing workflows. If it requires behavior change without integration, adoption will stall.
+
+Third, I evaluate brand, compliance, and operational risk. In Year 1, I focus on internal use cases where ROI is measurable and exposure is low.
+
+I believe in proving value through tightly scoped pilots with explicit success metrics before scaling.
+
+2️⃣ What would your first 90 days look like?
+
+Executive Answer:
+
+Days 1–30: Diagnose. Map stakeholders, tool sprawl, data readiness, and workflow friction.
+
+Days 30–60: Prioritize. Identify two to three pilots with measurable KPIs and clear ownership.
+
+Days 60–90: Execute disciplined pilots with feedback loops and executive visibility.
+
+The goal isn’t scale in 90 days — it’s clarity, alignment, and one tangible proof point that the operating model works.
+
+3️⃣ How do you ensure responsible, human-centered AI enablement?
+
+Executive Answer:
+
+Responsible AI starts with scope discipline. Not every workflow should be automated.
+
+I design for augmentation over replacement, embed human-in-the-loop controls, establish clear data boundaries, and measure performance transparently.
+
+Trust is a design constraint. When employees understand what the system can and cannot do, adoption accelerates.
+
+4️⃣ How do you measure ROI for enterprise AI initiatives?
+
+Executive Answer:
+
+I measure ROI across three categories: cost reduction, productivity lift, and revenue or margin impact.
+
+For operational use cases, that might mean reduced manual time or improved forecast accuracy. For merchandising, improved sell-through or reduced markdown intensity.
+
+I always define baseline metrics before launching pilots and track realized impact, not theoretical gains.
+
+ROI should be visible, measurable, and tied to business KPIs — not just usage metrics.
+
+5️⃣ How do you handle executive pushback on AI investment?
+
+Executive Answer:
+
+I frame AI investment as a portfolio decision, not a moonshot.
+
+Start small. Define measurable outcomes. Fund in phases.
+
+If the pilot doesn’t hit predefined thresholds, we stop. If it does, we scale.
+
+That discipline reduces risk and builds executive confidence.
+
+6️⃣ How do you prevent tool sprawl?
+
+Executive Answer:
+
+Tool sprawl happens when experimentation isn’t governed.
+
+I recommend a centralized platform strategy with federated use-case ownership.
+
+That means shared standards, observability, and security — but brand-level autonomy in prioritization.
+
+We sunset overlapping tools as successful patterns emerge.
+
+7️⃣ How do you drive AI adoption among non-technical employees?
+
+Executive Answer:
+
+Adoption succeeds when AI is embedded into existing workflows and tied to incentives.
+
+I focus on small, practical workflows — not large training sessions.
+
+Champions at the team level are critical. When peers demonstrate value, adoption spreads organically.
+
+8️⃣ When should you NOT use AI?
+
+Executive Answer:
+
+When the workflow lacks clean data, when risk outweighs value, or when automation removes necessary human judgment.
+
+AI should solve meaningful problems, not create novelty.
+
+If a deterministic system works better, use it.
+
+9️⃣ How would you evaluate ChatGPT vs Copilot vs Claude for enterprise use?
+
+Executive Answer:
+
+I evaluate across four dimensions: capability, integration into existing enterprise systems, governance and compliance, and cost structure.
+
+The right platform depends on workflow fit and ecosystem integration — not model hype.
+
+Platform choice should follow operating model strategy.
+
+🔟 How do you balance centralization vs brand autonomy?
+
+Executive Answer:
+
+Centralize standards, security, and core platform infrastructure.
+
+Federate use-case prioritization and adoption within brands.
+
+This allows scale without suppressing brand differentiation.
+
+11️⃣ What are the biggest risks of AI in retail?
+
+Executive Answer:
+
+Brand safety, pricing errors, biased decision-making, and over-automation.
+
+Retail margins are tight — small errors scale quickly.
+
+Risk management and guardrails must precede scale.
+
+12️⃣ How do you embed AI into Workday or HR systems?
+
+Executive Answer:
+
+Start with employee-facing workflows — onboarding support, policy Q&A, learning recommendations.
+
+Integrate via APIs, maintain clear data boundaries, and avoid creating shadow systems.
+
+AI should enhance the system of record, not replace it.
+
+13️⃣ How do you ensure AI improves margin, not just productivity?
+
+Executive Answer:
+
+Tie AI directly to margin-linked KPIs — sell-through rate, markdown percentage, inventory turns.
+
+If the use case doesn’t connect to economic drivers, it shouldn’t be prioritized.
+
+14️⃣ How do you scale from pilot to enterprise rollout?
+
+Executive Answer:
+
+Define success upfront. Measure impact. Document lessons.
+
+Standardize governance and rollout playbooks.
+
+Then scale deliberately — not emotionally.
+
+15️⃣ How do you handle resistance from middle management?
+
+Executive Answer:
+
+Resistance often reflects fear of loss of control.
+
+I involve managers early, define success metrics collaboratively, and show how AI supports their team’s performance.
+
+Ownership reduces resistance.
+
+16️⃣ What does “AI enablement” mean to you?
+
+Executive Answer:
+
+It means making employees more capable at their specific jobs.
+
+Not more tools. Not automation for its own sake.
+
+Capability amplification.
+
+17️⃣ How do you prioritize across competing stakeholder demands?
+
+Executive Answer:
+
+Use a transparent scoring framework: impact, feasibility, risk, and data readiness.
+
+Publish criteria. Make trade-offs visible.
+
+That builds trust in prioritization decisions.
+
+18️⃣ How do you monitor AI system performance over time?
+
+Executive Answer:
+
+Track model performance metrics, usage trends, business impact metrics, and drift indicators.
+
+AI isn’t “launch and forget.” It’s monitor and iterate.
+
+19️⃣ How do you manage vendor relationships?
+
+Executive Answer:
+
+Avoid single-vendor dependence when possible.
+
+Negotiate flexibility, ensure data portability, and align contracts to performance.
+
+Vendor strategy should support long-term operating flexibility.
+
+20️⃣ What differentiates you from other AI strategists?
+
+Executive Answer:
+
+I’ve built and debugged production AI systems inside large enterprises.
+
+I understand not just strategy, but adoption, governance, and real-world friction.
+
+I design operating models that make AI usable — not just impressive.
