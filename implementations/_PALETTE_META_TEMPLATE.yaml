@@ -1,0 +1,43 @@
+name: "[Implementation Name]"
+slug: "[implementation-slug]"
+domain: "[talent|dev|education|finance|retail|other]"
+type: "[interview-prep|planning|development|analysis|strategy]"
+status: "active"  # active | paused | complete | archived
+created: "YYYY-MM-DD"
+updated: "YYYY-MM-DD"
+
+purpose: |
+  Brief description of what this implementation demonstrates and what problems it solves.
+
+palette_agents_used:
+  - Argentavis  # Research
+  - Rex  # Architecture
+  - Therizinosaurus  # Build
+  - Ankylosaurus  # Validation
+  - Yutyrannus  # Narrative
+  - Velociraptor  # Debug
+  - Parasaurolophus  # Monitor
+
+rius_demonstrated:
+  - RIU-001  # Example RIU
+  - RIU-002  # Example RIU
+
+skills_extracted:
+  - skill-name-1
+  - skill-name-2
+
+outcomes:
+  time_invested_hours: 0
+  artifacts_created: 0
+  decisions_logged: 0
+  quality_score: 0  # 0-100
+
+owner: "Mical Neill"
+
+related_implementations:
+  - implementation-slug-1
+  - implementation-slug-2
+
+tags:
+  - tag1
+  - tag2

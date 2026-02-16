@@ -1,0 +1,40 @@
+name: "Job Search System"
+slug: "talent-job-search"
+domain: "talent"
+type: "workflow"
+status: "active"
+created: "2026-02-16"
+updated: "2026-02-16"
+
+purpose: |
+  End-to-end job search and interview preparation system.
+  Workflow tool used by other interview prep implementations.
+
+palette_agents_used:
+  - Argentavis
+  - Rex
+  - Therizinosaurus
+
+rius_demonstrated:
+  - RIU-047
+  - RIU-089
+
+skills_extracted: []
+
+outcomes:
+  time_invested_hours: 30
+  artifacts_created: 15
+  decisions_logged: 6
+  quality_score: 85
+
+owner: "Mical Neill"
+
+related_implementations:
+  - talent-gap-interview
+  - talent-glean-interview
+
+tags:
+  - job-search
+  - interview-prep
+  - workflow
+  - career

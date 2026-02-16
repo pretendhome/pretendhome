@@ -1,0 +1,41 @@
+name: "Gap Inc Interview Prep"
+slug: "talent-gap-interview"
+domain: "talent"
+type: "interview-prep"
+status: "complete"
+created: "2026-02-12"
+updated: "2026-02-16"
+
+purpose: |
+  Interview preparation for Gap Inc Sr. Manager, AI Strategy & Enterprise Enablement.
+  Demonstrates Palette's research → architecture → build → validate workflow.
+
+palette_agents_used:
+  - Argentavis
+  - Rex
+  - Therizinosaurus
+  - Ankylosaurus
+
+rius_demonstrated:
+  - RIU-047
+  - RIU-089
+
+skills_extracted: []
+
+outcomes:
+  time_invested_hours: 25
+  artifacts_created: 20
+  decisions_logged: 6
+  quality_score: 90
+
+owner: "Mical Neill"
+
+related_implementations:
+  - talent-job-search
+  - talent-glean-interview
+
+tags:
+  - interview-prep
+  - gap-inc
+  - ai-strategy
+  - retail-ai

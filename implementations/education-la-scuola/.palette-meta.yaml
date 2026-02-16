@@ -1,0 +1,40 @@
+name: "La Scuola High School Planning"
+slug: "education-la-scuola"
+domain: "education"
+type: "planning"
+status: "complete"
+created: "2026-02-07"
+updated: "2026-02-16"
+
+purpose: |
+  High school improvement planning integrating Reggio Emilia and IB frameworks.
+  Demonstrates Palette's full multi-agent workflow for educational planning.
+
+palette_agents_used:
+  - Argentavis
+  - Rex
+  - Therizinosaurus
+  - Ankylosaurus
+
+rius_demonstrated:
+  - RIU-047
+  - RIU-056
+  - RIU-089
+
+skills_extracted: []
+
+outcomes:
+  time_invested_hours: 60
+  artifacts_created: 7
+  decisions_logged: 20
+  quality_score: 90
+
+owner: "Mical Neill"
+
+related_implementations: []
+
+tags:
+  - education
+  - school-planning
+  - reggio-emilia
+  - ib-framework

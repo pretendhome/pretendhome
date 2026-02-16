@@ -1,0 +1,37 @@
+name: "Buffett Retirement Planning"
+slug: "finance-buffett-retirement"
+domain: "finance"
+type: "analysis"
+status: "active"
+created: "2026-02-11"
+updated: "2026-02-16"
+
+purpose: |
+  Retirement planning tool inspired by Warren Buffett's investment philosophy.
+  Demonstrates Palette's ability to handle financial modeling and scenario analysis.
+
+palette_agents_used:
+  - Argentavis  # Research on Buffett principles
+  - Therizinosaurus  # Build calculator
+
+rius_demonstrated:
+  - RIU-089  # Financial modeling
+  - RIU-047  # Analysis and reporting
+
+skills_extracted: []
+
+outcomes:
+  time_invested_hours: 5
+  artifacts_created: 1
+  decisions_logged: 3
+  quality_score: 70
+
+owner: "Mical Neill"
+
+related_implementations: []
+
+tags:
+  - finance
+  - retirement
+  - planning
+  - buffett

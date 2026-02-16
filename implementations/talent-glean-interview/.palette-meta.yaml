@@ -1,0 +1,38 @@
+name: "Glean Interview Prep"
+slug: "talent-glean-interview"
+domain: "talent"
+type: "interview-prep"
+status: "active"
+created: "2026-02-15"
+updated: "2026-02-16"
+
+purpose: |
+  Interview preparation for Glean AI Outcomes Manager role.
+  Built in 11 minutes using streamlined process from Gap learnings.
+
+palette_agents_used:
+  - Argentavis
+  - Therizinosaurus
+
+rius_demonstrated:
+  - RIU-047
+
+skills_extracted: []
+
+outcomes:
+  time_invested_hours: 3
+  artifacts_created: 8
+  decisions_logged: 0
+  quality_score: 85
+
+owner: "Mical Neill"
+
+related_implementations:
+  - talent-job-search
+  - talent-gap-interview
+
+tags:
+  - interview-prep
+  - glean
+  - ai-outcomes
+  - customer-success

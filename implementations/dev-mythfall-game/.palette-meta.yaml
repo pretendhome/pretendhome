@@ -1,0 +1,41 @@
+name: "Mythfall Multiplayer Game"
+slug: "dev-mythfall-game"
+domain: "dev"
+type: "development"
+status: "active"
+created: "2026-01-26"
+updated: "2026-02-16"
+
+purpose: |
+  Multiplayer RPG game built with Godot + Node.js.
+  Demonstrates Palette's ability to handle complex technical architecture and game development.
+
+palette_agents_used:
+  - Argentavis  # Infrastructure research
+  - Rex  # System architecture
+  - Therizinosaurus  # Code implementation
+  - Ankylosaurus  # Quality validation
+
+rius_demonstrated:
+  - RIU-073  # Game development
+  - RIU-082  # Real-time systems
+  - RIU-091  # Infrastructure architecture
+
+skills_extracted: []
+
+outcomes:
+  time_invested_hours: 40
+  artifacts_created: 10
+  decisions_logged: 15
+  quality_score: 75
+
+owner: "Mical Neill"
+
+related_implementations: []
+
+tags:
+  - game-development
+  - multiplayer
+  - godot
+  - nodejs
+  - real-time

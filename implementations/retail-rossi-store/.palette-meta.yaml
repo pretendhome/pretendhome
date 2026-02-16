@@ -1,0 +1,42 @@
+name: "Rossi Mission Store Promotion"
+slug: "retail-rossi-store"
+domain: "retail"
+type: "strategy"
+status: "complete"
+created: "2026-02-07"
+updated: "2026-02-16"
+
+purpose: |
+  Business plan and store promotion strategy for Rossi Mission graffiti art gallery.
+  Most comprehensive Palette implementation demonstrating full agent workflow.
+
+palette_agents_used:
+  - Argentavis
+  - Rex
+  - Therizinosaurus
+  - Ankylosaurus
+  - Yutyrannus
+
+rius_demonstrated:
+  - RIU-012
+  - RIU-034
+  - RIU-047
+  - RIU-089
+
+skills_extracted: []
+
+outcomes:
+  time_invested_hours: 80
+  artifacts_created: 30
+  decisions_logged: 25
+  quality_score: 95
+
+owner: "Mical Neill"
+
+related_implementations: []
+
+tags:
+  - retail
+  - business-planning
+  - product-strategy
+  - art-gallery
