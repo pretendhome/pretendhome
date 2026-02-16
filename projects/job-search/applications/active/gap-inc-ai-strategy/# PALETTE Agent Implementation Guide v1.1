@@ -1,0 +1,2950 @@
+# PALETTE Agent Implementation Guide v1.1
+
+
+**Generated**: 2025-01-21  
+**Purpose**: Prescriptive build instructions for all 8 agent archetypes  
+**Status**: UNVALIDATED (all agents require implementation and validation)
+
+
+---
+
+
+## Overview
+
+
+This guide provides step-by-step instructions for building each of the 8 PALETTE agent archetypes from scratch. Each agent is currently at **UNVALIDATED** status and requires systematic progression through the maturity tiers.
+
+
+**Maturity Progression Path**:
+UNVALIDATED → WORKING → PRODUCTION (10 successes) → (50 runs, <5% fail) → (maintain quality)
+**Critical Implementation Principles**:
+1. Build agents incrementally - start with minimal viable capability
+2. Enforce constraints first - prevent disallowed actions before adding features
+3. Test with fixtures - use artifact-based validation
+4. Document everything - decisions.md is the source of truth
+5. Progress systematically - don't skip maturity tiers
+
+
+---
+
+
+## Foundation: Shared Infrastructure
+
+
+Before building any agent, establish the shared infrastructure that all agents depend on.
+
+
+### 1. Message Protocol (MCP-style)
+
+
+All agents communicate using standardized JSON messages:
+
+
+```json
+{
+  "from_agent": "ark_type:agent_name:version",
+  "to_agent": "ark_type:agent_name:version",
+  "message_type": "request | response | error",
+  "trace_id": "unique_session_trace_id",
+  "payload": {
+    "task": "what needs to be done",
+    "context": "relevant information",
+    "artifacts": ["path1", "path2"],
+    "constraints": ["constraint1", "constraint2"]
+  },
+  "metadata": {
+    "timestamp": "ISO8601",
+    "priority": "normal | high | critical"
+  }
+}
+Implementation:
+* Create shared/message_protocol.py or equivalent
+* Implement message validation schema
+* Add trace_id generation for session tracking
+* Build message serialization/deserialization
+* 2. Constraint Validation Framework
+Every agent must validate actions against its constraint profile:
+class ConstraintValidator:
+    def __init__(self, allowed_actions, disallowed_actions):
+        self.allowed = set(allowed_actions)
+        self.disallowed = set(disallowed_actions)
+    
+    def validate(self, action):
+        """Returns (is_valid, reason)"""
+        if action in self.disallowed:
+            return False, f"Action '{action}' is explicitly disallowed"
+        if self.allowed and action not in self.allowed:
+            return False, f"Action '{action}' is not in allowed list"
+        return True, "Action permitted"
+    
+    def enforce(self, action):
+        """Raises exception if action not allowed"""
+        is_valid, reason = self.validate(action)
+        if not is_valid:
+            raise ConstraintViolationError(reason)
+Implementation:
+* Create shared/constraints.py
+* Define constraint profiles for each agent type
+* Implement violation logging and escalation
+* Add human-in-the-loop trigger for violations
+* 3. State Management
+Agents track their maturity state in decisions.md:
+agent: search-agent
+ark_type: ARK:Argentavis
+version: 1.0
+status: UNVALIDATED
+impressions:
+  success: 0
+  fail: 0
+  fail_gap: 0
+notes: Initial implementation
+Implementation:
+* Create shared/state_manager.py
+* Implement YAML read/write for decisions.md
+* Add impression tracking (success/fail/fail_gap)
+* Build automatic tier promotion/demotion logic
+* 4. Fixture Evaluation Harness
+Minimal artifact-based testing:
+fixtures/riu/<riu-id>//
+  ├── input.md              # Problem description + trigger signals
+  ├── expected/             # Expected artifacts
+  │   ├── artifact.json     # Expected output schema
+  │   └── checks.yaml       # Validation rules
+  └── notes.md              # Human notes (optional)
+Implementation:
+* Create shared/fixture_runner.py
+* Implement fixture discovery and loading
+* Add artifact comparison logic (schema validation, file existence, etc.)
+* Generate PASS/FAIL reports
+________________
+
+
+* Agent 1: ARK:Argentavis (Resource Gatherer)
+Role: Search, retrieval, research, context gathering (read-only)
+Priority: Critical - Build First
+Initial Status: UNVALIDATED
+* Core Capabilities Required
+1. Multi-source search: Query multiple sources (web, docs, APIs)
+2. Context filtering: Filter results by relevance and recency
+3. Citation tracking: Maintain source provenance
+4. Read-only enforcement: Prevent any write operations
+* Constraint Profile
+Disallowed Actions:
+* Synthesis-as-decision (cannot make recommendations)
+* Execution (cannot run code or modify systems)
+* Commits (cannot write to repositories)
+* Architecture recommendations (cannot propose designs)
+Allowed Actions:
+* Search external sources
+* Retrieve documents
+* Extract information
+* Cite sources
+* Flag knowledge gaps (KGDRS)
+* Build Steps
+* Step 1: Core Search Engine (Days 1-2)
+class ArgentavisAgent:
+    def __init__(self):
+        self.ark_type = "ARK:Argentavis"
+        self.version = "1.0"
+        self.constraints = ConstraintValidator(
+            allowed_actions=["search", "retrieve", "extract", "cite"],
+            disallowed_actions=["recommend", "execute", "commit", "design"]
+        )
+    
+    def search(self, query, sources=None, max_results=10):
+        """
+        Search across specified sources
+        Returns: List of SearchResult objects
+        """
+        self.constraints.enforce("search")
+        
+        results = []
+        # TODO: Implement multi-source search
+        # - Web search API (e.g., Google, Bing)
+        # - Internal document search
+        # - Academic databases (if applicable)
+        
+        return results
+    
+    def retrieve(self, document_id):
+        """
+        Retrieve full document by ID
+        Returns: Document object
+        """
+        self.constraints.enforce("retrieve")
+        # TODO: Implement document retrieval
+        pass
+    
+    def extract(self, document, query):
+        """
+        Extract relevant sections from document
+        Returns: List of excerpts with citations
+        """
+        self.constraints.enforce("extract")
+        # TODO: Implement relevance extraction
+        pass
+Validation Criteria:
+* Can perform web search
+* Returns results with citations
+* Constraint violations raise errors
+* No write operations possible
+* Step 2: Temporal Intelligence (Days 3-4)
+Add recency filtering and temporal awareness:
+class ArgentavisAgent:
+    def filter_by_recency(self, results, prioritize_recent=True):
+        """
+        Filter and rank results by publication date
+        Prioritizes 2024-2025 content by default
+        """
+        if prioritize_recent:
+            # Boost recent results
+            for result in results:
+                if result.year >= 2024:
+                    result.relevance_score *= 1.5
+        
+        return sorted(results, key=lambda r: r.relevance_score, reverse=True)
+Validation Criteria:
+* Recent content prioritized
+* Date metadata extracted correctly
+* Temporal filtering configurable
+* Step 3: Context-Aware Filtering (Days 5-6)
+Add ability to filter by customer context:
+class ArgentavisAgent:
+    def filter_by_context(self, results, context_requirements):
+        """
+        Filter results based on engagement context
+        
+        Args:
+            context_requirements: Dict with keys like 'industry', 'use_case', etc.
+        """
+        filtered = []
+        for result in results:
+            relevance = self._calculate_context_relevance(result, context_requirements)
+            if relevance > 0.6:  # Threshold
+                result.context_relevance = relevance
+                filtered.append(result)
+        
+        return filtered
+    
+    def _calculate_context_relevance(self, result, context):
+        """Calculate how well result matches context"""
+        # TODO: Implement context matching logic
+        pass
+Validation Criteria:
+* Industry-specific filtering works
+* Context relevance scores reasonable
+* Irrelevant results filtered out
+* Step 4: Cross-Reference Validation (Days 7-8)
+Add validation across multiple sources:
+class ArgentavisAgent:
+    def cross_reference(self, claim, min_sources=2):
+        """
+        Validate a claim across multiple sources
+        Returns: (is_validated, supporting_sources, conflicting_sources)
+        """
+        supporting = []
+        conflicting = []
+        
+        # Search for claim across sources
+        results = self.search(claim)
+        
+        for result in results:
+            if self._supports_claim(result, claim):
+                supporting.append(result)
+            elif self._contradicts_claim(result, claim):
+                conflicting.append(result)
+        
+        is_validated = len(supporting) >= min_sources
+        return is_validated, supporting, conflicting
+Validation Criteria:
+* Can identify supporting evidence
+* Detects contradictions
+* Requires minimum source count
+* Step 5: RIU Integration (Days 9-10)
+Map RIUs that use Argentavis:
+class ArgentavisAgent:
+    def handle_riu(self, riu_id, payload):
+        """Route RIU request to appropriate method"""
+        
+        # Map RIU IDs to methods
+        riu_handlers = {
+            "RIU-004": self._handle_workstream_decomposition,
+            "RIU-013": self._handle_source_of_truth_inventory,
+            "RIU-019": self._handle_data_lineage,
+            "RIU-140": self._handle_competitive_scan,
+            "RIU-201": self._handle_competitive_research,
+            "RIU-252": self._handle_model_evaluation,
+            # Add all relevant RIUs
+        }
+        
+        if riu_id in riu_handlers:
+            return riu_handlers[riu_id](payload)
+        else:
+            raise ValueError(f"RIU {riu_id} not supported by Argentavis")
+Validation Criteria:
+* All assigned RIUs routable
+* Each RIU produces expected artifacts
+* Fixture tests pass for sample RIUs
+* Step 6: KGDRS Integration (Days 11-12)
+Add knowledge gap detection:
+class ArgentavisAgent:
+    def detect_knowledge_gap(self, query, search_results):
+        """
+        Detect if we lack sufficient information to answer query
+        Emits KGDRS signal if needed
+        """
+        if len(search_results) == 0:
+            return self._emit_kgdrs("no_results", query)
+        
+        if self._lacks_authority(search_results):
+            return self._emit_kgdrs("low_authority", query)
+        
+        if self._contradictory_sources(search_results):
+            return self._emit_kgdrs("contradictions", query)
+        
+        return None
+    
+    def _emit_kgdrs(self, reason, query):
+        """Emit Knowledge Gap Detected signal"""
+        return {
+            "signal": "⚠️ KNOWLEDGE GAP DETECTED",
+            "reason": reason,
+            "query": query,
+            "retrieval_plan": self._suggest_retrieval_plan(reason, query),
+            "status": "paused_pending_resolution"
+        }
+Validation Criteria:
+* Detects insufficient results
+* Identifies low-authority sources
+* Flags contradictions
+* Emits proper KGDRS format
+* Testing Strategy
+Create fixtures for common scenarios:
+fixtures/riu/RIU-140/competitive-scan-basic/
+  ├── input.md
+  │   Trigger signals: competitive analysis needed
+  │   Query: "What are the top alternatives to Snowflake for data warehousing?"
+  │
+  ├── expected/
+  │   ├── competitive_scan.md (schema check: has sections for each competitor)
+  │   └── alternatives_matrix.md (schema check: comparison table structure)
+  │
+  └── notes.md
+      Expected: Should find Databricks, BigQuery, Redshift
+      Should cite recent (2024+) sources
+Run Fixture:
+python shared/fixture_runner.py --riu RIU-140 --agent argentavis
+* Promotion Criteria
+UNVALIDATED → WORKING:
+* 10 consecutive successful fixture runs
+* All constraint violations caught
+* KGDRS properly emitted when needed
+* Citations always included
+WORKING → PRODUCTION:
+* 50 total impressions with <5% failure rate
+* Search accuracy >95% on validation set
+* Source diversity >5 sources per query
+* Response time <10 seconds
+________________
+
+
+* Agent 2: ARK:Therizinosaurus (Builder)
+Role: Implementation within bounded scope
+Priority: Critical - Build Second
+Initial Status: UNVALIDATED
+* Core Capabilities Required
+1. Artifact creation: Generate code, configs, schemas
+2. Bounded implementation: Work within defined specifications
+3. CI/CD integration: Integrate with build pipelines
+4. Rollback support: Maintain ability to undo changes
+* Constraint Profile
+Disallowed Actions:
+* Architecture commitments (cannot decide on frameworks)
+* Scope expansion (cannot add features not in spec)
+* Design decisions (cannot change data models)
+Allowed Actions:
+* Create files within specification
+* Implement defined interfaces
+* Write tests
+* Generate documentation
+* Execute within bounded scope
+* Build Steps
+* Step 1: Core Artifact Generator (Days 1-3)
+class TherizinosaurusAgent:
+    def __init__(self):
+        self.ark_type = "ARK:Therizinosaurus"
+        self.version = "1.0"
+        self.constraints = ConstraintValidator(
+            allowed_actions=["create_file", "implement", "test", "document"],
+            disallowed_actions=["design", "expand_scope", "commit_architecture"]
+        )
+        self.scope_validator = ScopeValidator()
+    
+    def create_artifact(self, artifact_type, specification, constraints):
+        """
+        Create artifact within bounded specification
+        
+        Args:
+            artifact_type: "code" | "config" | "schema" | "test" | "doc"
+            specification: Detailed spec for artifact
+            constraints: Boundary constraints (file paths, dependencies, etc.)
+        """
+        self.constraints.enforce("create_file")
+        
+        # Validate scope before proceeding
+        if not self.scope_validator.is_within_scope(specification, constraints):
+            raise ScopeViolationError("Specification exceeds defined boundaries")
+        
+        # Generate artifact
+        artifact = self._generate(artifact_type, specification)
+        
+        # Validate artifact against spec
+        if not self._validates_against_spec(artifact, specification):
+            raise SpecificationMismatchError("Generated artifact doesn't match spec")
+        
+        return artifact
+Validation Criteria:
+* Can generate basic code files
+* Scope violations raise errors
+* Output matches specification
+* Constraint checks before execution
+* Step 2: Scope Validation Framework (Days 4-5)
+class ScopeValidator:
+    def __init__(self):
+        self.allowed_paths = []
+        self.allowed_dependencies = []
+        self.max_complexity = None
+    
+    def configure(self, specification):
+        """Configure validator from specification"""
+        self.allowed_paths = specification.get("allowed_paths", [])
+        self.allowed_dependencies = specification.get("allowed_dependencies", [])
+        self.max_complexity = specification.get("max_complexity")
+    
+    def is_within_scope(self, artifact_spec, constraints):
+        """Check if artifact specification is within scope"""
+        
+        # Check file paths
+        if artifact_spec.get("path") not in self.allowed_paths:
+            return False
+        
+        # Check dependencies
+        for dep in artifact_spec.get("dependencies", []):
+            if dep not in self.allowed_dependencies:
+                return False
+        
+        # Check complexity
+        if self.max_complexity and self._calculate_complexity(artifact_spec) > self.max_complexity:
+            return False
+        
+        return True
+Validation Criteria:
+* Path restrictions enforced
+* Dependency boundaries respected
+* Complexity limits enforced
+* Clear error messages on violations
+* Step 3: CI/CD Integration (Days 6-8)
+class TherizinosaurusAgent:
+    def integrate_cicd(self, pipeline_config):
+        """
+        Integrate with CI/CD pipeline
+        Enables automated testing and deployment
+        """
+        self.cicd = CICDIntegration(pipeline_config)
+    
+    def create_with_pipeline(self, artifact_type, specification, constraints):
+        """Create artifact and trigger pipeline"""
+        
+        # Create artifact
+        artifact = self.create_artifact(artifact_type, specification, constraints)
+        
+        # Write to filesystem
+        artifact_path = self._write_artifact(artifact)
+        
+        # Trigger CI/CD pipeline
+        pipeline_result = self.cicd.trigger_pipeline(artifact_path)
+        
+        # Check results
+        if not pipeline_result.passed:
+            # Rollback on failure
+            self._rollback_artifact(artifact_path)
+            raise PipelineFailureError(f"Pipeline failed: {pipeline_result.errors}")
+        
+        return artifact, pipeline_result
+Validation Criteria:
+* Pipeline integration works
+* Automated tests run
+* Failures trigger rollback
+* Success status returned
+* Step 4: Rollback Mechanisms (Days 9-10)
+class TherizinosaurusAgent:
+    def __init__(self):
+        # ... existing init
+        self.version_control = VersionControl()
+    
+    def create_artifact(self, artifact_type, specification, constraints):
+        """Create artifact with automatic versioning"""
+        
+        # Take snapshot before changes
+        snapshot_id = self.version_control.create_snapshot()
+        
+        try:
+            artifact = self._generate(artifact_type, specification)
+            self._write_artifact(artifact)
+            self.version_control.commit(artifact, specification)
+            return artifact
+        except Exception as e:
+            # Rollback on any error
+            self.version_control.rollback_to_snapshot(snapshot_id)
+            raise
+    
+    def rollback(self, artifact_id, to_version=None):
+        """Rollback artifact to previous version"""
+        return self.version_control.rollback(artifact_id, to_version)
+Validation Criteria:
+* Snapshots created before changes
+* Automatic rollback on errors
+* Manual rollback available
+* Version history maintained
+* Step 5: RIU Implementation (Days 11-14)
+Map RIUs that use Therizinosaurus (62 total):
+class TherizinosaurusAgent:
+    def handle_riu(self, riu_id, payload):
+        """Route RIU request to appropriate implementation"""
+        
+        riu_handlers = {
+            # Interfaces & Inputs
+            "RIU-010": self._handle_access_checklist,
+            "RIU-011": self._handle_data_contract,
+            "RIU-017": self._handle_connector_spec,
+            "RIU-018": self._handle_schema_mapping,
+            
+            # Core Logic
+            "RIU-022": self._handle_prompt_interface,
+            "RIU-023": self._handle_pipeline_split,
+            "RIU-024": self._handle_sidecar_pattern,
+            "RIU-025": self._handle_freshness_rules,
+            "RIU-026": self._handle_hybrid_similarity,
+            "RIU-027": self._handle_reranking_layer,
+            "RIU-028": self._handle_schema_constrained_gen,
+            "RIU-032": self._handle_extraction_pattern,
+            "RIU-033": self._handle_classification_pattern,
+            "RIU-034": self._handle_ranking_explanation,
+            "RIU-035": self._handle_caching_strategy,
+            
+            # Ops & Delivery
+            "RIU-060": self._handle_deployment_readiness,
+            "RIU-061": self._handle_observability_baseline,
+            "RIU-064": self._handle_feature_flags,
+            "RIU-065": self._handle_config_management,
+            "RIU-066": self._handle_secrets_handling,
+            "RIU-067": self._handle_database_migration,
+            
+            # Quality & Safety
+            "RIU-080": self._handle_contract_tests,
+            "RIU-082": self._handle_llm_guardrails,
+            "RIU-084": self._handle_data_quality,
+            "RIU-088": self._handle_privacy_redaction,
+            
+            # Multimodal (500 series)
+            "RIU-500": self._handle_multimodal_pipeline,
+            "RIU-501": self._handle_image_processing,
+            "RIU-502": self._handle_audio_processing,
+            
+            # Agentic (510 series)
+            "RIU-511": self._handle_agent_state_management,
+            "RIU-513": self._handle_inter_agent_protocol,
+            
+            # LLMOps (520 series)
+            "RIU-520": self._handle_prompt_versioning,
+            "RIU-523": self._handle_llm_caching,
+            
+            # Add all 62 assigned RIUs
+        }
+        
+        if riu_id not in riu_handlers:
+            raise ValueError(f"RIU {riu_id} not assigned to Therizinosaurus")
+        
+        return riu_handlers[riu_id](payload)
+Validation Criteria:
+* All 62 RIUs have handlers
+* Each handler respects constraints
+* Artifacts match RIU expectations
+* Fixtures pass for each RIU
+* Step 6: Multi-Agent Coordination (Days 15-16)
+class TherizinosaurusAgent:
+    def handle_handoff(self, message):
+        """
+        Receive handoff from another agent
+        Typically from Tyrannosaurus (design) or Orchestrator (routing)
+        """
+        
+        # Validate handoff message
+        if not self._validate_handoff(message):
+            raise HandoffValidationError("Invalid handoff message")
+        
+        # Extract specification and constraints
+        specification = message["payload"]["specification"]
+        constraints = message["payload"]["constraints"]
+        
+        # Execute within bounded scope
+        result = self.create_artifact(
+            artifact_type=message["payload"]["artifact_type"],
+            specification=specification,
+            constraints=constraints
+        )
+        
+        # Return result
+        return {
+            "from_agent": f"{self.ark_type}:{self.version}",
+            "to_agent": message["from_agent"],
+            "message_type": "response",
+            "trace_id": message["trace_id"],
+            "payload": {
+                "result": result,
+                "artifacts": [result.path],
+                "status": "completed"
+            }
+        }
+Validation Criteria:
+* Can receive handoffs from Rex
+* Can receive handoffs from Orch
+* Returns proper response format
+* Maintains trace_id for tracking
+* Testing Strategy
+Create fixtures for implementation tasks:
+fixtures/riu/RIU-022/prompt-interface-basic/
+  ├── input.md
+  │   Trigger signals: prompting engagement, schema engagement
+  │   Task: Create prompt interface for customer classification
+  │   Specification:
+  │     - Input: customer description (string)
+  │     - Output: classification (enum: enterprise, smb, startup)
+  │     - Constraints: max 1000 tokens, JSON output required
+  │
+  ├── expected/
+  │   ├── prompt_contract.md (must have: variables, constraints, schema)
+  │   ├── output_schema.json (must validate against provided schema)
+  │   └── prompt_templates/ (must have at least one template)
+  │
+  └── notes.md
+* Promotion Criteria
+UNVALIDATED → WORKING:
+* 10 consecutive successful implementations
+* All scope violations caught
+* CI/CD integration working
+* Rollback mechanisms functional
+WORKING → PRODUCTION:
+* 50 impressions with <5% failure rate
+* Compilation/validation success >99%
+* Specification adherence >95%
+* Pipeline integration stable
+________________
+
+
+* Agent 3: ARK:Velociraptor (Debugger)
+Role: Failure isolation, root cause analysis, repair
+Priority: High - Build Third
+Initial Status: UNVALIDATED
+* Core Capabilities Required
+1. Failure detection: Identify when something breaks
+2. Root cause analysis: Trace errors to source
+3. Multi-agent debugging: Debug agent-to-agent interactions
+4. Repair recommendation: Suggest fixes within scope
+* Constraint Profile
+Disallowed Actions:
+* Feature expansion (cannot add new capabilities)
+* Architecture changes (cannot redesign systems)
+* Scope creep (cannot fix unrelated issues)
+Allowed Actions:
+* Inspect logs and traces
+* Run diagnostic commands
+* Analyze error states
+* Suggest repairs within existing scope
+* Implement fixes for bugs (not features)
+* Build Steps
+* Step 1: Failure Detection (Days 1-3)
+class VelociraptorAgent:
+    def __init__(self):
+        self.ark_type = "ARK:Velociraptor"
+        self.version = "1.0"
+        self.constraints = ConstraintValidator(
+            allowed_actions=["inspect", "diagnose", "analyze", "repair"],
+            disallowed_actions=["add_feature", "redesign", "expand_scope"]
+        )
+        self.log_analyzer = LogAnalyzer()
+        self.trace_analyzer = TraceAnalyzer()
+    
+    def detect_failure(self, system_state):
+        """
+        Detect failures from system state
+        Returns: List of detected failures with severity
+        """
+        failures = []
+        
+        # Check for exceptions in logs
+        log_failures = self.log_analyzer.find_exceptions(system_state.logs)
+        failures.extend(log_failures)
+        
+        # Check for trace anomalies
+        trace_failures = self.trace_analyzer.find_anomalies(system_state.traces)
+        failures.extend(trace_failures)
+        
+        # Check for state inconsistencies
+        state_failures = self._check_state_consistency(system_state)
+        failures.extend(state_failures)
+        
+        return sorted(failures, key=lambda f: f.severity, reverse=True)
+Validation Criteria:
+* Detects exceptions in logs
+* Identifies trace anomalies
+* Finds state inconsistencies
+* Prioritizes by severity
+* Step 2: Root Cause Analysis (Days 4-6)
+class VelociraptorAgent:
+    def analyze_root_cause(self, failure):
+        """
+        Trace failure to root cause
+        Returns: RootCause object with explanation
+        """
+        
+        # Build causality chain
+        chain = self._build_causality_chain(failure)
+        
+        # Identify root cause (earliest point in chain)
+        root = chain[0] if chain else None
+        
+        # Gather supporting evidence
+        evidence = self._gather_evidence(root, failure)
+        
+        return RootCause(
+            failure=failure,
+            root_cause=root,
+            causality_chain=chain,
+            evidence=evidence,
+            confidence=self._calculate_confidence(evidence)
+        )
+    
+    def _build_causality_chain(self, failure):
+        """Build chain of events leading to failure"""
+        chain = []
+        current = failure
+        
+        while current:
+            chain.insert(0, current)
+            current = self._find_previous_event(current)
+        
+        return chain
+Validation Criteria:
+* Builds causality chains
+* Identifies root causes
+* Gathers supporting evidence
+* Reports confidence levels
+* Step 3: Multi-Agent Interaction Debugging (Days 7-9)
+class VelociraptorAgent:
+    def debug_agent_interaction(self, trace_id):
+        """
+        Debug multi-agent workflow by trace_id
+        Reconstructs agent-to-agent message flow
+        """
+        
+        # Reconstruct message flow
+        messages = self._reconstruct_message_flow(trace_id)
+        
+        # Identify handoff points
+        handoffs = self._identify_handoffs(messages)
+        
+        # Check for handoff failures
+        failures = []
+        for handoff in handoffs:
+            if not self._validate_handoff(handoff):
+                failures.append({
+                    "type": "handoff_failure",
+                    "from_agent": handoff.from_agent,
+                    "to_agent": handoff.to_agent,
+                    "reason": self._diagnose_handoff_failure(handoff)
+                })
+        
+        # Check for state inconsistencies
+        state_failures = self._check_state_consistency_across_agents(messages)
+        failures.extend(state_failures)
+        
+        return AgentInteractionDebugReport(
+            trace_id=trace_id,
+            messages=messages,
+            handoffs=handoffs,
+            failures=failures
+        )
+Validation Criteria:
+* Reconstructs message flows
+* Identifies handoff failures
+* Detects state inconsistencies
+* Reports agent-specific issues
+* Step 4: Repair Recommendation (Days 10-12)
+class VelociraptorAgent:
+    def recommend_repair(self, root_cause):
+        """
+        Recommend repair strategy within existing scope
+        Cannot add features or change architecture
+        """
+        
+        # Validate we can repair within scope
+        if not self._is_repairable_within_scope(root_cause):
+            return RepairRecommendation(
+                actionable=False,
+                reason="Repair requires architecture change (escalate to Rex)",
+                escalation_required=True
+            )
+        
+        # Generate repair options
+        options = self._generate_repair_options(root_cause)
+        
+        # Rank by safety and effectiveness
+        ranked_options = sorted(options, key=lambda o: (o.safety, o.effectiveness), reverse=True)
+        
+        return RepairRecommendation(
+            actionable=True,
+            options=ranked_options,
+            recommended_option=ranked_options[0],
+            escalation_required=False
+        )
+    
+    def _is_repairable_within_scope(self, root_cause):
+        """Check if repair can be done without scope expansion"""
+        
+        # Cannot repair if requires:
+        if root_cause.requires_new_feature:
+            return False
+        if root_cause.requires_architecture_change:
+            return False
+        if root_cause.requires_scope_expansion:
+            return False
+        
+        return True
+Validation Criteria:
+* Identifies repairable issues
+* Escalates non-repairable issues
+* Provides multiple repair options
+* Ranks by safety and effectiveness
+* Step 5: Compliance-Aware Debugging (Days 13-14)
+class VelociraptorAgent:
+    def debug_with_compliance(self, failure, compliance_requirements):
+        """
+        Debug while respecting compliance boundaries
+        Ensures no PII exposure, proper audit logging, etc.
+        """
+        
+        # Redact sensitive information
+        sanitized_failure = self._redact_sensitive_data(failure)
+        
+        # Perform root cause analysis on sanitized data
+        root_cause = self.analyze_root_cause(sanitized_failure)
+        
+        # Log to audit trail if required
+        if compliance_requirements.get("audit_required"):
+            self._log_to_audit_trail(root_cause, compliance_requirements)
+        
+        # Ensure repair recommendations comply
+        repair = self.recommend_repair(root_cause)
+        repair.compliance_validated = self._validate_compliance(repair, compliance_requirements)
+        
+        return root_cause, repair
+Validation Criteria:
+* Redacts PII before analysis
+* Logs to audit trail when required
+* Validates repair compliance
+* Maintains GDPR/HIPAA boundaries
+* Step 6: RIU Implementation (Days 15-16)
+class VelociraptorAgent:
+    def handle_riu(self, riu_id, payload):
+        """Route RIU request to debugging handler"""
+        
+        riu_handlers = {
+            "RIU-062": self._handle_incident_containment,  # Incident recovery
+            "RIU-503": self._handle_cross_modal_validation,  # Cross-modal debugging
+            "RIU-512": self._handle_agent_failure_recovery,  # Agent failure recovery
+            "RIU-531": self._handle_bias_detection,  # Algorithmic bias detection
+            "RIU-543": self._handle_drift_detection,  # Drift detection
+            # Add all relevant debugging RIUs
+        }
+        
+        if riu_id not in riu_handlers:
+            raise ValueError(f"RIU {riu_id} not assigned to Velociraptor")
+        
+        return riu_handlers[riu_id](payload)
+* Testing Strategy
+fixtures/riu/RIU-062/incident-basic/
+  ├── input.md
+  │   Trigger signals: incident response, production failure
+  │   System state: API returning 500 errors
+  │   Logs: [simulated error logs]
+  │
+  ├── expected/
+  │   ├── root_cause_analysis.md (must identify cause)
+  │   ├── repair_recommendation.md (must provide fix)
+  │   └── incident_timeline.md (must reconstruct events)
+  │
+  └── notes.md
+* Promotion Criteria
+UNVALIDATED → WORKING:
+* 10 consecutive successful diagnoses
+* Root cause accuracy >70%
+* Proper escalation for out-of-scope
+* No scope violations
+WORKING → PRODUCTION:
+* 50 impressions with <5% failure rate
+* Root cause accuracy >90%
+* Repair success rate >80%
+* Analysis time <5 minutes
+________________
+
+
+* Agent 4: ARK:Tyrannosaurus Rex (Architect)
+Role: Design, tradeoffs, system decisions, technology selection
+Priority: High - Build Fourth
+Initial Status: UNVALIDATED
+* Core Capabilities Required
+1. Architecture decisions: Design system structure
+2. Technology selection: Choose frameworks and tools
+3. Tradeoff analysis: Evaluate competing options
+4. ONE-WAY DOOR detection: Flag irreversible decisions
+* Constraint Profile
+Disallowed Actions:
+* Silent commits (must flag ONE-WAY DOORs)
+* Execution without approval (must propose, not decide)
+Allowed Actions:
+* Propose architectures
+* Analyze tradeoffs
+* Recommend technologies
+* Flag irreversible decisions
+* Document design rationale
+* Build Steps
+* Step 1: Architecture Proposal Engine (Days 1-4)
+class TyrannosaurusAgent:
+    def __init__(self):
+        self.ark_type = "ARK:Tyrannosaurus"
+        self.version = "1.0"
+        self.constraints = ConstraintValidator(
+            allowed_actions=["propose", "analyze", "recommend", "flag"],
+            disallowed_actions=["commit_silently", "execute_without_approval"]
+        )
+        self.one_way_door_detector = OneWayDoorDetector()
+    
+    def propose_architecture(self, requirements, constraints):
+        """
+        Propose system architecture based on requirements
+        Returns: Architecture proposal with multiple options
+        """
+        
+        # Analyze requirements
+        analysis = self._analyze_requirements(requirements, constraints)
+        
+        # Generate architecture options
+        options = self._generate_architecture_options(analysis)
+        
+        # Evaluate each option
+        evaluated_options = []
+        for option in options:
+            evaluation = self._evaluate_option(option, requirements, constraints)
+            
+            # Check if option involves ONE-WAY DOOR decisions
+            one_way_doors = self.one_way_door_detector.detect(option)
+            
+            evaluated_options.append({
+                "option": option,
+                "evaluation": evaluation,
+                "one_way_doors": one_way_doors,
+                "requires_human_approval": len(one_way_doors) > 0
+            })
+        
+        return ArchitectureProposal(
+            requirements=requirements,
+            constraints=constraints,
+            options=evaluated_options,
+            recommendation=self._select_best_option(evaluated_options)
+        )
+Validation Criteria:
+* Generates multiple architecture options
+* Evaluates against requirements
+* Detects ONE-WAY DOOR decisions
+* Flags for human approval
+* Step 2: ONE-WAY DOOR Detection (Days 5-7)
+class OneWayDoorDetector:
+    def detect(self, architecture_option):
+        """
+        Detect irreversible decisions in architecture
+        Returns: List of ONE-WAY DOOR decisions
+        """
+        one_way_doors = []
+        
+        # Check for database schema commitments
+        if architecture_option.has_database_schema:
+            one_way_doors.append(OneWayDoor(
+                type="database_schema",
+                reason="Schema changes are costly to reverse",
+                impact="high",
+                alternatives=self._find_schema_alternatives(architecture_option)
+            ))
+        
+        # Check for framework commitments
+        if architecture_option.has_framework_selection:
+            one_way_doors.append(OneWayDoor(
+                type="framework_commitment",
+                reason="Switching frameworks requires significant rework",
+                impact="high",
+                alternatives=self._find_framework_alternatives(architecture_option)
+            ))
+        
+        # Check for security model
+        if architecture_option.has_security_model:
+            one_way_doors.append(OneWayDoor(
+                type="security_model",
+                reason="Security architecture changes impact entire system",
+                impact="critical",
+                alternatives=self._find_security_alternatives(architecture_option)
+            ))
+        
+        # Check for production deployment decisions
+        if architecture_option.has_deployment_commitment:
+            one_way_doors.append(OneWayDoor(
+                type="deployment_commitment",
+                reason="Affects customer-facing systems",
+                impact="critical",
+                alternatives=self._find_deployment_alternatives(architecture_option)
+            ))
+        
+        return one_way_doors
+Validation Criteria:
+* Detects database commitments
+* Detects framework selections
+* Detects security models
+* Detects deployment commitments
+* Provides alternatives for each
+* Step 3: Tradeoff Analysis (Days 8-10)
+class TyrannosaurusAgent:
+    def analyze_tradeoffs(self, option_a, option_b, criteria):
+        """
+        Systematic tradeoff analysis between two options
+        Uses CLEAR framework: Cost, Latency, Efficacy, Assurance, Reliability
+        """
+        
+        tradeoffs = {
+            "cost": self._compare_cost(option_a, option_b),
+            "latency": self._compare_latency(option_a, option_b),
+            "efficacy": self._compare_efficacy(option_a, option_b, criteria),
+            "assurance": self._compare_assurance(option_a, option_b),
+            "reliability": self._compare_reliability(option_a, option_b)
+        }
+        
+        # Calculate weighted score based on criteria importance
+        score_a = self._calculate_weighted_score(option_a, tradeoffs, criteria)
+        score_b = self._calculate_weighted_score(option_b, tradeoffs, criteria)
+        
+        return TradeoffAnalysis(
+            option_a=option_a,
+            option_b=option_b,
+            tradeoffs=tradeoffs,
+            scores={"a": score_a, "b": score_b},
+            recommendation="a" if score_a > score_b else "b",
+            confidence=abs(score_a - score_b) / max(score_a, score_b)
+        )
+Validation Criteria:
+* Compares across CLEAR dimensions
+* Calculates weighted scores
+* Provides clear recommendation
+* Reports confidence level
+* Step 4: Technology Selection (Days 11-13)
+class TyrannosaurusAgent:
+    def select_technology(self, category, requirements, constraints):
+        """
+        Select technology/framework for specific category
+        Examples: database, message queue, ML framework, etc.
+        """
+        
+        # Get candidate technologies
+        candidates = self._get_technology_candidates(category)
+        
+        # Filter by constraints
+        viable_candidates = [
+            c for c in candidates
+            if self._meets_constraints(c, constraints)
+        ]
+        
+        # Evaluate each candidate
+        evaluations = []
+        for candidate in viable_candidates:
+            eval_result = self._evaluate_technology(candidate, requirements, constraints)
+            
+            # Check maturity and support
+            maturity_score = self._assess_maturity(candidate)
+            
+            # Check ecosystem
+            ecosystem_score = self._assess_ecosystem(candidate)
+            
+            evaluations.append({
+                "technology": candidate,
+                "evaluation": eval_result,
+                "maturity": maturity_score,
+                "ecosystem": ecosystem_score,
+                "total_score": eval_result.score + maturity_score + ecosystem_score
+            })
+        
+        # Sort by total score
+        evaluations.sort(key=lambda e: e["total_score"], reverse=True)
+        
+        # Check if top choice involves ONE-WAY DOOR
+        top_choice = evaluations[0]
+        one_way_door = self.one_way_door_detector.detect_technology_selection(top_choice)
+        
+        return TechnologySelection(
+            category=category,
+            candidates=evaluations,
+            recommendation=top_choice,
+            requires_approval=one_way_door is not None,
+            one_way_door=one_way_door
+        )
+Validation Criteria:
+* Identifies candidate technologies
+* Evaluates against requirements
+* Assesses maturity and ecosystem
+* Flags technology commitments
+* Step 5: Industry-Specific Modules (Days 14-16)
+class TyrannosaurusAgent:
+    def apply_industry_requirements(self, architecture, industry):
+        """
+        Apply industry-specific requirements (HIPAA, SOX, FedRAMP, etc.)
+        """
+        
+        industry_modules = {
+            "healthcare": self._apply_hipaa_requirements,
+            "finance": self._apply_sox_requirements,
+            "government": self._apply_fedramp_requirements,
+            "eu": self._apply_gdpr_requirements
+        }
+        
+        if industry not in industry_modules:
+            return architecture
+        
+        # Apply industry-specific requirements
+        modified_architecture = industry_modules[industry](architecture)
+        
+        # Validate compliance
+        compliance_check = self._validate_compliance(modified_architecture, industry)
+        
+        return IndustryArchitecture(
+            base_architecture=architecture,
+            industry=industry,
+            modified_architecture=modified_architecture,
+            compliance_status=compliance_check,
+            additional_requirements=self._list_additional_requirements(industry)
+        )
+    
+    def _apply_hipaa_requirements(self, architecture):
+        """Apply HIPAA compliance requirements"""
+        
+        # Add encryption requirements
+        architecture.add_requirement("encryption_at_rest", mandatory=True)
+        architecture.add_requirement("encryption_in_transit", mandatory=True)
+        
+        # Add audit logging
+        architecture.add_requirement("comprehensive_audit_logs", mandatory=True)
+        
+        # Add access controls
+        architecture.add_requirement("role_based_access_control", mandatory=True)
+        
+        # Add data minimization
+        architecture.add_requirement("phi_minimization", mandatory=True)
+        
+        return architecture
+Validation Criteria:
+* Applies HIPAA requirements
+* Applies SOX requirements
+* Applies FedRAMP requirements
+* Validates compliance
+* Step 6: RIU Implementation (Days 17-20)
+Map the 58 RIUs assigned to Tyrannosaurus:
+class TyrannosaurusAgent:
+    def handle_riu(self, riu_id, payload):
+        """Route RIU to architecture handler"""
+        
+        riu_handlers = {
+            # Clarify & Bound (design decisions)
+            "RIU-001": self._handle_convergence_brief,
+            "RIU-003": self._handle_decision_log,
+            "RIU-004": self._handle_workstream_decomposition,
+            "RIU-005": self._handle_scope_freeze,
+            "RIU-006": self._handle_success_metrics,
+            "RIU-007": self._handle_constraint_profile,
+            "RIU-008": self._handle_assumptions_register,
+            "RIU-009": self._handle_risk_register,
+            
+            # Interfaces & Inputs (design)
+            "RIU-011": self._handle_data_contract,
+            "RIU-012": self._handle_pii_compliance,
+            "RIU-015": self._handle_output_contract,
+            "RIU-016": self._handle_api_contract,
+            "RIU-017": self._handle_connector_spec,
+            "RIU-018": self._handle_schema_mapping,
+            "RIU-019": self._handle_data_lineage,
+            
+            # Core Logic (architecture)
+            "RIU-021": self._handle_golden_set,
+            "RIU-022": self._handle_prompt_interface,
+            "RIU-023": self._handle_pipeline_split,
+            "RIU-024": self._handle_sidecar_pattern,
+            "RIU-025": self._handle_freshness_rules,
+            "RIU-026": self._handle_hybrid_similarity,
+            "RIU-027": self._handle_reranking_layer,
+            "RIU-029": self._handle_tool_safety,
+            "RIU-032": self._handle_extraction_pattern,
+            "RIU-033": self._handle_classification_pattern,
+            "RIU-034": self._handle_ranking_explanation,
+            "RIU-035": self._handle_caching_strategy,
+            
+            # Ops & Delivery (design)
+            "RIU-060": self._handle_deployment_readiness,
+            "RIU-061": self._handle_observability_baseline,
+            "RIU-062": self._handle_incident_containment,
+            "RIU-063": self._handle_performance_characterization,
+            "RIU-064": self._handle_feature_flags,
+            "RIU-066": self._handle_secrets_handling,
+            "RIU-067": self._handle_database_migration,
+            "RIU-068": self._handle_canary_rollout,
+            "RIU-070": self._handle_slo_sli,
+            
+            # Quality & Safety (design)
+            "RIU-082": self._handle_llm_guardrails,
+            "RIU-083": self._handle_red_team,
+            "RIU-085": self._handle_cost_budget,
+            "RIU-086": self._handle_regression_suite,
+            "RIU-087": self._handle_human_review_gate,
+            "RIU-088": self._handle_privacy_redaction,
+            
+            # Specialized
+            "RIU-120": self._handle_integration_mode,
+            "RIU-231": self._handle_chunking_strategy,
+            "RIU-250": self._handle_security_review,
+            "RIU-252": self._handle_model_evaluation,
+            "RIU-326": self._handle_threat_model,
+            "RIU-327": self._handle_authn_authz,
+            
+            # Multimodal (500 series)
+            "RIU-500": self._handle_multimodal_pipeline,
+            
+            # Agentic (510 series)
+            "RIU-510": self._handle_multi_agent_workflow,
+            "RIU-512": self._handle_agent_failure_recovery,
+            "RIU-513": self._handle_inter_agent_protocol,
+            "RIU-514": self._handle_capability_boundaries,
+            
+            # LLMOps (520 series)
+            "RIU-520": self._handle_prompt_versioning,
+            "RIU-521": self._handle_model_versioning,
+            
+            # Governance (530 series)
+            "RIU-530": self._handle_risk_classification,
+            "RIU-531": self._handle_bias_detection,
+            "RIU-532": self._handle_explainability,
+            "RIU-533": self._handle_fria,
+            "RIU-534": self._handle_audit_trail,
+            
+            # Agent patterns (540 series)
+            "RIU-542": self._handle_observability_stack,
+            
+            # Add remaining RIUs (58 total)
+        }
+        
+        if riu_id not in riu_handlers:
+            raise ValueError(f"RIU {riu_id} not assigned to Tyrannosaurus")
+        
+        return riu_handlers[riu_id](payload)
+* Testing Strategy
+fixtures/riu/RIU-001/convergence-brief-basic/
+  ├── input.md
+  │   Trigger signals: new engagement, conflicting asks
+  │   Context: Customer wants "AI-powered analytics dashboard"
+  │   Stakeholders: Engineering, Product, Sales
+  │
+  ├── expected/
+  │   ├── convergence_brief.md (must have: Goal, Roles, Capabilities, Constraints, Non-goals)
+  │   ├── assumptions.md (must list key assumptions)
+  │   └── open_questions.md (must identify gaps)
+  │
+  └── notes.md
+      Expected: Clear goal definition, scope boundaries, explicit non-goals
+* Promotion Criteria
+UNVALIDATED → WORKING:
+* 10 consecutive successful proposals
+* ONE-WAY DOOR detection >85% accurate
+* All proposals include alternatives
+* No silent commitments
+WORKING → PRODUCTION:
+* 50 impressions with <5% failure rate
+* Architecture quality score >90%
+* ONE-WAY DOOR detection >95% accurate
+* Proposal acceptance rate >85%
+________________
+
+
+* Agent 5: ARK:Yutyrannus (GTM/Narrative)
+Role: Customer-facing explanations, demos, documentation, enablement
+Priority: Medium - Build Fifth
+Initial Status: UNVALIDATED
+* Core Capabilities Required
+1. Customer communication: Translate technical to business language
+2. Demo engineering: Create compelling demonstrations
+3. Documentation generation: Create clear, useful docs
+4. Evidence validation: Ensure all claims are backed by evidence
+* Constraint Profile
+Disallowed Actions:
+* Outrun evidence (cannot make claims without backing)
+* Overpromising (cannot commit beyond capabilities)
+Allowed Actions:
+* Create customer-facing content
+* Generate demos
+* Write documentation
+* Translate technical concepts
+* Validate against evidence
+* Build Steps
+* Step 1: Evidence-Based Content Generation (Days 1-3)
+class YutyrannosAgent:
+    def __init__(self):
+        self.ark_type = "ARK:Yutyrannus"
+        self.version = "1.0"
+        self.constraints = ConstraintValidator(
+            allowed_actions=["create_content", "generate_demo", "write_docs", "translate"],
+            disallowed_actions=["claim_without_evidence", "overpromise"]
+        )
+        self.evidence_validator = EvidenceValidator()
+    
+    def generate_content(self, topic, audience, evidence_base):
+        """
+        Generate customer-facing content
+        All claims must be backed by evidence
+        """
+        
+        # Generate initial content
+        draft = self._generate_draft(topic, audience)
+        
+        # Extract claims from content
+        claims = self._extract_claims(draft)
+        
+        # Validate each claim against evidence
+        validated_claims = []
+        unsupported_claims = []
+        
+        for claim in claims:
+            if self.evidence_validator.validate(claim, evidence_base):
+                validated_claims.append(claim)
+            else:
+                unsupported_claims.append(claim)
+        
+        # Remove or flag unsupported claims
+        if unsupported_claims:
+            draft = self._remove_unsupported_claims(draft, unsupported_claims)
+            warnings = [f"Removed unsupported claim: {c}" for c in unsupported_claims]
+        else:
+            warnings = []
+        
+        return Content(
+            topic=topic,
+            audience=audience,
+            draft=draft,
+            validated_claims=validated_claims,
+            warnings=warnings,
+            evidence_citations=self._generate_citations(validated_claims, evidence_base)
+        )
+Validation Criteria:
+* All claims backed by evidence
+* Unsupported claims removed
+* Citations included
+* Warnings for removed claims
+* Step 2: Audience Adaptation (Days 4-5)
+class YutyrannosAgent:
+    def adapt_for_audience(self, content, audience):
+        """
+        Adapt content for specific audience
+        Examples: executive, technical, end-user
+        """
+        
+        audience_profiles = {
+            "executive": {
+                "focus": "business_value",
+                "detail_level": "high_level",
+                "terminology": "business",
+                "preferred_format": "slides"
+            },
+            "technical": {
+                "focus": "implementation",
+                "detail_level": "detailed",
+                "terminology": "technical",
+                "preferred_format": "documentation"
+            },
+            "end_user": {
+                "focus": "usability",
+                "detail_level": "simple",
+                "terminology": "plain_language",
+                "preferred_format": "tutorial"
+            }
+        }
+        
+        profile = audience_profiles.get(audience, audience_profiles["technical"])
+        
+        # Adapt content based on profile
+        adapted = self._adjust_focus(content, profile["focus"])
+        adapted = self._adjust_detail_level(adapted, profile["detail_level"])
+        adapted = self._adjust_terminology(adapted, profile["terminology"])
+        adapted = self._format_for_medium(adapted, profile["preferred_format"])
+        
+        return adapted
+Validation Criteria:
+* Executive content focuses on business value
+* Technical content includes implementation details
+* End-user content uses plain language
+* Format matches audience preference
+* Step 3: Demo Engineering (Days 6-8)
+class YutyrannosAgent:
+    def create_demo(self, capability, data_source="synthetic"):
+        """
+        Create demonstration of capability
+        Can use customer data (with permission) or synthetic data
+        """
+        
+        # Validate data source
+        if data_source == "customer":
+            if not self._has_permission_for_customer_data():
+                raise PermissionError("No permission for customer data")
+        
+        # Create demo script
+        script = self._generate_demo_script(capability)
+        
+        # Generate demo data
+        if data_source == "synthetic":
+            demo_data = self._generate_synthetic_data(capability)
+        else:
+            demo_data = self._prepare_customer_data(capability)
+        
+        # Create demo environment
+        environment = self._setup_demo_environment(capability, demo_data)
+        
+        # Test demo
+        test_result = self._test_demo(script, environment)
+        
+        if not test_result.success:
+            raise DemoFailureError(f"Demo test failed: {test_result.errors}")
+        
+        return Demo(
+            capability=capability,
+            script=script,
+            data=demo_data,
+            environment=environment,
+            test_result=test_result,
+            safety_check=self._verify_no_customer_data_leak(demo_data)
+        )
+Validation Criteria:
+* Demo script clear and logical
+* Data appropriate for audience
+* Demo runs reliably
+* No customer data leaks
+* Step 4: Documentation Generation (Days 9-11)
+class YutyrannosAgent:
+    def generate_documentation(self, system, doc_type):
+        """
+        Generate documentation for system
+        Types: user_guide, api_reference, troubleshooting, runbook
+        """
+        
+        doc_generators = {
+            "user_guide": self._generate_user_guide,
+            "api_reference": self._generate_api_reference,
+            "troubleshooting": self._generate_troubleshooting_guide,
+            "runbook": self._generate_runbook
+        }
+        
+        if doc_type not in doc_generators:
+            raise ValueError(f"Unknown doc type: {doc_type}")
+        
+        # Generate documentation
+        docs = doc_generators[doc_type](system)
+        
+        # Validate against system reality
+        validation = self._validate_docs_against_system(docs, system)
+        
+        if not validation.accurate:
+            # Fix inaccuracies
+            docs = self._fix_inaccuracies(docs, validation.errors)
+        
+        # Add examples
+        docs = self._add_examples(docs, system)
+        
+        # Generate table of contents
+        docs = self._add_toc(docs)
+        
+        return Documentation(
+            doc_type=doc_type,
+            content=docs,
+            validation=validation,
+            last_updated=datetime.now()
+        )
+Validation Criteria:
+* Documentation matches system reality
+* Examples work as written
+* Table of contents generated
+* Clear and understandable
+* Step 5: Enablement Materials (Days 12-14)
+class YutyrannosAgent:
+    def create_enablement_pack(self, system, audience):
+        """
+        Create comprehensive enablement materials
+        Includes: docs, examples, exercises, troubleshooting
+        """
+        
+        pack = EnablementPack(system=system, audience=audience)
+        
+        # Generate core documentation
+        pack.add_document(
+            "overview",
+            self.generate_documentation(system, "user_guide")
+        )
+        
+        # Create examples
+        examples = self._generate_examples(system, count=5)
+        pack.add_examples(examples)
+        
+        # Create exercises
+        exercises = self._generate_exercises(system, difficulty="progressive")
+        pack.add_exercises(exercises)
+        
+        # Add troubleshooting guide
+        pack.add_document(
+            "troubleshooting",
+            self.generate_documentation(system, "troubleshooting")
+        )
+        
+        # Add support contacts
+        pack.add_support_info(self._get_support_contacts(system))
+        
+        # Validate completeness
+        validation = self._validate_enablement_pack(pack)
+        
+        if not validation.complete:
+            raise IncompletePack(f"Missing: {validation.missing_elements}")
+        
+        return pack
+Validation Criteria:
+* All required sections included
+* Examples are working
+* Exercises appropriate for audience
+* Support info included
+* Step 6: RIU Implementation (Days 15-16)
+class YutyrannosAgent:
+    def handle_riu(self, riu_id, payload):
+        """Route RIU to content generation handler"""
+        
+        riu_handlers = {
+            # Adoption & Change
+            "RIU-100": self._handle_capability_statement,
+            "RIU-101": self._handle_workshop_design,
+            "RIU-102": self._handle_enablement_pack,
+            "RIU-103": self._handle_training_session,
+            "RIU-104": self._handle_handoff_bundle,
+            "RIU-105": self._handle_executive_update,
+            
+            # Specialized
+            "RIU-140": self._handle_competitive_scan,
+            "RIU-330": self._handle_error_messaging,
+            "RIU-413": self._handle_demo_creation,
+            
+            # Governance (communication)
+            "RIU-532": self._handle_explainability_framework,
+            "RIU-535": self._handle_documentation_package,
+            
+            # Ops & Delivery (documentation)
+            "RIU-069": self._handle_runbook,
+            
+            # Add remaining RIUs (15 total)
+        }
+        
+        if riu_id not in riu_handlers:
+            raise ValueError(f"RIU {riu_id} not assigned to Yutyrannus")
+        
+        return riu_handlers[riu_id](payload)
+* Testing Strategy
+fixtures/riu/RIU-100/capability-statement-basic/
+  ├── input.md
+  │   Trigger signals: stakeholder alignment needed
+  │   System: AI-powered document search
+  │   Audience: Executive stakeholders
+  │   Evidence: [technical specs, performance metrics]
+  │
+  ├── expected/
+  │   └── capability_statement.md
+  │       Must have:
+  │         - What (solution description)
+  │         - Why (business value)
+  │         - How (approach overview)
+  │       Must NOT have:
+  │         - Unsupported claims
+  │         - Technical jargon
+  │
+  └── notes.md
+* Promotion Criteria
+UNVALIDATED → WORKING:
+* 10 consecutive successful content generations
+* All claims backed by evidence
+* No overpromising detected
+* Audience adaptation working
+WORKING → PRODUCTION:
+* 50 impressions with <5% failure rate
+* Documentation clarity score >90%
+* Evidence validation accuracy >95%
+* Demo success rate >98%
+________________
+
+
+* Agent 6: ARK:Ankylosaurus (Validator)
+Role: Quality assurance, compliance checking, verification, auditing
+Priority: High - Build Sixth
+Initial Status: UNVALIDATED
+* Core Capabilities Required
+1. Quality assurance: Test and validate artifacts
+2. Compliance checking: Verify regulatory compliance
+3. Security review: Assess security posture
+4. Audit trail generation: Create comprehensive audit logs
+* Constraint Profile
+Disallowed Actions:
+* Implementation (cannot write code)
+* Architecture decisions (cannot design systems)
+* Remediation (cannot fix issues, only identify)
+Allowed Actions:
+* Review and validate
+* Run tests and checks
+* Generate audit reports
+* Flag compliance violations
+* Document findings
+* Build Steps
+* Step 1: Quality Validation Framework (Days 1-4)
+class AnkylosaurusAgent:
+    def __init__(self):
+        self.ark_type = "ARK:Ankylosaurus"
+        self.version = "1.0"
+        self.constraints = ConstraintValidator(
+            allowed_actions=["review", "validate", "test", "audit", "flag"],
+            disallowed_actions=["implement", "design", "remediate"]
+        )
+        self.validation_rules = ValidationRuleEngine()
+    
+    def validate_artifact(self, artifact, specification):
+        """
+        Validate artifact against specification
+        Returns: Validation report (PASS/FAIL with details)
+        """
+        
+        validation_results = []
+        
+        # Check completeness
+        completeness = self._check_completeness(artifact, specification)
+        validation_results.append(completeness)
+        
+        # Check correctness
+        correctness = self._check_correctness(artifact, specification)
+        validation_results.append(correctness)
+        
+        # Check quality
+        quality = self._check_quality(artifact)
+        validation_results.append(quality)
+        
+        # Check security
+        security = self._check_security(artifact)
+        validation_results.append(security)
+        
+        # Aggregate results
+        overall_pass = all(r.passed for r in validation_results)
+        
+        return ValidationReport(
+            artifact=artifact,
+            specification=specification,
+            results=validation_results,
+            overall_status="PASS" if overall_pass else "FAIL",
+            findings=[r for r in validation_results if not r.passed],
+            recommendations=self._generate_recommendations(validation_results)
+        )
+Validation Criteria:
+* Checks artifact completeness
+* Verifies correctness
+* Assesses quality
+* Reviews security
+* Generates actionable findings
+* Step 2: Compliance Engine (Days 5-8)
+class AnkylosaurusAgent:
+    def check_compliance(self, system, frameworks):
+        """
+        Check compliance against regulatory frameworks
+        Frameworks: EU_AI_ACT, HIPAA, SOX, GDPR, FEDRAMP
+        """
+        
+        compliance_results = {}
+        
+        for framework in frameworks:
+            # Get compliance requirements
+            requirements = self._get_requirements(framework)
+            
+            # Check each requirement
+            checks = []
+            for req in requirements:
+                check_result = self._check_requirement(system, req)
+                checks.append(check_result)
+            
+            # Calculate compliance score
+            passed = sum(1 for c in checks if c.compliant)
+            total = len(checks)
+            score = passed / total if total > 0 else 0
+            
+            compliance_results[framework] = ComplianceResult(
+                framework=framework,
+                checks=checks,
+                score=score,
+                status="COMPLIANT" if score == 1.0 else "NON_COMPLIANT",
+                violations=[c for c in checks if not c.compliant],
+                recommendations=self._generate_compliance_recommendations(checks)
+            )
+        
+        return ComplianceReport(
+            system=system,
+            frameworks=frameworks,
+            results=compliance_results,
+            overall_compliant=all(r.status == "COMPLIANT" for r in compliance_results.values()),
+            summary=self._generate_compliance_summary(compliance_results)
+        )
+    
+    def _check_requirement(self, system, requirement):
+        """Check single compliance requirement"""
+        
+        if requirement.type == "encryption_at_rest":
+            return self._check_encryption_at_rest(system)
+        elif requirement.type == "audit_logging":
+            return self._check_audit_logging(system)
+        elif requirement.type == "access_control":
+            return self._check_access_control(system)
+        # Add all requirement types
+Validation Criteria:
+* Checks EU AI Act compliance
+* Checks HIPAA compliance
+* Checks SOX compliance
+* Checks GDPR compliance
+* Generates compliance reports
+* Step 3: Security Review Framework (Days 9-11)
+class AnkylosaurusAgent:
+    def security_review(self, system):
+        """
+        Comprehensive security review
+        Uses: STRIDE threat modeling, MITRE ATLAS, OWASP GenAI
+        """
+        
+        # STRIDE threat modeling
+        stride_threats = self._stride_analysis(system)
+        
+        # MITRE ATLAS (for AI/ML systems)
+        if system.has_ai_components:
+            atlas_threats = self._atlas_analysis(system)
+        else:
+            atlas_threats = []
+        
+        # OWASP GenAI (for generative AI)
+        if system.has_generative_ai:
+            owasp_threats = self._owasp_genai_analysis(system)
+        else:
+            owasp_threats = []
+        
+        # Aggregate threats
+        all_threats = stride_threats + atlas_threats + owasp_threats
+        
+        # Risk assessment
+        risk_assessment = self._assess_risks(all_threats)
+        
+        # Generate findings
+        findings = self._generate_security_findings(all_threats, risk_assessment)
+        
+        return SecurityReview(
+            system=system,
+            threats=all_threats,
+            risk_assessment=risk_assessment,
+            findings=findings,
+            overall_risk_level=max(t.risk_level for t in all_threats),
+            recommendations=self._generate_security_recommendations(findings)
+        )
+Validation Criteria:
+* STRIDE analysis complete
+* MITRE ATLAS for AI systems
+* OWASP GenAI for generative AI
+* Risk assessment included
+* Recommendations actionable
+* Step 4: Audit Trail Generation (Days 12-14)
+class AnkylosaurusAgent:
+    def generate_audit_trail(self, system, events, retention_policy):
+        """
+        Generate comprehensive audit trail
+        Includes: system events, compliance checks, security reviews
+        """
+        
+        # Filter events by relevance
+        relevant_events = self._filter_relevant_events(events)
+        
+        # Categorize events
+        categorized = {
+            "access": [],
+            "changes": [],
+            "compliance": [],
+            "security": [],
+            "failures": []
+        }
+        
+        for event in relevant_events:
+            category = self._categorize_event(event)
+            categorized[category].append(event)
+        
+        # Generate audit log entries
+        audit_entries = []
+        for event in relevant_events:
+            entry = self._create_audit_entry(event)
+            audit_entries.append(entry)
+        
+        # Apply retention policy
+        retention = self._apply_retention_policy(audit_entries, retention_policy)
+        
+        return AuditTrail(
+            system=system,
+            entries=audit_entries,
+            categorized=categorized,
+            retention_policy=retention_policy,
+            retention_summary=retention,
+            completeness=self._check_audit_completeness(audit_entries)
+        )
+Validation Criteria:
+* All relevant events captured
+* Events properly categorized
+* Retention policy applied
+* Audit trail complete
+* Step 5: Test Execution and Validation (Days 15-17)
+class AnkylosaurusAgent:
+    def run_test_suite(self, system, test_suite):
+        """
+        Execute test suite and validate results
+        Types: unit, integration, e2e, performance, security
+        """
+        
+        results = []
+        
+        for test in test_suite.tests:
+            # Run test
+            result = self._execute_test(test, system)
+            
+            # Validate result
+            validation = self._validate_test_result(result, test.expected)
+            
+            results.append(TestResult(
+                test=test,
+                execution=result,
+                validation=validation,
+                passed=validation.passed,
+                duration=result.duration
+            ))
+        
+        # Calculate metrics
+        total = len(results)
+        passed = sum(1 for r in results if r.passed)
+        failed = total - passed
+        
+        return TestReport(
+            system=system,
+            test_suite=test_suite,
+            results=results,
+            summary=TestSummary(
+                total=total,
+                passed=passed,
+                failed=failed,
+                pass_rate=passed / total if total > 0 else 0
+            ),
+            failures=[r for r in results if not r.passed]
+        )
+Validation Criteria:
+* All tests executed
+* Results validated
+* Failures documented
+* Metrics calculated
+* Step 6: RIU Implementation (Days 18-20)
+class AnkylosaurusAgent:
+    def handle_riu(self, riu_id, payload):
+        """Route RIU to validation handler"""
+        
+        riu_handlers = {
+            # Quality & Safety (35 RIUs)
+            "RIU-012": self._handle_pii_compliance,
+            "RIU-014": self._handle_edge_case_catalog,
+            "RIU-016": self._handle_api_contract_review,
+            "RIU-020": self._handle_baseline_behavior,
+            "RIU-021": self._handle_golden_set,
+            "RIU-028": self._handle_schema_constrained_gen,
+            "RIU-029": self._handle_tool_safety,
+            "RIU-066": self._handle_secrets_handling,
+            "RIU-080": self._handle_contract_tests,
+            "RIU-081": self._handle_smoke_tests,
+            "RIU-082": self._handle_llm_guardrails,
+            "RIU-083": self._handle_red_team,
+            "RIU-084": self._handle_data_quality,
+            "RIU-085": self._handle_cost_budget,
+            "RIU-086": self._handle_regression_suite,
+            "RIU-087": self._handle_human_review_gate,
+            "RIU-088": self._handle_privacy_redaction,
+            
+            # Multimodal
+            "RIU-501": self._handle_image_validation,
+            "RIU-503": self._handle_cross_modal_validation,
+            
+            # Agentic
+            "RIU-514": self._handle_capability_boundaries,
+            
+            # LLMOps
+            "RIU-522": self._handle_token_budget,
+            "RIU-524": self._handle_output_quality_monitoring,
+            
+            # Governance (530 series - 6 RIUs)
+            "RIU-530": self._handle_risk_classification,
+            "RIU-531": self._handle_bias_detection,
+            "RIU-532": self._handle_explainability,
+            "RIU-533": self._handle_fria,
+            "RIU-534": self._handle_audit_trail,
+            "RIU-535": self._handle_documentation_package,
+            
+            # Agent patterns
+            "RIU-540": self._handle_validation_gate,
+            "RIU-541": self._handle_audit_preparation,
+            
+            # Add all 35+ assigned RIUs
+        }
+        
+        if riu_id not in riu_handlers:
+            raise ValueError(f"RIU {riu_id} not assigned to Ankylosaurus")
+        
+        return riu_handlers[riu_id](payload)
+* Testing Strategy
+fixtures/riu/RIU-082/llm-guardrails-basic/
+  ├── input.md
+  │   Trigger signals: agent design, quality concerns
+  │   System: LLM-powered chatbot
+  │   Requirements: No PII exposure, no harmful content
+  │
+  ├── expected/
+  │   ├── llm_guardrails.md (must define policies)
+  │   ├── policy_rules.yaml (must be machine-readable)
+  │   ├── evidence_requirements.md (must specify validation)
+  │   └── validation_report.md (must show PASS/FAIL)
+  │
+  └── notes.md
+* Promotion Criteria
+UNVALIDATED → WORKING:
+* 10 consecutive successful validations
+* Validation accuracy >90%
+* Compliance detection >95%
+* False positive rate <10%
+WORKING → PRODUCTION:
+* 50 impressions with <5% failure rate
+* Validation accuracy >98%
+* Compliance detection >99%
+* False positive rate <5%
+________________
+
+
+* Agent 7: ARK:Parasaurolophus (Monitor)
+Role: Observation, anomaly detection, health checking, drift detection
+Priority: High - Build Seventh
+Initial Status: UNVALIDATED
+* Core Capabilities Required
+1. Monitoring setup: Configure comprehensive observability
+2. Anomaly detection: Identify unusual patterns
+3. Drift detection: Detect model/data/behavior drift
+4. Health checking: Monitor system health
+* Constraint Profile
+Disallowed Actions:
+* Remediation (cannot fix issues)
+* Changes (cannot modify systems)
+* Implementation (cannot write code)
+Allowed Actions:
+* Observe and monitor
+* Detect anomalies
+* Configure alerts
+* Generate health reports
+* Flag drift
+* Build Steps
+* Step 1: Monitoring Infrastructure Setup (Days 1-4)
+class ParasaurolophusAgent:
+    def __init__(self):
+        self.ark_type = "ARK:Parasaurolophus"
+        self.version = "1.0"
+        self.constraints = ConstraintValidator(
+            allowed_actions=["observe", "detect", "configure", "alert", "flag"],
+            disallowed_actions=["remediate", "change", "implement"]
+        )
+        self.metrics_collector = MetricsCollector()
+        self.alert_manager = AlertManager()
+    
+    def setup_monitoring(self, system, requirements):
+        """
+        Set up comprehensive monitoring infrastructure
+        Includes: metrics, logs, traces, dashboards, alerts
+        """
+        
+        # Define metrics to collect
+        metrics = self._define_metrics(system, requirements)
+        
+        # Set up metric collection
+        collectors = []
+        for metric in metrics:
+            collector = self.metrics_collector.create_collector(metric)
+            collectors.append(collector)
+        
+        # Create dashboards
+        dashboards = self._create_dashboards(metrics, requirements)
+        
+        # Configure alerts
+        alerts = self._configure_alerts(metrics, requirements)
+        
+        # Set up log aggregation
+        log_config = self._setup_logging(system, requirements)
+        
+        # Set up distributed tracing
+        trace_config = self._setup_tracing(system, requirements)
+        
+        return MonitoringSetup(
+            system=system,
+            metrics=metrics,
+            collectors=collectors,
+            dashboards=dashboards,
+            alerts=alerts,
+            logging=log_config,
+            tracing=trace_config,
+            validation=self._validate_monitoring_setup(collectors, dashboards, alerts)
+        )
+    
+    def _define_metrics(self, system, requirements):
+        """Define 200+ metrics as per framework requirements"""
+        
+        metrics = []
+        
+        # Performance metrics
+        metrics.extend([
+            Metric("request_latency", "gauge", unit="ms"),
+            Metric("request_throughput", "counter", unit="req/s"),
+            Metric("error_rate", "gauge", unit="percent"),
+        ])
+        
+        # AI-specific metrics
+        if system.has_ai:
+            metrics.extend([
+                Metric("token_usage", "counter", unit="tokens"),
+                Metric("model_latency", "gauge", unit="ms"),
+                Metric("retrieval_quality", "gauge", unit="score"),
+                Metric("llm_cost", "counter", unit="dollars"),
+            ])
+        
+        # System metrics
+        metrics.extend([
+            Metric("cpu_usage", "gauge", unit="percent"),
+            Metric("memory_usage", "gauge", unit="bytes"),
+            Metric("disk_usage", "gauge", unit="bytes"),
+        ])
+        
+        # Business metrics
+        metrics.extend([
+            Metric("user_sessions", "counter"),
+            Metric("feature_usage", "counter"),
+            Metric("conversion_rate", "gauge", unit="percent"),
+        ])
+        
+        # Add more to reach 200+ metrics
+        
+        return metrics
+Validation Criteria:
+* 200+ metrics defined
+* All metrics collected
+* Dashboards functional
+* Alerts configured
+* Step 2: Anomaly Detection (Days 5-7)
+class ParasaurolophusAgent:
+    def detect_anomalies(self, metric_data, baseline):
+        """
+        Detect anomalies using statistical methods
+        Methods: Z-score, IQR, moving average, ML-based
+        """
+        
+        anomalies = []
+        
+        # Statistical anomaly detection
+        for metric in metric_data:
+            # Z-score method
+            z_score_anomalies = self._detect_zscore_anomalies(metric, baseline)
+            anomalies.extend(z_score_anomalies)
+            
+            # IQR method
+            iqr_anomalies = self._detect_iqr_anomalies(metric, baseline)
+            anomalies.extend(iqr_anomalies)
+            
+            # Moving average
+            ma_anomalies = self._detect_moving_average_anomalies(metric, baseline)
+            anomalies.extend(ma_anomalies)
+        
+        # ML-based detection (if enabled)
+        if baseline.has_ml_model:
+            ml_anomalies = self._detect_ml_anomalies(metric_data, baseline)
+            anomalies.extend(ml_anomalies)
+        
+        # Deduplicate and prioritize
+        unique_anomalies = self._deduplicate_anomalies(anomalies)
+        prioritized = sorted(unique_anomalies, key=lambda a: a.severity, reverse=True)
+        
+        return AnomalyReport(
+            metric_data=metric_data,
+            baseline=baseline,
+            anomalies=prioritized,
+            detection_methods=["zscore", "iqr", "moving_average", "ml"],
+            summary=self._generate_anomaly_summary(prioritized)
+        )
+Validation Criteria:
+* Detects statistical anomalies
+* ML-based detection optional
+* Deduplicates findings
+* Prioritizes by severity
+* Step 3: Drift Detection (Days 8-10)
+class ParasaurolophusAgent:
+    def detect_drift(self, system, baseline):
+        """
+        Detect data drift, model drift, and behavior drift
+        """
+        
+        drift_results = {}
+        
+        # Data drift detection
+        if system.has_data_inputs:
+            data_drift = self._detect_data_drift(system.data, baseline.data)
+            drift_results["data"] = data_drift
+        
+        # Model drift detection
+        if system.has_ml_models:
+            model_drift = self._detect_model_drift(system.models, baseline.models)
+            drift_results["model"] = model_drift
+        
+        # Behavior drift detection
+        behavior_drift = self._detect_behavior_drift(system.behavior, baseline.behavior)
+        drift_results["behavior"] = behavior_drift
+        
+        # Calculate overall drift score
+        drift_scores = [d.score for d in drift_results.values()]
+        overall_drift = sum(drift_scores) / len(drift_scores) if drift_scores else 0
+        
+        # Determine if drift is significant
+        significant = overall_drift > 0.3  # Threshold
+        
+        return DriftReport(
+            system=system,
+            baseline=baseline,
+            drift_results=drift_results,
+            overall_drift=overall_drift,
+            significant=significant,
+            recommendations=self._generate_drift_recommendations(drift_results)
+        )
+    
+    def _detect_data_drift(self, current_data, baseline_data):
+        """Detect drift in data distribution"""
+        
+        # Compare distributions
+        ks_statistic, p_value = self._kolmogorov_smirnov_test(current_data, baseline_data)
+        
+        # PSI (Population Stability Index)
+        psi = self._calculate_psi(current_data, baseline_data)
+        
+        # Determine drift level
+        if psi > 0.25:
+            drift_level = "significant"
+        elif psi > 0.1:
+            drift_level = "moderate"
+        else:
+            drift_level = "minimal"
+        
+        return DataDrift(
+            ks_statistic=ks_statistic,
+            p_value=p_value,
+            psi=psi,
+            drift_level=drift_level,
+            score=psi
+        )
+Validation Criteria:
+* Detects data drift
+* Detects model drift
+* Detects behavior drift
+* Provides drift scores
+* Step 4: Health Checking (Days 11-13)
+class ParasaurolophusAgent:
+    def health_check(self, system):
+        """
+        Comprehensive health check
+        Returns: Health status with details
+        """
+        
+        health_checks = []
+        
+        # Service availability
+        availability = self._check_availability(system)
+        health_checks.append(availability)
+        
+        # Response time
+        response_time = self._check_response_time(system)
+        health_checks.append(response_time)
+        
+        # Error rate
+        error_rate = self._check_error_rate(system)
+        health_checks.append(error_rate)
+        
+        # Resource utilization
+        resources = self._check_resources(system)
+        health_checks.append(resources)
+        
+        # Dependencies
+        dependencies = self._check_dependencies(system)
+        health_checks.append(dependencies)
+        
+        # Overall health
+        all_healthy = all(c.status == "healthy" for c in health_checks)
+        any_critical = any(c.status == "critical" for c in health_checks)
+        
+        if any_critical:
+            overall_status = "critical"
+        elif all_healthy:
+            overall_status = "healthy"
+        else:
+            overall_status = "degraded"
+        
+        return HealthReport(
+            system=system,
+            checks=health_checks,
+            overall_status=overall_status,
+            timestamp=datetime.now()
+        )
+Validation Criteria:
+* Checks service availability
+* Monitors response times
+* Tracks error rates
+* Checks dependencies
+* Step 5: Intelligent Alerting (Days 14-16)
+class ParasaurolophusAgent:
+    def configure_intelligent_alerts(self, metrics, requirements):
+        """
+        Configure alerts with intelligent thresholds
+        Reduces alert fatigue through smart grouping and prioritization
+        """
+        
+        alerts = []
+        
+        for metric in metrics:
+            # Determine baseline
+            baseline = self._calculate_baseline(metric)
+            
+            # Set dynamic thresholds
+            thresholds = self._calculate_dynamic_thresholds(metric, baseline)
+            
+            # Define alert conditions
+            conditions = self._define_alert_conditions(metric, thresholds)
+            
+            # Configure escalation
+            escalation = self._configure_escalation(metric, requirements)
+            
+            # Create alert
+            alert = Alert(
+                metric=metric,
+                baseline=baseline,
+                thresholds=thresholds,
+                conditions=conditions,
+                escalation=escalation,
+                grouping=self._configure_alert_grouping(metric)
+            )
+            
+            alerts.append(alert)
+        
+        # Configure alert routing
+        routing = self._configure_alert_routing(alerts, requirements)
+        
+        return AlertConfiguration(
+            alerts=alerts,
+            routing=routing,
+            suppression_rules=self._configure_suppression_rules(alerts)
+        )
+Validation Criteria:
+* Dynamic thresholds set
+* Escalation configured
+* Alert grouping reduces noise
+* Routing to appropriate channels
+* Step 6: RIU Implementation (Days 17-18)
+class ParasaurolophusAgent:
+    def handle_riu(self, riu_id, payload):
+        """Route RIU to monitoring handler"""
+        
+        riu_handlers = {
+            # Ops & Delivery (monitoring)
+            "RIU-035": self._handle_caching_strategy,
+            "RIU-061": self._handle_observability_baseline,
+            "RIU-063": self._handle_performance_characterization,
+            "RIU-068": self._handle_canary_rollout,
+            "RIU-070": self._handle_slo_sli,
+            
+            # Quality & Safety (monitoring)
+            "RIU-085": self._handle_cost_budget,
+            
+            # Multimodal
+            "RIU-502": self._handle_audio_processing,
+            
+            # Agentic
+            "RIU-511": self._handle_agent_state_management,
+            
+            # LLMOps (520 series - 3 RIUs)
+            "RIU-521": self._handle_model_versioning,
+            "RIU-522": self._handle_token_budget,
+            "RIU-523": self._handle_llm_caching,
+            "RIU-524": self._handle_output_quality_monitoring,
+            
+            # Agent patterns (540 series - 3 RIUs)
+            "RIU-542": self._handle_observability_stack,
+            "RIU-543": self._handle_drift_detection,
+            "RIU-544": self._handle_health_check,
+            
+            # Add all 16 assigned RIUs
+        }
+        
+        if riu_id not in riu_handlers:
+            raise ValueError(f"RIU {riu_id} not assigned to Parasaurolophus")
+        
+        return riu_handlers[riu_id](payload)
+* Testing Strategy
+fixtures/riu/RIU-061/observability-baseline-basic/
+  ├── input.md
+  │   Trigger signals: observability engagement, quality concerns
+  │   System: Web API service
+  │   Requirements: <1s latency, >99.9% uptime
+  │
+  ├── expected/
+  │   ├── observability_baseline.md (must define metrics)
+  │   ├── dashboards/ (must have at least one dashboard spec)
+  │   ├── alerts.md (must configure alerts)
+  │   └── logging_spec.md (must specify log structure)
+  │
+  └── notes.md
+* Promotion Criteria
+UNVALIDATED → WORKING:
+* 10 consecutive successful monitoring setups
+* Anomaly detection >85% accurate
+* Alert accuracy >85%
+* Detection latency <1 minute
+WORKING → PRODUCTION:
+* 50 impressions with <5% failure rate
+* Monitoring coverage >99%
+* Alert accuracy >95%
+* Detection latency <1 minute
+________________
+
+
+* Agent 8: ARK:Orchestrator (Workflow Router)
+Role: Routes tasks to appropriate agents, coordinates multi-step workflows
+Priority: Critical - Build Last (requires other agents)
+Initial Status: UNVALIDATED
+* Core Capabilities Required
+1. Task routing: Map tasks to appropriate agents
+2. Workflow coordination: Manage multi-agent workflows
+3. Convergence validation: Ensure convergence brief exists
+4. ONE-WAY DOOR flagging: Detect and flag irreversible decisions
+* Constraint Profile
+Disallowed Actions:
+* Direct execution (cannot execute tasks itself)
+* Bypassing convergence (cannot route without convergence brief)
+Allowed Actions:
+* Route tasks to agents
+* Coordinate workflows
+* Validate convergence briefs
+* Flag ONE-WAY DOOR decisions
+* Track workflow state
+* Build Steps
+* Step 1: RIU-to-Agent Routing Engine (Days 1-4)
+class OrchestratorAgent:
+    def __init__(self):
+        self.ark_type = "ARK:Orchestrator"
+        self.version = "1.0"
+        self.constraints = ConstraintValidator(
+            allowed_actions=["route", "coordinate", "validate", "flag", "track"],
+            disallowed_actions=["execute_directly", "bypass_convergence"]
+        )
+        self.riu_taxonomy = self._load_riu_taxonomy()
+        self.agent_registry = self._load_agent_registry()
+    
+    def route_task(self, task, convergence_brief):
+        """
+        Route task to appropriate agent(s)
+        Requires convergence brief before routing
+        """
+        
+        # Validate convergence brief exists and is complete
+        if not self._validate_convergence_brief(convergence_brief):
+            raise MissingConvergenceError(
+                "Cannot route without complete convergence brief (RIU-001)"
+            )
+        
+        # Identify relevant RIUs
+        matching_rius = self._match_rius(task)
+        
+        if not matching_rius:
+            return NoMatchResult(
+                task=task,
+                reason="No RIU matches task pattern",
+                recommendation="Create candidate RIU or refine task description"
+            )
+        
+        # Determine required agents for each RIU
+        agent_assignments = []
+        for riu in matching_rius:
+            agents = self.riu_taxonomy.get_agents(riu.id)
+            agent_assignments.append({
+                "riu": riu,
+                "agents": agents,
+                "coordination_pattern": self._determine_coordination_pattern(riu, agents)
+            })
+        
+        # Check for ONE-WAY DOOR decisions
+        one_way_doors = self._detect_one_way_doors(matching_rius, convergence_brief)
+        
+        if one_way_doors:
+            return RoutingResult(
+                task=task,
+                rius=matching_rius,
+                agent_assignments=agent_assignments,
+                requires_approval=True,
+                one_way_doors=one_way_doors,
+                status="PENDING_APPROVAL"
+            )
+        
+        return RoutingResult(
+            task=task,
+            rius=matching_rius,
+            agent_assignments=agent_assignments,
+            requires_approval=False,
+            status="READY_TO_EXECUTE"
+        )
+Validation Criteria:
+* Requires convergence brief
+* Matches tasks to RIUs
+* Routes to correct agents
+* Flags ONE-WAY DOORS
+* Step 2: Convergence Brief Validation (Days 5-6)
+class OrchestratorAgent:
+    def _validate_convergence_brief(self, convergence_brief):
+        """
+        Validate convergence brief is complete
+        Required elements: Goal, Roles, Capabilities, Constraints, Non-goals
+        """
+        
+        required_elements = [
+            "goal",
+            "roles",
+            "capabilities",
+            "constraints",
+            "non_goals"
+        ]
+        
+        missing = []
+        for element in required_elements:
+            if not convergence_brief.get(element):
+                missing.append(element)
+        
+        if missing:
+            raise IncompleteConvergenceError(
+                f"Convergence brief missing: {', '.join(missing)}"
+            )
+        
+        # Validate goal is specific and measurable
+        if not self._is_specific_goal(convergence_brief.goal):
+            raise VagueGoalError("Goal must be specific and measurable")
+        
+        # Validate constraints are binding
+        if not self._has_binding_constraints(convergence_brief.constraints):
+            raise WeakConstraintsError("Constraints must be binding and verifiable")
+        
+        return True
+Validation Criteria:
+* Checks all required elements
+* Validates goal specificity
+* Validates constraint strength
+* Provides clear error messages
+* Step 3: Multi-Agent Workflow Coordination (Days 7-10)
+class OrchestratorAgent:
+    def coordinate_workflow(self, routing_result, convergence_brief):
+        """
+        Coordinate multi-agent workflow
+        Supports: Sequential, Parallel, Dynamic, Hierarchical patterns
+        """
+        
+        pattern = routing_result.coordination_pattern
+        
+        if pattern == "sequential":
+            return self._coordinate_sequential(routing_result, convergence_brief)
+        elif pattern == "parallel":
+            return self._coordinate_parallel(routing_result, convergence_brief)
+        elif pattern == "dynamic":
+            return self._coordinate_dynamic(routing_result, convergence_brief)
+        elif pattern == "hierarchical":
+            return self._coordinate_hierarchical(routing_result, convergence_brief)
+        else:
+            raise UnknownPatternError(f"Unknown coordination pattern: {pattern}")
+    
+    def _coordinate_sequential(self, routing_result, convergence_brief):
+        """
+        Sequential workflow: Agent A → Agent B → Agent C
+        Each agent completes before next starts
+        """
+        
+        workflow = SequentialWorkflow(routing_result, convergence_brief)
+        
+        for assignment in routing_result.agent_assignments:
+            # Execute agent task
+            result = self._execute_agent_task(assignment)
+            
+            # Validate result before proceeding
+            if not result.success:
+                # Rollback to previous state
+                workflow.rollback()
+                return WorkflowResult(
+                    status="FAILED",
+                    failed_at=assignment,
+                    error=result.error,
+                    rollback_completed=True
+                )
+            
+            # Add result to workflow state
+            workflow.add_result(assignment, result)
+            
+            # State checkpoint
+            workflow.create_checkpoint()
+        
+        return WorkflowResult(
+            status="COMPLETED",
+            workflow=workflow,
+            results=workflow.get_all_results()
+        )
+    
+    def _coordinate_parallel(self, routing_result, convergence_brief):
+        """
+        Parallel workflow: Agent A, Agent B, Agent C execute concurrently
+        Wait for all to complete, then merge results
+        """
+        
+        workflow = ParallelWorkflow(routing_result, convergence_brief)
+        
+        # Start all agents concurrently
+        futures = []
+        for assignment in routing_result.agent_assignments:
+            future = self._execute_agent_task_async(assignment)
+            futures.append((assignment, future))
+        
+        # Wait for all to complete
+        results = []
+        for assignment, future in futures:
+            result = future.get()
+            results.append((assignment, result))
+        
+        # Check for failures
+        failures = [(a, r) for a, r in results if not r.success]
+        if failures:
+            return WorkflowResult(
+                status="FAILED",
+                failures=failures,
+                partial_results=[r for a, r in results if r.success]
+            )
+        
+        # Merge results
+        merged = self._merge_parallel_results(results)
+        
+        return WorkflowResult(
+            status="COMPLETED",
+            workflow=workflow,
+            results=merged
+        )
+Validation Criteria:
+* Sequential workflows execute in order
+* Parallel workflows execute concurrently
+* Dynamic workflows adapt at runtime
+* Hierarchical workflows respect levels
+* Step 4: State Management and Tracking (Days 11-13)
+class OrchestratorAgent:
+    def track_workflow_state(self, workflow):
+        """
+        Track workflow state across agent handoffs
+        Enables recovery and debugging
+        """
+        
+        state = WorkflowState(
+            workflow_id=workflow.id,
+            convergence_brief=workflow.convergence_brief,
+            routing_result=workflow.routing_result,
+            started_at=datetime.now()
+        )
+        
+        # Track each step
+        for step in workflow.steps:
+            step_state = StepState(
+                step=step,
+                agent=step.agent,
+                status="pending",
+                started_at=None,
+                completed_at=None,
+                result=None
+            )
+            
+            state.add_step(step_state)
+        
+        # Persist state
+        self._persist_state(state)
+        
+        return state
+    
+    def update_workflow_state(self, workflow_id, step_id, result):
+        """Update state after step completion"""
+        
+        state = self._load_state(workflow_id)
+        step_state = state.get_step(step_id)
+        
+        step_state.status = "completed" if result.success else "failed"
+        step_state.completed_at = datetime.now()
+        step_state.result = result
+        
+        # Update overall workflow status
+        if all(s.status == "completed" for s in state.steps):
+            state.status = "completed"
+        elif any(s.status == "failed" for s in state.steps):
+            state.status = "failed"
+        
+        # Persist updated state
+        self._persist_state(state)
+        
+        return state
+Validation Criteria:
+* State persisted after each step
+* State recoverable after failure
+* State includes all context
+* State enables debugging
+* Step 5: Failure Recovery and Rollback (Days 14-16)
+class OrchestratorAgent:
+    def handle_workflow_failure(self, workflow_id, failure_point):
+        """
+        Handle workflow failure with recovery options
+        """
+        
+        state = self._load_state(workflow_id)
+        
+        # Determine recovery strategy
+        if self._can_retry(failure_point):
+            return self._retry_step(workflow_id, failure_point)
+        
+        elif self._can_rollback(state, failure_point):
+            return self._rollback_workflow(workflow_id, failure_point)
+        
+        elif self._has_fallback_agent(failure_point):
+            return self._try_fallback_agent(workflow_id, failure_point)
+        
+        else:
+            # Escalate to human
+            return self._escalate_to_human(workflow_id, failure_point)
+    
+    def _rollback_workflow(self, workflow_id, failure_point):
+        """
+        Rollback workflow to last successful checkpoint
+        """
+        
+        state = self._load_state(workflow_id)
+        
+        # Find last successful checkpoint
+        checkpoint = state.get_last_checkpoint_before(failure_point)
+        
+        if not checkpoint:
+            raise NoCheckpointError("No checkpoint available for rollback")
+        
+        # Rollback each step after checkpoint
+        steps_to_rollback = state.get_steps_after(checkpoint)
+        
+        for step in reversed(steps_to_rollback):
+            if step.result and step.result.artifacts:
+                self._rollback_step_artifacts(step)
+        
+        # Reset state to checkpoint
+        state.restore_from_checkpoint(checkpoint)
+        
+        return RollbackResult(
+            workflow_id=workflow_id,
+            rolled_back_to=checkpoint,
+            steps_rolled_back=len(steps_to_rollback),
+            status="rolled_back"
+        )
+Validation Criteria:
+* Retry on transient failures
+* Rollback to checkpoints
+* Fallback agents available
+* Human escalation when needed
+* Step 6: Integration Testing (Days 17-20)
+Since Orchestrator depends on other agents, testing requires integration:
+class OrchestratorAgent:
+    def integration_test(self, test_scenario):
+        """
+        Test orchestrator with real agents
+        """
+        
+        # Create test convergence brief
+        convergence_brief = test_scenario.convergence_brief
+        
+        # Create test task
+        task = test_scenario.task
+        
+        # Route task
+        routing_result = self.route_task(task, convergence_brief)
+        
+        # Verify routing
+        assert len(routing_result.rius) > 0, "No RIUs matched"
+        assert len(routing_result.agent_assignments) > 0, "No agents assigned"
+        
+        # Execute workflow
+        workflow_result = self.coordinate_workflow(routing_result, convergence_brief)
+        
+        # Verify results
+        assert workflow_result.status == "COMPLETED", f"Workflow failed: {workflow_result.error}"
+        
+        # Verify artifacts produced
+        for assignment in routing_result.agent_assignments:
+            assert assignment.riu.id in workflow_result.artifacts, f"Missing artifact for {assignment.riu.id}"
+        
+        return True
+Integration Test Scenarios:
+1. Simple sequential workflow (3 agents)
+2. Parallel workflow (2 agents)
+3. Workflow with ONE-WAY DOOR (requires approval)
+4. Workflow with failure and recovery
+5. Complex hierarchical workflow (5+ agents)
+* Testing Strategy
+fixtures/multi-agent/sequential-workflow-basic/
+  ├── input.md
+  │   Convergence brief: Complete brief with all elements
+  │   Task: Build API with monitoring and validation
+  │   Expected flow: Rex (design) → Theri (build) → Anky (validate) → Para (monitor)
+  │
+  ├── expected/
+  │   ├── routing_result.json (must route to all 4 agents in sequence)
+  │   ├── workflow_state.json (must track state through all steps)
+  │   └── final_artifacts/ (must include artifacts from all agents)
+  │
+  └── notes.md
+* Promotion Criteria
+UNVALIDATED → WORKING:
+* 10 consecutive successful orchestrations
+* Routing accuracy >85%
+* All workflows complete or fail gracefully
+* State tracking functional
+WORKING → PRODUCTION:
+* 50 impressions with <5% failure rate
+* Routing accuracy >95%
+* Workflow completion rate >98%
+* State recovery works 100%
+________________
+
+
+* Cross-Agent Integration Testing
+Once all agents are built, perform comprehensive integration testing:
+* Test Suite 1: Full Workflow Tests
+Test 1: Complete Project Delivery
+Input: "Build a customer-facing chatbot with HIPAA compliance"
+
+
+Expected flow:
+1. Orchestrator validates convergence brief
+2. Routes to Rex for architecture
+3. Rex flags HIPAA as ONE-WAY DOOR (human approval)
+4. Human approves
+5. Routes to Theri for implementation
+6. Routes to Anky for compliance validation
+7. Routes to Para for monitoring setup
+8. Routes to Yuty for documentation
+9. Orchestrator confirms completion
+
+
+Validation:
+- [ ] All agents invoked in correct order
+- [ ] ONE-WAY DOOR properly flagged
+- [ ] Human approval obtained
+- [ ] All artifacts produced
+- [ ] System is operational
+Test 2: Failure and Recovery
+Input: "Deploy ML model to production"
+
+
+Inject failure: Theri fails during build
+
+
+Expected flow:
+1. Orchestrator detects Theri failure
+2. Attempts retry (fails again)
+3. Initiates rollback
+4. Routes to Raptor for diagnosis
+5. Raptor identifies issue
+6. Escalates to human with diagnosis
+7. Human fixes issue
+8. Orchestrator resumes from checkpoint
+
+
+Validation:
+- [ ] Failure detected immediately
+- [ ] Rollback successful
+- [ ] Raptor diagnoses correctly
+- [ ] Human escalation proper
+- [ ] Recovery from checkpoint works
+Test 3: Multi-Agent Parallel Workflow
+Input: "Validate system across security, compliance, and performance"
+
+
+Expected flow:
+1. Orchestrator routes in parallel:
+   - Anky (security review)
+   - Anky (compliance check)
+   - Para (performance test)
+2. All execute concurrently
+3. Orchestrator merges results
+4. Routes to Yuty for report generation
+
+
+Validation:
+- [ ] Parallel execution confirmed
+- [ ] All agents complete
+- [ ] Results merged correctly
+- [ ] Final report includes all findings
+* Test Suite 2: Constraint Enforcement
+Test for each agent:
+def test_agent_constraints(agent):
+    """Test that agent respects its constraints"""
+    
+    # Get disallowed actions for agent
+    disallowed = agent.constraints.disallowed
+    
+    # Attempt each disallowed action
+    for action in disallowed:
+        with pytest.raises(ConstraintViolationError):
+            agent.execute_action(action)
+    
+    # Verify violation was logged
+    assert agent.constraint_violations[-1].action == action
+    assert agent.constraint_violations[-1].escalated == True
+* Test Suite 3: RIU Coverage
+Test that all 111 RIUs are routable:
+def test_riu_coverage():
+    """Test that every RIU can be routed to an agent"""
+    
+    orchestrator = OrchestratorAgent()
+    taxonomy = load_riu_taxonomy()
+    
+    unroutable = []
+    
+    for riu in taxonomy.all_rius:
+        agents = taxonomy.get_agents(riu.id)
+        
+        if not agents:
+            unroutable.append(riu.id)
+    
+    assert len(unroutable) == 0, f"Unroutable RIUs: {unroutable}"
+________________
+
+
+* Promotion to Production Checklist
+Before promoting any agent to PRODUCTION:
+* Technical Validation
+* All assigned RIUs implemented
+* All fixtures passing
+* Constraint enforcement working
+* No scope violations in 50+ runs
+* Performance meets targets
+* Error handling comprehensive
+* Integration Validation
+* Can receive handoffs from other agents
+* Can send handoffs to other agents
+* Message protocol compliance
+* State management working
+* Failure recovery tested
+* Documentation
+* Build instructions complete
+* API documentation written
+* Constraint profile documented
+* Example usage provided
+* Troubleshooting guide available
+* Operational Readiness
+* Monitoring configured
+* Alerts set up
+* Runbook written
+* Incident response plan
+* On-call coverage defined
+* Governance
+* Security review passed
+* Compliance validation complete
+* Audit trail configured
+* Human oversight defined
+* Escalation paths clear
+________________
+
+
+* Implementation Timeline
+Total Estimated Timeline: 16-20 weeks for all 8 agents
+* Phase 1: Foundation (Weeks 1-2)
+* Build shared infrastructure
+* Message protocol
+* Constraint validation
+* State management
+* Fixture harness
+* Phase 2: Core Agents (Weeks 3-10)
+* Week 3-4: Argentavis (Resource Gatherer)
+* Week 5-6: Therizinosaurus (Builder)
+* Week 7-8: Velociraptor (Debugger)
+* Week 9-10: Tyrannosaurus (Architect)
+* Phase 3: Supporting Agents (Weeks 11-16)
+* Week 11-12: Yutyrannus (GTM/Narrative)
+* Week 13-14: Ankylosaurus (Validator)
+* Week 15-16: Parasaurolophus (Monitor)
+* Phase 4: Orchestration (Weeks 17-18)
+* Week 17-18: Orchestrator (Workflow Router)
+* Phase 5: Integration & Production (Weeks 19-20)
+* Week 19: Full integration testing
+* Week 20: Production hardening and deployment
+________________
+
+
+* Success Metrics
+Track these metrics across all agent implementations:
+* Development Metrics
+* Agent implementation velocity (agents/week)
+* Fixture pass rate (should trend toward 100%)
+* Constraint violation rate (should trend toward 0%)
+* RIU coverage (should reach 100%)
+* Quality Metrics
+* Maturity tier progression rate
+* Failure rate by tier
+* Promotion/demotion frequency
+* Bug escape rate
+* Operational Metrics
+* Agent availability (target >95%)
+* Response time (by agent type)
+* Workflow completion rate (target >98%)
+* Human escalation rate
+* Business Metrics
+* Build & Validate phase completion (target: 23% → 70%)
+* AI project success rate (target: 3.2x improvement)
+* SA/SE efficiency recovery (target: 40% improvement)
+* Customer satisfaction (target: >4.0/5.0)
+________________
+
+
+END OF AGENT IMPLEMENTATION GUIDE v1.1
