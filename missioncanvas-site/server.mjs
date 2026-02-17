@@ -15,7 +15,9 @@ const __dirname = path.dirname(__filename);
 
 const PORT = Number(process.env.PORT || 8787);
 const OPENCLAW_BASE_URL = process.env.OPENCLAW_BASE_URL || '';
-const OPENCLAW_API_KEY = process.env.OPENCLAW_API_KEY || '';
+const OPENCLAW_API_KEY = process.env.OPENCLAW_API_KEY || process.env.OPENCLAW_GATEWAY_TOKEN || '';
+const OPENCLAW_UPSTREAM_MODE = (process.env.OPENCLAW_UPSTREAM_MODE || 'missioncanvas').toLowerCase();
+const OPENCLAW_AGENT_ID = process.env.OPENCLAW_AGENT_ID || 'main';
 const ALLOW_ORIGIN = process.env.ALLOW_ORIGIN || '*';
 
 const MIME = {
@@ -50,26 +52,112 @@ async function readBody(req) {
   }
 }
 
-async function proxyToOpenClaw(payload) {
-  if (!OPENCLAW_BASE_URL) return null;
-  const target = `${OPENCLAW_BASE_URL.replace(/\/$/, '')}/v1/missioncanvas/route`;
-  const headers = { 'Content-Type': 'application/json' };
-  if (OPENCLAW_API_KEY) headers.Authorization = `Bearer ${OPENCLAW_API_KEY}`;
+function briefPromptFromPayload(payload) {
+  const input = payload.input || {};
+  return [
+    'You are MissionCanvas runtime wrapped around Palette policy.',
+    'Return concise plain text with:',
+    '- Convergence summary',
+    '- Recommended next action',
+    '- Risks and one-way-door cautions',
+    '',
+    `Objective: ${input.objective || ''}`,
+    `Context: ${input.context || ''}`,
+    `Desired Outcome: ${input.desired_outcome || ''}`,
+    `Constraints: ${input.constraints || ''}`,
+    `Risk posture: ${input.risk_posture || 'medium'}`
+  ].join('\n');
+}
 
-  const res = await fetch(target, {
+function extractTextFromGateway(obj) {
+  if (!obj) return '';
+  if (typeof obj === 'string') return obj;
+
+  // OpenResponses-like shapes
+  if (Array.isArray(obj.output)) {
+    const texts = [];
+    for (const item of obj.output) {
+      if (item?.type === 'output_text' && item?.text) texts.push(item.text);
+      if (Array.isArray(item?.content)) {
+        for (const c of item.content) {
+          if (c?.type === 'output_text' && c?.text) texts.push(c.text);
+          if (c?.type === 'text' && c?.text) texts.push(c.text);
+        }
+      }
+    }
+    if (texts.length) return texts.join('\n');
+  }
+
+  // Chat Completions-like shapes
+  if (Array.isArray(obj.choices)) {
+    const texts = obj.choices
+      .map((c) => c?.message?.content)
+      .filter(Boolean)
+      .map((c) => (typeof c === 'string' ? c : JSON.stringify(c)));
+    if (texts.length) return texts.join('\n');
+  }
+
+  if (typeof obj.text === 'string') return obj.text;
+  if (typeof obj.content === 'string') return obj.content;
+
+  return '';
+}
+
+async function fetchJson(url, payload, headers = {}) {
+  const mergedHeaders = { 'Content-Type': 'application/json', ...headers };
+  const res = await fetch(url, {
     method: 'POST',
-    headers,
+    headers: mergedHeaders,
     body: JSON.stringify(payload)
   });
 
   if (!res.ok) {
     throw new Error(`OpenClaw upstream ${res.status}`);
   }
+  return await res.json();
+}
 
-  const proxied = await res.json();
-  if (!proxied.request_id) proxied.request_id = payload.request_id || makeRequestId();
-  if (!proxied.source) proxied.source = 'openclaw';
-  return proxied;
+async function proxyToOpenClaw(payload) {
+  if (!OPENCLAW_BASE_URL) return null;
+  const base = OPENCLAW_BASE_URL.replace(/\/$/, '');
+  const headers = {};
+  if (OPENCLAW_API_KEY) headers.Authorization = `Bearer ${OPENCLAW_API_KEY}`;
+
+  if (OPENCLAW_UPSTREAM_MODE === 'missioncanvas') {
+    const proxied = await fetchJson(`${base}/v1/missioncanvas/route`, payload, headers);
+    if (!proxied.request_id) proxied.request_id = payload.request_id || makeRequestId();
+    if (!proxied.source) proxied.source = 'openclaw_missioncanvas';
+    return proxied;
+  }
+
+  if (OPENCLAW_UPSTREAM_MODE === 'responses') {
+    const upstreamPayload = {
+      model: `openclaw:${OPENCLAW_AGENT_ID}`,
+      input: briefPromptFromPayload(payload)
+    };
+    const raw = await fetchJson(`${base}/v1/responses`, upstreamPayload, headers);
+    const txt = extractTextFromGateway(raw);
+    const out = localRouteResponse(payload, 'openclaw_responses');
+    if (txt) out.action_brief_markdown = `${out.action_brief_markdown}\n\n## OpenClaw Model Notes\n${txt}`;
+    return out;
+  }
+
+  if (OPENCLAW_UPSTREAM_MODE === 'chatcompletions') {
+    const upstreamPayload = {
+      model: `openclaw:${OPENCLAW_AGENT_ID}`,
+      messages: [
+        { role: 'system', content: 'You are MissionCanvas runtime wrapped around Palette policy.' },
+        { role: 'user', content: briefPromptFromPayload(payload) }
+      ]
+    };
+    const raw = await fetchJson(`${base}/v1/chat/completions`, upstreamPayload, headers);
+    const txt = extractTextFromGateway(raw);
+    const out = localRouteResponse(payload, 'openclaw_chatcompletions');
+    if (txt) out.action_brief_markdown = `${out.action_brief_markdown}\n\n## OpenClaw Model Notes\n${txt}`;
+    return out;
+  }
+
+  throw new Error(`Unsupported OPENCLAW_UPSTREAM_MODE: ${OPENCLAW_UPSTREAM_MODE}`);
 }
 
 async function serveStatic(req, res) {
@@ -95,8 +183,9 @@ function healthPayload() {
     status: 'ok',
     service: 'missioncanvas-openclaw-adapter',
     mode: OPENCLAW_BASE_URL ? 'proxy' : 'local_fallback',
+    upstream_mode: OPENCLAW_UPSTREAM_MODE,
     openclaw_base_url: OPENCLAW_BASE_URL || null,
-    version: '1.1.0'
+    version: '1.2.0'
   };
 }
 
@@ -104,8 +193,9 @@ function capabilitiesPayload() {
   return {
     routes: ROUTES.map((r) => ({ id: r.id, name: r.name, agent: r.agent, artifact: r.artifact })),
     one_way_door_gate: true,
-    voice_input: 'browser_web_speech',
-    voice_output: 'speech_synthesis'
+    voice_input: 'browser_web_speech + terminal_bridge',
+    voice_output: 'speech_synthesis + terminal_tts_optional',
+    upstream_modes: ['missioncanvas', 'responses', 'chatcompletions']
   };
 }
 
@@ -212,7 +302,7 @@ const server = createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`MissionCanvas server running at http://localhost:${PORT}`);
   if (OPENCLAW_BASE_URL) {
-    console.log(`Proxy mode enabled -> ${OPENCLAW_BASE_URL}`);
+    console.log(`Proxy mode enabled -> ${OPENCLAW_BASE_URL} (${OPENCLAW_UPSTREAM_MODE})`);
   } else {
     console.log('Proxy mode disabled -> using local Palette route fallback');
   }
