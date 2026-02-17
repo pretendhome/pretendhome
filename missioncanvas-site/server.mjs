@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import { readFile } from 'node:fs/promises';
+import { readFile, appendFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -19,6 +19,7 @@ const OPENCLAW_API_KEY = process.env.OPENCLAW_API_KEY || process.env.OPENCLAW_GA
 const OPENCLAW_UPSTREAM_MODE = (process.env.OPENCLAW_UPSTREAM_MODE || 'missioncanvas').toLowerCase();
 const OPENCLAW_AGENT_ID = process.env.OPENCLAW_AGENT_ID || 'main';
 const ALLOW_ORIGIN = process.env.ALLOW_ORIGIN || '*';
+const DECISIONS_LOG_PATH = process.env.MISSIONCANVAS_DECISIONS_LOG_PATH || '';
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -195,8 +196,82 @@ function capabilitiesPayload() {
     one_way_door_gate: true,
     voice_input: 'browser_web_speech + terminal_bridge',
     voice_output: 'speech_synthesis + terminal_tts_optional',
-    upstream_modes: ['missioncanvas', 'responses', 'chatcompletions']
+    upstream_modes: ['missioncanvas', 'responses', 'chatcompletions'],
+    decision_log_append: Boolean(DECISIONS_LOG_PATH)
   };
+}
+
+async function appendDecisionLogEntry(payload) {
+  if (!DECISIONS_LOG_PATH) {
+    return { ok: false, message: 'Decision log path not configured (MISSIONCANVAS_DECISIONS_LOG_PATH).' };
+  }
+  const target = path.resolve(DECISIONS_LOG_PATH);
+  const parent = path.dirname(target);
+  await mkdir(parent, { recursive: true });
+
+  const timestamp = new Date().toISOString();
+  const block = [
+    '',
+    '---',
+    `### Engagement Update: ${timestamp} / ${payload.request_id || makeRequestId()}`,
+    '',
+    '#### MissionCanvas Log Payload',
+    payload.decision_log_payload || '(missing payload)',
+    '',
+    '#### Brief',
+    payload.action_brief_markdown || '(missing brief)',
+    ''
+  ].join('\n');
+
+  await appendFile(target, block, { encoding: 'utf-8' });
+  return { ok: true, message: `Appended to ${target}` };
+}
+
+async function writeStreamedRoute(req, res) {
+  const payload = await readBody(req);
+  if (payload.__parse_error__) {
+    json(res, 400, {
+      request_id: null,
+      status: 'error',
+      error: { code: 'VALIDATION_ERROR', message: 'Request body must be valid JSON', retryable: true, details: ['Invalid JSON'] }
+    });
+    return;
+  }
+
+  const errors = validateRoutePayload(payload);
+  if (errors.length) {
+    json(res, 400, {
+      request_id: payload.request_id || null,
+      status: 'error',
+      error: { code: 'VALIDATION_ERROR', message: 'Invalid request payload', retryable: true, details: errors }
+    });
+    return;
+  }
+  if (!payload.request_id) payload.request_id = makeRequestId();
+
+  let routed;
+  try {
+    routed = await proxyToOpenClaw(payload);
+  } catch (_err) {
+    routed = localRouteResponse(payload, 'local_fallback');
+  }
+
+  const brief = routed.action_brief_markdown || '';
+  const pieces = brief.split('\n');
+
+  applyCors(res);
+  res.writeHead(200, {
+    'Content-Type': 'application/x-ndjson; charset=utf-8',
+    'Cache-Control': 'no-cache, no-transform',
+    Connection: 'keep-alive'
+  });
+
+  for (const line of pieces) {
+    const evt = { type: 'chunk', text: `${line}\n` };
+    res.write(`${JSON.stringify(evt)}\n`);
+  }
+  res.write(`${JSON.stringify({ type: 'final', response: routed })}\n`);
+  res.end();
 }
 
 const server = createServer(async (req, res) => {
@@ -260,6 +335,11 @@ const server = createServer(async (req, res) => {
       return;
     }
 
+    if (req.method === 'POST' && req.url === '/v1/missioncanvas/talk-stream') {
+      await writeStreamedRoute(req, res);
+      return;
+    }
+
     if (req.method === 'POST' && req.url === '/v1/missioncanvas/confirm-one-way-door') {
       const payload = await readBody(req);
       if (payload.__parse_error__) {
@@ -282,6 +362,24 @@ const server = createServer(async (req, res) => {
         next_step: 'resume_execution',
         message: 'One-way-door confirmation recorded.'
       });
+      return;
+    }
+
+    if (req.method === 'POST' && req.url === '/v1/missioncanvas/log-append') {
+      const payload = await readBody(req);
+      if (payload.__parse_error__) {
+        json(res, 400, {
+          status: 'error',
+          message: 'Request body must be valid JSON'
+        });
+        return;
+      }
+      const result = await appendDecisionLogEntry(payload);
+      if (!result.ok) {
+        json(res, 400, { status: 'error', message: result.message });
+      } else {
+        json(res, 200, { status: 'ok', message: result.message });
+      }
       return;
     }
 

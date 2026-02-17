@@ -51,7 +51,9 @@ If upstream fails or is unavailable, adapter automatically falls back to local P
 - `GET /v1/missioncanvas/health`
 - `GET /v1/missioncanvas/capabilities`
 - `POST /v1/missioncanvas/route`
+- `POST /v1/missioncanvas/talk-stream` (NDJSON streaming)
 - `POST /v1/missioncanvas/confirm-one-way-door`
+- `POST /v1/missioncanvas/log-append`
 
 Contract reference:
 - `palette/docs/openclaw_application_prompt_missioncanvas_api_contract_v1.0.md`
@@ -81,6 +83,10 @@ Environment options:
 - `MISSIONCANVAS_ENABLE_TTS=1` (optional local TTS)
 - `MISSIONCANVAS_TEST_TRANSCRIPT` (for non-mic testing)
 
+Adapter env options:
+
+- `MISSIONCANVAS_DECISIONS_LOG_PATH` (optional absolute/relative file path for decision append)
+
 Example (non-mic test):
 
 ```bash
@@ -101,6 +107,11 @@ Expected output:
 ```text
 adapter_contract_check: PASS
 ```
+
+## Streaming Talk Mode
+
+- In web UI, use `Run Streaming Response` for incremental output.
+- Adapter endpoint returns line-wise NDJSON chunks and final structured response.
 
 ## Notes
 

@@ -6,12 +6,16 @@
       (window.MISSIONCANVAS_CONFIG && window.MISSIONCANVAS_CONFIG.apiBase) ||
       DEFAULT_API_BASE,
     routePath: "/v1/missioncanvas/route",
-    confirmPath: "/v1/missioncanvas/confirm-one-way-door"
+    confirmPath: "/v1/missioncanvas/confirm-one-way-door",
+    streamPath: "/v1/missioncanvas/talk-stream",
+    logAppendPath: "/v1/missioncanvas/log-append"
   };
 
   const APP_STATE = {
     lastRequestId: null,
-    lastOneWayItems: []
+    lastOneWayItems: [],
+    lastDecisionLogPayload: "",
+    lastBrief: ""
   };
 
   const paletteRoutes = [
@@ -291,8 +295,116 @@
     }
 
     uiRefs.briefOutput.value = response.action_brief_markdown || "No brief returned.";
+    APP_STATE.lastDecisionLogPayload = response.decision_log_payload || "";
+    APP_STATE.lastBrief = response.action_brief_markdown || "";
     uiRefs.result.classList.remove("hidden");
     uiRefs.result.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  async function appendDecisionLog() {
+    if (!APP_STATE.lastRequestId || !APP_STATE.lastDecisionLogPayload) {
+      return { ok: false, message: "No routed decision payload available yet." };
+    }
+
+    const base = CONFIG.apiBase || "";
+    const endpoint = `${base}${CONFIG.logAppendPath}`;
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          request_id: APP_STATE.lastRequestId,
+          decision_log_payload: APP_STATE.lastDecisionLogPayload,
+          action_brief_markdown: APP_STATE.lastBrief
+        })
+      });
+      const data = await res.json();
+      if (!res.ok || data.status !== "ok") {
+        return { ok: false, message: data?.message || "Log append failed." };
+      }
+      return { ok: true, message: data.message || "Decision log appended." };
+    } catch (_err) {
+      return { ok: false, message: "Log append request failed." };
+    }
+  }
+
+  async function runStreamingRoute(payload, uiRefs) {
+    const base = CONFIG.apiBase || "";
+    const endpoint = `${base}${CONFIG.streamPath}`;
+    const streamBox = document.getElementById("streamBox");
+    const streamOutput = document.getElementById("streamOutput");
+    if (!streamBox || !streamOutput) return;
+
+    streamBox.classList.remove("hidden");
+    streamOutput.textContent = "";
+
+    const body = {
+      request_id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+      timestamp: new Date().toISOString(),
+      session_id: "missioncanvas-web-session",
+      user: { id: "web-user", role: "operator" },
+      input: {
+        objective: payload.question,
+        context: payload.context,
+        desired_outcome: payload.outcome,
+        constraints: payload.constraints,
+        risk_posture: "medium"
+      },
+      policy: {
+        enforce_convergence: true,
+        enforce_one_way_gate: true,
+        max_selected_rius: 5,
+        require_validation_checks: true
+      },
+      runtime: {
+        mode: "planning",
+        allow_execution: false,
+        tool_whitelist: ["research", "planning"],
+        log_target: "implementation"
+      }
+    };
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let finalResponse = null;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+        for (const line of lines) {
+          if (!line.trim()) continue;
+          let evt;
+          try {
+            evt = JSON.parse(line);
+          } catch (_err) {
+            continue;
+          }
+          if (evt.type === "chunk") {
+            streamOutput.textContent += evt.text;
+          } else if (evt.type === "final") {
+            finalResponse = evt.response;
+          }
+        }
+      }
+
+      if (finalResponse) {
+        renderRoutingResponse(finalResponse, uiRefs);
+      }
+    } catch (_err) {
+      streamOutput.textContent = "Streaming unavailable. Use standard route flow.";
+    }
   }
 
   function initAskForm() {
@@ -315,6 +427,9 @@
     const copyBtn = document.getElementById("copyBrief");
     const emailBtn = document.getElementById("emailBrief");
     const speakBtn = document.getElementById("speakBrief");
+    const runStreamBtn = document.getElementById("runStream");
+    const appendLogBtn = document.getElementById("appendLog");
+    const autoLog = document.getElementById("autoLog");
     let currentBrief = "";
 
     form.addEventListener("submit", async function (e) {
@@ -330,6 +445,10 @@
       const response = await routeViaOpenClaw(payload);
       currentBrief = response.action_brief_markdown || "";
       renderRoutingResponse(response, uiRefs);
+      if (autoLog && autoLog.checked) {
+        const logResult = await appendDecisionLog();
+        uiRefs.rAction.textContent = `${uiRefs.rAction.textContent} | ${logResult.message}`;
+      }
     });
 
     copyBtn.addEventListener("click", async function () {
@@ -391,6 +510,26 @@
       utter.rate = 1.0;
       utter.pitch = 1.0;
       window.speechSynthesis.speak(utter);
+    });
+
+    runStreamBtn.addEventListener("click", async function () {
+      const questionEl = document.getElementById("question");
+      const contextEl = document.getElementById("context");
+      const outcomeEl = document.getElementById("outcome");
+      const constraintsEl = document.getElementById("constraints");
+      const payload = {
+        question: String(questionEl?.value || "").trim(),
+        context: String(contextEl?.value || "").trim(),
+        outcome: String(outcomeEl?.value || "").trim(),
+        constraints: String(constraintsEl?.value || "").trim()
+      };
+      if (!payload.question) return;
+      await runStreamingRoute(payload, uiRefs);
+    });
+
+    appendLogBtn.addEventListener("click", async function () {
+      const logResult = await appendDecisionLog();
+      uiRefs.rAction.textContent = `${uiRefs.rAction.textContent} | ${logResult.message}`;
     });
   }
 

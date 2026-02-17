@@ -84,6 +84,7 @@
           <button id="voiceStart" class="btn alt btn-small" type="button">Voice Input</button>
           <button id="voiceStop" class="btn alt btn-small" type="button">Stop Voice</button>
           <button id="speakBrief" class="btn alt btn-small" type="button">Speak Brief</button>
+          <button id="runStream" class="btn alt btn-small" type="button">Run Streaming Response</button>
           <span id="voiceStatus" class="voice-status">Voice: idle</span>
         </div>
 
@@ -126,7 +127,14 @@
             <button id="copyBrief" class="btn alt" type="button">Copy Brief</button>
             <button id="emailBrief" class="btn alt" type="button">Email Brief</button>
             <button id="confirmOwd" class="btn alt hidden" type="button">Confirm ONE-WAY DOOR</button>
+            <button id="appendLog" class="btn alt" type="button">Append Decision Log</button>
+            <label class="inline-check"><input id="autoLog" type="checkbox" /> Auto-log after route</label>
           </div>
+        </div>
+
+        <div id="streamBox" class="stream-box hidden" aria-live="polite">
+          <h3>Live Talk Mode Output</h3>
+          <pre id="streamOutput"></pre>
         </div>
       </section>
 

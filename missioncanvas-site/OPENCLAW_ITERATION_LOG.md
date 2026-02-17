@@ -84,6 +84,25 @@ Anky validation:
 - Contract checks pass.
 - Noninteractive terminal bridge simulation returns routed brief successfully.
 
+## Iteration 5 (Streaming + Decision Logging)
+
+Para findings:
+- Talk mode needed incremental UX, not just final response blocks.
+- Decision payload existed but no write path into persistent log.
+
+Raptor fixes:
+- Added `POST /v1/missioncanvas/talk-stream` (NDJSON chunks + final payload).
+- Added `POST /v1/missioncanvas/log-append` (env-gated file append).
+- Added frontend controls:
+  - Run Streaming Response
+  - Append Decision Log
+  - Auto-log toggle after route
+
+Anky validation:
+- Adapter contract tests still pass.
+- Syntax checks pass.
+- One-way-door behavior remains intact after streaming/logging additions.
+
 ## Next Iteration Targets
 
 1. Add persistent conversation/session memory by `session_id`.
