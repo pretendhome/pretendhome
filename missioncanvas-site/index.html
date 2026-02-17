@@ -111,6 +111,8 @@
 
         <div id="askResult" class="result hidden" aria-live="polite">
           <h3>Recommended route</h3>
+          <p><strong>Response source:</strong> <span id="rSource"></span></p>
+          <p><strong>Status:</strong> <span id="rStatus"></span></p>
           <p><strong>Primary RIU:</strong> <span id="rRiu"></span></p>
           <p><strong>Primary Agent:</strong> <span id="rAgent"></span></p>
           <p><strong>Why this route:</strong> <span id="rWhy"></span></p>
@@ -123,6 +125,7 @@
           <div class="cta-row">
             <button id="copyBrief" class="btn alt" type="button">Copy Brief</button>
             <button id="emailBrief" class="btn alt" type="button">Email Brief</button>
+            <button id="confirmOwd" class="btn alt hidden" type="button">Confirm ONE-WAY DOOR</button>
           </div>
         </div>
       </section>

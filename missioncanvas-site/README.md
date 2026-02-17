@@ -7,6 +7,8 @@ This folder now includes an end-to-end web interface prototype with:
 - Voice input + speak-brief output (browser Web Speech APIs)
 - Business-owner page (`for-business-owners.html`)
 - Lightweight API adapter server (`server.mjs`)
+- Shared adapter core logic (`openclaw_adapter_core.mjs`)
+- Contract validator (`adapter_contract_check.mjs`)
 
 Files:
 
@@ -46,6 +48,8 @@ Behavior:
 
 - `POST /v1/missioncanvas/route`
 - `POST /v1/missioncanvas/confirm-one-way-door`
+- `GET /v1/missioncanvas/health`
+- `GET /v1/missioncanvas/capabilities`
 
 These follow the contract documented in:
 
@@ -56,6 +60,22 @@ These follow the contract documented in:
 - Voice input uses `SpeechRecognition`/`webkitSpeechRecognition`
 - Brief narration uses `speechSynthesis`
 - Browser support varies (best in Chrome/Edge)
+- For direct terminal voice capture, use browser mode today; terminal microphone bridge is planned as a next-phase adapter.
+
+## Validation pass (Para -> Raptor -> Anky)
+
+Run contract checks without starting network listeners:
+
+```bash
+cd missioncanvas-site
+node adapter_contract_check.mjs
+```
+
+Expected output:
+
+```text
+adapter_contract_check: PASS
+```
 
 ## GitHub Pages note
 

@@ -9,6 +9,11 @@
     confirmPath: "/v1/missioncanvas/confirm-one-way-door"
   };
 
+  const APP_STATE = {
+    lastRequestId: null,
+    lastOneWayItems: []
+  };
+
   const paletteRoutes = [
     {
       id: "RIU-001",
@@ -260,6 +265,8 @@
     const selected = (response.routing && response.routing.selected_rius && response.routing.selected_rius[0]) || null;
     const agentMap = (response.routing && response.routing.agent_map && response.routing.agent_map[0]) || null;
 
+    uiRefs.rSource.textContent = response.source || "unknown";
+    uiRefs.rStatus.textContent = response.status || "unknown";
     uiRefs.rRiu.textContent = selected ? `${selected.riu_id} - ${selected.name}` : "UNKNOWN";
     uiRefs.rAgent.textContent = agentMap ? agentMap.agent : "UNKNOWN";
     uiRefs.rWhy.textContent = selected ? selected.why_now : "No route details returned.";
@@ -270,10 +277,17 @@
 
     if (response.status === "needs_confirmation") {
       uiRefs.rAction.textContent = "ONE-WAY DOOR detected. Human confirmation required before execution.";
+      uiRefs.confirmOwd.classList.remove("hidden");
+      APP_STATE.lastRequestId = response.request_id || null;
+      APP_STATE.lastOneWayItems = (response.one_way_door && response.one_way_door.items) || [];
     } else if (agentMap && agentMap.task) {
       uiRefs.rAction.textContent = agentMap.task;
+      uiRefs.confirmOwd.classList.add("hidden");
+      APP_STATE.lastRequestId = response.request_id || null;
+      APP_STATE.lastOneWayItems = [];
     } else {
       uiRefs.rAction.textContent = "Proceed with convergence and first artifact.";
+      uiRefs.confirmOwd.classList.add("hidden");
     }
 
     uiRefs.briefOutput.value = response.action_brief_markdown || "No brief returned.";
@@ -288,11 +302,14 @@
     const uiRefs = {
       result: document.getElementById("askResult"),
       rRiu: document.getElementById("rRiu"),
+      rSource: document.getElementById("rSource"),
+      rStatus: document.getElementById("rStatus"),
       rAgent: document.getElementById("rAgent"),
       rWhy: document.getElementById("rWhy"),
       rArtifact: document.getElementById("rArtifact"),
       rAction: document.getElementById("rAction"),
-      briefOutput: document.getElementById("briefOutput")
+      briefOutput: document.getElementById("briefOutput"),
+      confirmOwd: document.getElementById("confirmOwd")
     };
 
     const copyBtn = document.getElementById("copyBrief");
@@ -333,6 +350,38 @@
       const subject = encodeURIComponent("MissionCanvas Routed Brief");
       const body = encodeURIComponent(currentBrief);
       window.location.href = `mailto:hello@missioncanvas.ai?subject=${subject}&body=${body}`;
+    });
+
+    uiRefs.confirmOwd.addEventListener("click", async function () {
+      if (!APP_STATE.lastRequestId || !APP_STATE.lastOneWayItems.length) return;
+      const base = CONFIG.apiBase || "";
+      const endpoint = `${base}${CONFIG.confirmPath}`;
+      const payload = {
+        request_id: APP_STATE.lastRequestId,
+        confirmation_id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        approvals: APP_STATE.lastOneWayItems.map((item) => ({
+          decision_id: item.decision_id,
+          approved: true,
+          approved_by: "web-user",
+          timestamp: new Date().toISOString(),
+          notes: "Confirmed from MissionCanvas web UI"
+        }))
+      };
+
+      try {
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        uiRefs.rStatus.textContent = `${data.status || "approved"} (confirmed)`;
+        uiRefs.rAction.textContent = "ONE-WAY DOOR confirmed. Continue with controlled execution.";
+        uiRefs.confirmOwd.classList.add("hidden");
+      } catch (_err) {
+        uiRefs.rAction.textContent = "Confirmation failed. Retry or switch to manual approval flow.";
+      }
     });
 
     speakBtn.addEventListener("click", function () {
