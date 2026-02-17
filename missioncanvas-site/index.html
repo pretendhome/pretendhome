@@ -166,10 +166,12 @@
     </footer>
   </div>
 
+  <script src="config.js"></script>
   <script>
-    window.MISSIONCANVAS_CONFIG = {
-      apiBase: ""
-    };
+    window.MISSIONCANVAS_CONFIG = Object.assign(
+      { apiBase: "" },
+      window.MISSIONCANVAS_CONFIG || {}
+    );
   </script>
   <script src="app.js"></script>
 </body>

@@ -7,6 +7,7 @@ This folder contains a full web + adapter integration prototype for Palette-alig
 - `index.html` - modern landing + ask flow + voice controls
 - `for-business-owners.html` - business-owner landing page
 - `styles.css` - shared styles
+- `config.js` - frontend runtime config (set API base URL)
 - `app.js` - frontend routing logic + confirmation flow + voice UX
 - `server.mjs` - API adapter + OpenClaw proxy + fallback
 - `openclaw_adapter_core.mjs` - shared route/validation core
@@ -14,6 +15,9 @@ This folder contains a full web + adapter integration prototype for Palette-alig
 - `terminal_voice_bridge.mjs` - direct terminal microphone bridge
 - `OPENCLAW_ITERATION_LOG.md` - Para/Raptor/Anky iteration records
 - `OPENCLAW_RESEARCH_NOTES.md` - external research references and design rationale
+- `deploy/PRODUCTION_WIRING.md` - live wiring runbook
+- `scripts/run_rossi_pilot.mjs` - production pilot runner
+- `pilot/rossi_payload.json` - pilot payload
 
 ## Quick Start
 
@@ -24,6 +28,12 @@ node server.mjs
 
 Open:
 - `http://localhost:8787`
+
+Set frontend API base in `config.js` when deploying:
+
+```js
+window.MISSIONCANVAS_CONFIG = { apiBase: "https://api.missioncanvas.ai" };
+```
 
 ## OpenClaw Proxy Modes
 
@@ -106,6 +116,13 @@ Expected output:
 
 ```text
 adapter_contract_check: PASS
+```
+
+Pilot flow test:
+
+```bash
+cd missioncanvas-site
+node scripts/run_rossi_pilot.mjs --offline
 ```
 
 ## Streaming Talk Mode

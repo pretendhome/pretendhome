@@ -103,6 +103,25 @@ Anky validation:
 - Syntax checks pass.
 - One-way-door behavior remains intact after streaming/logging additions.
 
+## Iteration 6 (Live Wiring + Pilot Runbook)
+
+Para findings:
+- Needed explicit production wiring artifacts and executable pilot path.
+- Frontend needed environment-configurable API base without code edits.
+
+Raptor fixes:
+- Added runtime config file: `config.js`.
+- Added production wiring runbook: `deploy/PRODUCTION_WIRING.md`.
+- Added pilot payload + runner:
+  - `pilot/rossi_payload.json`
+  - `scripts/run_rossi_pilot.mjs`
+- Added env template: `.env.production.example`.
+
+Anky validation:
+- Script syntax checks pass.
+- Offline pilot run produces brief + report artifacts.
+- Adapter contract checks continue to pass.
+
 ## Next Iteration Targets
 
 1. Add persistent conversation/session memory by `session_id`.
