@@ -1,41 +1,68 @@
-# MissionCanvas Landing Site (v2)
+# MissionCanvas Site (OpenClaw Integration v1)
 
-This folder contains a static site:
+This folder now includes an end-to-end web interface prototype with:
 
-- `index.html` (home + Palette question router + waitlist)
-- `for-business-owners.html` (business-owner specific page)
-- `styles.css` (shared site styling)
-- `app.js` (question routing + waitlist form behavior)
-- `CNAME` (`missioncanvas.ai`)
+- Modern landing page (`index.html`)
+- Palette question router UI (RIU + agent + artifact + action brief)
+- Voice input + speak-brief output (browser Web Speech APIs)
+- Business-owner page (`for-business-owners.html`)
+- Lightweight API adapter server (`server.mjs`)
 
-## Quick publish on GitHub Pages
+Files:
 
-1. Create/open your GitHub repo for Pages.
-2. Copy all files from this folder into repo root.
-3. Push to `main`.
-4. In repo settings, enable Pages from `main` branch root.
-5. Set custom domain to `missioncanvas.ai`.
-6. Keep DNS:
-   - `A @` -> GitHub Pages A records
-   - `CNAME www` -> `<your-username>.github.io`
+- `index.html`
+- `for-business-owners.html`
+- `styles.css`
+- `app.js`
+- `server.mjs`
+- `CNAME`
 
-## Waitlist behavior
+## Local run (recommended)
 
-The waitlist form is frontend-only and opens the visitor's email client with prefilled content to:
+Use Node 18+.
 
-- `hello@missioncanvas.ai`
+```bash
+cd missioncanvas-site
+node server.mjs
+```
 
-This avoids backend setup for v1.
+Open: `http://localhost:8787`
 
-## Palette router behavior
+## OpenClaw mode (proxy)
 
-The `Ask MissionCanvas` form in `index.html` runs a lightweight local router in `app.js`:
+If you have an OpenClaw deployment endpoint, run:
 
-- Inputs: question, context, outcome, constraints
-- Outputs: RIU-style route, primary agent, next artifact, and generated action brief
-- Actions: copy brief or email brief to `hello@missioncanvas.ai`
+```bash
+cd missioncanvas-site
+OPENCLAW_BASE_URL="https://<your-openclaw-host>" OPENCLAW_API_KEY="<optional-key>" node server.mjs
+```
 
-## Update points
+Behavior:
 
-- Contact address appears in header/CTA links and form script.
-- Main copy is plain text blocks in both HTML files.
+- Server attempts upstream OpenClaw call at `/v1/missioncanvas/route`
+- On failure/unavailable upstream, it falls back to local Palette route logic
+
+## API endpoints exposed by `server.mjs`
+
+- `POST /v1/missioncanvas/route`
+- `POST /v1/missioncanvas/confirm-one-way-door`
+
+These follow the contract documented in:
+
+- `palette/docs/openclaw_application_prompt_missioncanvas_api_contract_v1.0.md`
+
+## Voice experience notes
+
+- Voice input uses `SpeechRecognition`/`webkitSpeechRecognition`
+- Brief narration uses `speechSynthesis`
+- Browser support varies (best in Chrome/Edge)
+
+## GitHub Pages note
+
+GitHub Pages cannot run `server.mjs`.
+
+For hosted dynamic mode, deploy the adapter API to a serverless/container runtime and set:
+
+- `window.MISSIONCANVAS_CONFIG.apiBase`
+
+in your deployed frontend environment.

@@ -80,6 +80,12 @@
       <section id="ask" class="card ask-section modern-ask">
         <h2>Ask MissionCanvas</h2>
         <p class="muted">Simple question system connected to Palette router logic.</p>
+        <div class="voice-bar">
+          <button id="voiceStart" class="btn alt btn-small" type="button">Voice Input</button>
+          <button id="voiceStop" class="btn alt btn-small" type="button">Stop Voice</button>
+          <button id="speakBrief" class="btn alt btn-small" type="button">Speak Brief</button>
+          <span id="voiceStatus" class="voice-status">Voice: idle</span>
+        </div>
 
         <form id="askForm" class="form-grid">
           <div class="full">
@@ -149,6 +155,11 @@
     </footer>
   </div>
 
+  <script>
+    window.MISSIONCANVAS_CONFIG = {
+      apiBase: ""
+    };
+  </script>
   <script src="app.js"></script>
 </body>
 </html>

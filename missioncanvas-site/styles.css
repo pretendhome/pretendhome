@@ -216,6 +216,20 @@ section { padding: 12px 0; }
   background: linear-gradient(150deg, #f8faff, #ffffff);
 }
 
+.voice-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 8px 0 6px;
+}
+
+.voice-status {
+  font-size: 0.86rem;
+  color: #37476e;
+  font-weight: 600;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
