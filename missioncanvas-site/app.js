@@ -1,236 +1,215 @@
 (function () {
-  const DEFAULT_API_BASE = "";
-
   const CONFIG = {
-    apiBase:
-      (window.MISSIONCANVAS_CONFIG && window.MISSIONCANVAS_CONFIG.apiBase) ||
-      DEFAULT_API_BASE,
+    apiBase: (window.MISSIONCANVAS_CONFIG && window.MISSIONCANVAS_CONFIG.apiBase) || "",
     routePath: "/v1/missioncanvas/route",
-    confirmPath: "/v1/missioncanvas/confirm-one-way-door",
     streamPath: "/v1/missioncanvas/talk-stream",
+    confirmPath: "/v1/missioncanvas/confirm-one-way-door",
     logAppendPath: "/v1/missioncanvas/log-append"
   };
 
-  const APP_STATE = {
+  const STATE = {
+    transcript: "",
+    structured: {
+      objective: "",
+      context: "",
+      desired_outcome: "",
+      constraints: ""
+    },
+    lastResponse: null,
     lastRequestId: null,
     lastOneWayItems: [],
-    lastDecisionLogPayload: "",
-    lastBrief: ""
+    lastBrief: "",
+    lastDecisionLogPayload: ""
   };
 
-  const paletteRoutes = [
-    {
-      id: "RIU-001",
-      name: "Convergence & Scope Clarification",
-      keywords: ["clarify", "unclear", "scope", "direction", "where do i start", "confused", "alignment"],
-      agent: "Yuty (Narrative) -> Rex (Architecture)",
-      artifact: "Convergence Brief",
-      action: "Define target outcome, non-goals, and first success metric."
-    },
-    {
-      id: "RIU-014",
-      name: "Business Planning & Positioning",
-      keywords: ["business plan", "strategy", "positioning", "roadmap", "model", "offer", "pricing"],
-      agent: "Rex (Architecture) + Yuty (Narrative)",
-      artifact: "Operating Plan v1",
-      action: "Build a one-page strategy, priorities, and 30-day execution plan."
-    },
-    {
-      id: "RIU-028",
-      name: "Market Signal & Brand Narrative",
-      keywords: ["brand", "podcast", "drop", "campaign", "marketing", "audience", "content", "story"],
-      agent: "Argy (Research) -> Yuty (Narrative)",
-      artifact: "Go-To-Market Brief",
-      action: "Map competitors, audience signals, and narrative hooks."
-    },
-    {
-      id: "RIU-039",
-      name: "Funding & Grants",
-      keywords: ["grant", "funding", "loan", "application", "capital", "subsidy", "government"],
-      agent: "Argy (Research) + Theri (Build)",
-      artifact: "Funding Pipeline + Draft Applications",
-      action: "Generate funding list, eligibility matrix, and first application draft."
-    },
-    {
-      id: "RIU-062",
-      name: "Build & Implementation",
-      keywords: ["build", "website", "app", "automation", "system", "implement", "launch"],
-      agent: "Theri (Build) with Rex (Architecture)",
-      artifact: "Implementation Spec + Build Tasks",
-      action: "Convert plan into build tickets and delivery sequence."
-    },
-    {
-      id: "RIU-073",
-      name: "Debug & Recovery",
-      keywords: ["bug", "error", "broken", "issue", "fix", "not working", "failure"],
-      agent: "Raptor (Debug)",
-      artifact: "Root-Cause + Fix Plan",
-      action: "Identify failure point and define minimal corrective action."
-    }
-  ];
+  const $ = (id) => document.getElementById(id);
 
-  function scoreRoute(input, route) {
-    const text = input.toLowerCase();
-    let score = 0;
-    for (const keyword of route.keywords) {
-      if (text.includes(keyword)) {
-        score += keyword.includes(" ") ? 2 : 1;
-      }
-    }
-    return score;
+  const refs = {
+    systemStatus: $("systemStatus"),
+    btnVoiceStart: $("btnVoiceStart"),
+    btnVoiceStop: $("btnVoiceStop"),
+    voiceState: $("voiceState"),
+    transcriptInput: $("transcriptInput"),
+    btnTranslate: $("btnTranslate"),
+    translateConfidence: $("translateConfidence"),
+    tObjective: $("tObjective"),
+    tContext: $("tContext"),
+    tOutcome: $("tOutcome"),
+    tConstraints: $("tConstraints"),
+    btnRoute: $("btnRoute"),
+    btnStream: $("btnStream"),
+    manualInput: $("manualInput"),
+    btnManualTranslate: $("btnManualTranslate"),
+    resultStatus: $("resultStatus"),
+    rSource: $("rSource"),
+    rStatus: $("rStatus"),
+    rRiu: $("rRiu"),
+    rAgent: $("rAgent"),
+    rArtifact: $("rArtifact"),
+    rAction: $("rAction"),
+    briefOutput: $("briefOutput"),
+    btnSpeak: $("btnSpeak"),
+    btnCopy: $("btnCopy"),
+    btnConfirmOwd: $("btnConfirmOwd"),
+    btnAppendLog: $("btnAppendLog"),
+    autoLog: $("autoLog"),
+    followupInput: $("followupInput"),
+    btnRefine: $("btnRefine"),
+    presetChips: Array.from(document.querySelectorAll(".preset-chip")),
+    streamBox: $("streamBox"),
+    streamOutput: $("streamOutput")
+  };
+
+  function setSystemStatus(message, level = "warn") {
+    if (!refs.systemStatus) return;
+    refs.systemStatus.textContent = `System status: ${message}`;
+    refs.systemStatus.classList.remove("ok", "warn", "error");
+    refs.systemStatus.classList.add(level);
   }
 
-  function chooseLocalRoute(payload) {
-    const fullText = [payload.question, payload.context, payload.outcome, payload.constraints].join(" ");
-    let best = paletteRoutes[0];
-    let bestScore = -1;
+  function splitSentences(text) {
+    return String(text || "")
+      .split(/(?<=[.!?])\s+|\n+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
 
-    for (const route of paletteRoutes) {
-      const s = scoreRoute(fullText, route);
-      if (s > bestScore) {
-        best = route;
-        bestScore = s;
-      }
+  function firstNonEmpty(arr) {
+    for (const item of arr) {
+      if (item && String(item).trim()) return String(item).trim();
     }
+    return "";
+  }
 
-    if (bestScore <= 0) {
-      return {
-        id: "RIU-001",
-        name: "Convergence & Scope Clarification",
-        agent: "Yuty (Narrative) -> Rex (Architecture)",
-        artifact: "Convergence Brief",
-        action: "Clarify objective, constraints, and first measurable output.",
-        why: "No strong keyword match. Defaulting to convergence-first routing."
-      };
+  function findSentence(sentences, patterns) {
+    for (const s of sentences) {
+      const lower = s.toLowerCase();
+      if (patterns.some((p) => lower.includes(p))) return s;
     }
+    return "";
+  }
+
+  function mergeUnique(parts) {
+    return [...new Set(parts.filter(Boolean).map((x) => x.trim()))].join(" ");
+  }
+
+  // Translation layer: convert natural speech into structured mission prompt.
+  function translateNaturalInput(rawText, prior = null) {
+    const text = String(rawText || "").trim();
+    const sentences = splitSentences(text);
+
+    const objective = firstNonEmpty([
+      findSentence(sentences, ["i need", "i want", "help me", "build", "create", "plan", "figure out"]),
+      sentences[0],
+      prior?.objective
+    ]);
+
+    const context = firstNonEmpty([
+      findSentence(sentences, ["currently", "today", "right now", "already", "we have", "so far", "existing"]),
+      prior?.context
+    ]);
+
+    const desiredOutcome = firstNonEmpty([
+      findSentence(sentences, ["so that", "goal", "outcome", "by", "within", "end state", "in "]),
+      prior?.desired_outcome
+    ]);
+
+    const constraints = mergeUnique([
+      findSentence(sentences, ["budget", "deadline", "time", "limited", "cannot", "can't", "risk", "team", "constraint"]),
+      prior?.constraints
+    ]);
+
+    let confidence = 40;
+    if (objective) confidence += 25;
+    if (context) confidence += 10;
+    if (desiredOutcome) confidence += 15;
+    if (constraints) confidence += 10;
 
     return {
-      ...best,
-      why: "Matched route signals in your question and context."
+      objective,
+      context,
+      desired_outcome: desiredOutcome,
+      constraints,
+      confidence: Math.min(100, confidence)
     };
   }
 
-  function detectOneWayDoor(payload) {
-    const text = [payload.question, payload.context, payload.outcome, payload.constraints].join(" ").toLowerCase();
-    const oneWayTerms = ["production deploy", "delete database", "drop table", "delete data", "irreversible", "migrate live"];
-    return oneWayTerms.some((t) => text.includes(t));
+  function renderStructuredPrompt(data) {
+    refs.tObjective.value = data.objective || "";
+    refs.tContext.value = data.context || "";
+    refs.tOutcome.value = data.desired_outcome || "";
+    refs.tConstraints.value = data.constraints || "";
+    refs.translateConfidence.textContent = `Confidence: ${data.confidence || 0}%`;
+
+    STATE.structured = {
+      objective: data.objective || "",
+      context: data.context || "",
+      desired_outcome: data.desired_outcome || "",
+      constraints: data.constraints || ""
+    };
   }
 
-  function buildBrief(payload, route) {
-    const date = new Date().toISOString().slice(0, 10);
-    return [
+  function readStructuredPrompt() {
+    return {
+      objective: String(refs.tObjective.value || "").trim(),
+      context: String(refs.tContext.value || "").trim(),
+      desired_outcome: String(refs.tOutcome.value || "").trim(),
+      constraints: String(refs.tConstraints.value || "").trim()
+    };
+  }
+
+  function localFallbackRoute(structured) {
+    const objective = structured.objective || "UNKNOWN";
+    const requestId = crypto.randomUUID ? crypto.randomUUID() : String(Date.now());
+    const route = /grant|fund/i.test(objective)
+      ? { id: "RIU-039", name: "Funding & Grants", agent: "Argy + Theri", artifact: "Funding Pipeline" }
+      : /plan|business|strategy/i.test(objective)
+        ? { id: "RIU-014", name: "Business Planning & Positioning", agent: "Rex + Yuty", artifact: "Operating Plan v1" }
+        : { id: "RIU-001", name: "Convergence & Scope Clarification", agent: "Yuty -> Rex", artifact: "Convergence Brief" };
+
+    const brief = [
       "# MissionCanvas Action Brief",
       "",
-      `Date: ${date}`,
       `Route: ${route.id} - ${route.name}`,
       `Primary Agent: ${route.agent}`,
       "",
       "## Input",
-      `Question: ${payload.question || "N/A"}`,
-      `Context: ${payload.context || "N/A"}`,
-      `Desired Outcome: ${payload.outcome || "N/A"}`,
-      `Constraints: ${payload.constraints || "N/A"}`,
+      `Objective: ${structured.objective || "N/A"}`,
+      `Context: ${structured.context || "N/A"}`,
+      `Desired Outcome: ${structured.desired_outcome || "N/A"}`,
+      `Constraints: ${structured.constraints || "N/A"}`,
       "",
-      "## Immediate Plan",
-      `Why this route: ${route.why}`,
-      `Next artifact: ${route.artifact}`,
-      `Immediate action: ${route.action}`,
-      "",
-      "## Convergence Checks",
-      "- Is the target outcome explicit and measurable?",
-      "- Are non-goals defined?",
-      "- Is this a ONE-WAY or TWO-WAY decision?",
-      "- What is the first deliverable in 24-72 hours?",
-      "",
-      "Generated by MissionCanvas (OpenClaw integration mode)."
+      "## Immediate Action",
+      `Build ${route.artifact} and execute first 30-day priority set.`
     ].join("\n");
-  }
-
-  function makeLocalResponse(payload) {
-    const route = chooseLocalRoute(payload);
-    const oneWay = detectOneWayDoor(payload);
-    const brief = buildBrief(payload, route);
 
     return {
-      request_id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
-      status: oneWay ? "needs_confirmation" : "ok",
-      convergence: {
-        complete: Boolean(payload.question && payload.outcome),
-        goal: payload.outcome || "UNKNOWN",
-        roles: "Human defines intent; agents execute bounded tasks.",
-        capabilities: "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
-        constraints: payload.constraints || "None provided",
-        non_goals: "Unapproved irreversible actions",
-        missing_fields: []
-      },
+      request_id: requestId,
+      source: "local_fallback",
+      status: "ok",
       routing: {
-        candidate_rius: [
-          {
-            riu_id: route.id,
-            name: route.name,
-            match_strength: "STRONG",
-            matched_signals: ["keyword_match"]
-          }
-        ],
-        selected_rius: [
-          {
-            riu_id: route.id,
-            name: route.name,
-            why_now: route.why
-          }
-        ],
-        agent_map: [
-          {
-            agent: route.agent,
-            task: route.action,
-            maturity: "UNVALIDATED",
-            human_required: true
-          }
-        ]
+        selected_rius: [{ riu_id: route.id, name: route.name, why_now: "Fallback route chosen by local translator." }],
+        agent_map: [{ agent: route.agent, task: `Build ${route.artifact} and define first execution sequence.` }]
       },
-      one_way_door: {
-        detected: oneWay,
-        items: oneWay
-          ? [
-              {
-                decision_id: "OWD-001",
-                description: "Potential irreversible/production action detected",
-                reason: "Policy requires explicit human confirmation.",
-                requires_confirmation: true
-              }
-            ]
-          : []
-      },
-      artifacts: {
-        to_create: [route.artifact],
-        to_update: []
-      },
-      validation_checks: [
-        "Verify convergence completeness",
-        "Confirm decision reversibility",
-        "Validate first artifact quality"
-      ],
+      artifacts: { to_create: [route.artifact] },
       action_brief_markdown: brief,
-      decision_log_payload: `Route=${route.id}; Agent=${route.agent}; OWD=${oneWay}`,
-      knowledge_gap: {
-        detected: false,
-        what_is_missing: [],
-        required_retrieval: []
-      }
+      decision_log_payload: `Route=${route.id}; Agent=${route.agent}; OWD=false`,
+      one_way_door: { detected: false, items: [] }
     };
   }
 
-  async function routeViaOpenClaw(payload) {
+  async function fetchRoute(structured) {
+    const endpoint = `${CONFIG.apiBase}${CONFIG.routePath}`;
     const body = {
       request_id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
       timestamp: new Date().toISOString(),
       session_id: "missioncanvas-web-session",
       user: { id: "web-user", role: "operator" },
       input: {
-        objective: payload.question,
-        context: payload.context,
-        desired_outcome: payload.outcome,
-        constraints: payload.constraints,
+        objective: structured.objective,
+        context: structured.context,
+        desired_outcome: structured.desired_outcome,
+        constraints: structured.constraints,
         risk_posture: "medium"
       },
       policy: {
@@ -247,107 +226,37 @@
       }
     };
 
-    const base = CONFIG.apiBase || "";
-    const endpoint = `${base}${CONFIG.routePath}`;
-
     try {
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       });
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      return await res.json();
-    } catch (_error) {
-      return makeLocalResponse(payload);
-    }
-  }
-
-  function renderRoutingResponse(response, uiRefs) {
-    const selected = (response.routing && response.routing.selected_rius && response.routing.selected_rius[0]) || null;
-    const agentMap = (response.routing && response.routing.agent_map && response.routing.agent_map[0]) || null;
-
-    uiRefs.rSource.textContent = response.source || "unknown";
-    uiRefs.rStatus.textContent = response.status || "unknown";
-    uiRefs.rRiu.textContent = selected ? `${selected.riu_id} - ${selected.name}` : "UNKNOWN";
-    uiRefs.rAgent.textContent = agentMap ? agentMap.agent : "UNKNOWN";
-    uiRefs.rWhy.textContent = selected ? selected.why_now : "No route details returned.";
-    uiRefs.rArtifact.textContent =
-      response.artifacts && response.artifacts.to_create && response.artifacts.to_create.length
-        ? response.artifacts.to_create.join(", ")
-        : "None";
-
-    if (response.status === "needs_confirmation") {
-      uiRefs.rAction.textContent = "ONE-WAY DOOR detected. Human confirmation required before execution.";
-      uiRefs.confirmOwd.classList.remove("hidden");
-      APP_STATE.lastRequestId = response.request_id || null;
-      APP_STATE.lastOneWayItems = (response.one_way_door && response.one_way_door.items) || [];
-    } else if (agentMap && agentMap.task) {
-      uiRefs.rAction.textContent = agentMap.task;
-      uiRefs.confirmOwd.classList.add("hidden");
-      APP_STATE.lastRequestId = response.request_id || null;
-      APP_STATE.lastOneWayItems = [];
-    } else {
-      uiRefs.rAction.textContent = "Proceed with convergence and first artifact.";
-      uiRefs.confirmOwd.classList.add("hidden");
-    }
-
-    uiRefs.briefOutput.value = response.action_brief_markdown || "No brief returned.";
-    APP_STATE.lastDecisionLogPayload = response.decision_log_payload || "";
-    APP_STATE.lastBrief = response.action_brief_markdown || "";
-    uiRefs.result.classList.remove("hidden");
-    uiRefs.result.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  async function appendDecisionLog() {
-    if (!APP_STATE.lastRequestId || !APP_STATE.lastDecisionLogPayload) {
-      return { ok: false, message: "No routed decision payload available yet." };
-    }
-
-    const base = CONFIG.apiBase || "";
-    const endpoint = `${base}${CONFIG.logAppendPath}`;
-    try {
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          request_id: APP_STATE.lastRequestId,
-          decision_log_payload: APP_STATE.lastDecisionLogPayload,
-          action_brief_markdown: APP_STATE.lastBrief
-        })
-      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      if (!res.ok || data.status !== "ok") {
-        return { ok: false, message: data?.message || "Log append failed." };
-      }
-      return { ok: true, message: data.message || "Decision log appended." };
+      setSystemStatus("proxy route success", "ok");
+      return data;
     } catch (_err) {
-      return { ok: false, message: "Log append request failed." };
+      setSystemStatus("proxy unavailable, using local fallback", "warn");
+      return localFallbackRoute(structured);
     }
   }
 
-  async function runStreamingRoute(payload, uiRefs) {
-    const base = CONFIG.apiBase || "";
-    const endpoint = `${base}${CONFIG.streamPath}`;
-    const streamBox = document.getElementById("streamBox");
-    const streamOutput = document.getElementById("streamOutput");
-    if (!streamBox || !streamOutput) return;
+  async function fetchStream(structured) {
+    refs.streamBox.classList.remove("hidden");
+    refs.streamOutput.textContent = "";
 
-    streamBox.classList.remove("hidden");
-    streamOutput.textContent = "";
-
+    const endpoint = `${CONFIG.apiBase}${CONFIG.streamPath}`;
     const body = {
       request_id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
       timestamp: new Date().toISOString(),
       session_id: "missioncanvas-web-session",
       user: { id: "web-user", role: "operator" },
       input: {
-        objective: payload.question,
-        context: payload.context,
-        desired_outcome: payload.outcome,
-        constraints: payload.constraints,
+        objective: structured.objective,
+        context: structured.context,
+        desired_outcome: structured.desired_outcome,
+        constraints: structured.constraints,
         risk_posture: "medium"
       },
       policy: {
@@ -370,7 +279,9 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       });
-      if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
+
+      if (!res.ok || !res.body) throw new Error("Stream unavailable");
+      setSystemStatus("stream connected", "ok");
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -383,6 +294,7 @@
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split("\n");
         buffer = lines.pop() || "";
+
         for (const line of lines) {
           if (!line.trim()) continue;
           let evt;
@@ -391,191 +303,136 @@
           } catch (_err) {
             continue;
           }
+
           if (evt.type === "chunk") {
-            streamOutput.textContent += evt.text;
+            refs.streamOutput.textContent += evt.text;
           } else if (evt.type === "final") {
             finalResponse = evt.response;
           }
         }
       }
 
-      if (finalResponse) {
-        renderRoutingResponse(finalResponse, uiRefs);
-      }
+      if (finalResponse) renderResponse(finalResponse);
     } catch (_err) {
-      streamOutput.textContent = "Streaming unavailable. Use standard route flow.";
+      setSystemStatus("stream unavailable", "warn");
+      refs.streamOutput.textContent = "Streaming unavailable. Use standard route.";
     }
   }
 
-  function initAskForm() {
-    const form = document.getElementById("askForm");
-    if (!form) return;
+  function renderResponse(response) {
+    const selected = response?.routing?.selected_rius?.[0] || null;
+    const agentMap = response?.routing?.agent_map?.[0] || null;
+    const artifact = response?.artifacts?.to_create?.[0] || "-";
 
-    const uiRefs = {
-      result: document.getElementById("askResult"),
-      rRiu: document.getElementById("rRiu"),
-      rSource: document.getElementById("rSource"),
-      rStatus: document.getElementById("rStatus"),
-      rAgent: document.getElementById("rAgent"),
-      rWhy: document.getElementById("rWhy"),
-      rArtifact: document.getElementById("rArtifact"),
-      rAction: document.getElementById("rAction"),
-      briefOutput: document.getElementById("briefOutput"),
-      confirmOwd: document.getElementById("confirmOwd")
-    };
+    refs.resultStatus.textContent = "Route complete.";
+    refs.rSource.textContent = response?.source || "unknown";
+    refs.rStatus.textContent = response?.status || "unknown";
+    refs.rRiu.textContent = selected ? `${selected.riu_id} - ${selected.name}` : "-";
+    refs.rAgent.textContent = agentMap?.agent || "-";
+    refs.rArtifact.textContent = artifact;
+    refs.rAction.textContent = agentMap?.task || "-";
+    refs.briefOutput.value = response?.action_brief_markdown || "No brief returned.";
 
-    const copyBtn = document.getElementById("copyBrief");
-    const emailBtn = document.getElementById("emailBrief");
-    const speakBtn = document.getElementById("speakBrief");
-    const runStreamBtn = document.getElementById("runStream");
-    const appendLogBtn = document.getElementById("appendLog");
-    const autoLog = document.getElementById("autoLog");
-    let currentBrief = "";
+    STATE.lastResponse = response;
+    STATE.lastRequestId = response?.request_id || null;
+    STATE.lastOneWayItems = response?.one_way_door?.items || [];
+    STATE.lastBrief = response?.action_brief_markdown || "";
+    STATE.lastDecisionLogPayload = response?.decision_log_payload || "";
 
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const data = new FormData(form);
-      const payload = {
-        question: String(data.get("question") || "").trim(),
-        context: String(data.get("context") || "").trim(),
-        outcome: String(data.get("outcome") || "").trim(),
-        constraints: String(data.get("constraints") || "").trim()
-      };
-
-      const response = await routeViaOpenClaw(payload);
-      currentBrief = response.action_brief_markdown || "";
-      renderRoutingResponse(response, uiRefs);
-      if (autoLog && autoLog.checked) {
-        const logResult = await appendDecisionLog();
-        uiRefs.rAction.textContent = `${uiRefs.rAction.textContent} | ${logResult.message}`;
-      }
-    });
-
-    copyBtn.addEventListener("click", async function () {
-      if (!currentBrief) return;
-      try {
-        await navigator.clipboard.writeText(currentBrief);
-        copyBtn.textContent = "Copied";
-        setTimeout(function () {
-          copyBtn.textContent = "Copy Brief";
-        }, 1200);
-      } catch (_err) {
-        copyBtn.textContent = "Copy failed";
-      }
-    });
-
-    emailBtn.addEventListener("click", function () {
-      if (!currentBrief) return;
-      const subject = encodeURIComponent("MissionCanvas Routed Brief");
-      const body = encodeURIComponent(currentBrief);
-      window.location.href = `mailto:hello@missioncanvas.ai?subject=${subject}&body=${body}`;
-    });
-
-    uiRefs.confirmOwd.addEventListener("click", async function () {
-      if (!APP_STATE.lastRequestId || !APP_STATE.lastOneWayItems.length) return;
-      const base = CONFIG.apiBase || "";
-      const endpoint = `${base}${CONFIG.confirmPath}`;
-      const payload = {
-        request_id: APP_STATE.lastRequestId,
-        confirmation_id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
-        approvals: APP_STATE.lastOneWayItems.map((item) => ({
-          decision_id: item.decision_id,
-          approved: true,
-          approved_by: "web-user",
-          timestamp: new Date().toISOString(),
-          notes: "Confirmed from MissionCanvas web UI"
-        }))
-      };
-
-      try {
-        const res = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        uiRefs.rStatus.textContent = `${data.status || "approved"} (confirmed)`;
-        uiRefs.rAction.textContent = "ONE-WAY DOOR confirmed. Continue with controlled execution.";
-        uiRefs.confirmOwd.classList.add("hidden");
-      } catch (_err) {
-        uiRefs.rAction.textContent = "Confirmation failed. Retry or switch to manual approval flow.";
-      }
-    });
-
-    speakBtn.addEventListener("click", function () {
-      if (!currentBrief || !window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(currentBrief.slice(0, 900));
-      utter.rate = 1.0;
-      utter.pitch = 1.0;
-      window.speechSynthesis.speak(utter);
-    });
-
-    runStreamBtn.addEventListener("click", async function () {
-      const questionEl = document.getElementById("question");
-      const contextEl = document.getElementById("context");
-      const outcomeEl = document.getElementById("outcome");
-      const constraintsEl = document.getElementById("constraints");
-      const payload = {
-        question: String(questionEl?.value || "").trim(),
-        context: String(contextEl?.value || "").trim(),
-        outcome: String(outcomeEl?.value || "").trim(),
-        constraints: String(constraintsEl?.value || "").trim()
-      };
-      if (!payload.question) return;
-      await runStreamingRoute(payload, uiRefs);
-    });
-
-    appendLogBtn.addEventListener("click", async function () {
-      const logResult = await appendDecisionLog();
-      uiRefs.rAction.textContent = `${uiRefs.rAction.textContent} | ${logResult.message}`;
-    });
+    if (response?.status === "needs_confirmation" && STATE.lastOneWayItems.length) {
+      refs.btnConfirmOwd.classList.remove("hidden");
+    } else {
+      refs.btnConfirmOwd.classList.add("hidden");
+    }
   }
 
-  function initHeroAsk() {
-    const form = document.getElementById("heroAskForm");
-    const heroInput = document.getElementById("heroQuestion");
-    if (!form || !heroInput) return;
-
-    const tags = document.querySelectorAll(".tag[data-q]");
-    tags.forEach(function (tag) {
-      tag.addEventListener("click", function () {
-        heroInput.value = tag.getAttribute("data-q") || "";
-        heroInput.focus();
-      });
-    });
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const askQuestion = document.getElementById("question");
-      if (askQuestion) {
-        askQuestion.value = heroInput.value.trim();
-      }
-      const askSection = document.getElementById("ask");
-      if (askSection) {
-        askSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    });
-  }
-
-  function initVoiceInput() {
-    const voiceStart = document.getElementById("voiceStart");
-    const voiceStop = document.getElementById("voiceStop");
-    const voiceStatus = document.getElementById("voiceStatus");
-    const questionInput = document.getElementById("question");
-
-    if (!voiceStart || !voiceStop || !voiceStatus || !questionInput) return;
-
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      voiceStatus.textContent = "Voice: not supported in this browser";
-      voiceStart.disabled = true;
-      voiceStop.disabled = true;
+  async function appendDecisionLog() {
+    if (!STATE.lastRequestId || !STATE.lastDecisionLogPayload) {
+      refs.rAction.textContent = "No decision payload to append yet.";
       return;
     }
 
-    const recognition = new SpeechRecognition();
+    const endpoint = `${CONFIG.apiBase}${CONFIG.logAppendPath}`;
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          request_id: STATE.lastRequestId,
+          decision_log_payload: STATE.lastDecisionLogPayload,
+          action_brief_markdown: STATE.lastBrief
+        })
+      });
+      const data = await res.json();
+      refs.rAction.textContent = data?.message || "Decision log appended.";
+    } catch (_err) {
+      refs.rAction.textContent = "Decision log append failed.";
+    }
+  }
+
+  async function confirmOneWayDoor() {
+    if (!STATE.lastRequestId || !STATE.lastOneWayItems.length) return;
+
+    const endpoint = `${CONFIG.apiBase}${CONFIG.confirmPath}`;
+    const payload = {
+      request_id: STATE.lastRequestId,
+      confirmation_id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+      approvals: STATE.lastOneWayItems.map((item) => ({
+        decision_id: item.decision_id,
+        approved: true,
+        approved_by: "web-user",
+        timestamp: new Date().toISOString(),
+        notes: "Confirmed via MissionCanvas voice-first UI"
+      }))
+    };
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      refs.rStatus.textContent = `${data.status || "approved"} (confirmed)`;
+      refs.btnConfirmOwd.classList.add("hidden");
+    } catch (_err) {
+      refs.rStatus.textContent = "confirmation_failed";
+    }
+  }
+
+  function speakBrief() {
+    if (!STATE.lastBrief || !window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(STATE.lastBrief.slice(0, 1200));
+    utter.rate = 1.0;
+    utter.pitch = 1.0;
+    window.speechSynthesis.speak(utter);
+  }
+
+  async function copyBrief() {
+    if (!STATE.lastBrief) return;
+    try {
+      await navigator.clipboard.writeText(STATE.lastBrief);
+      refs.btnCopy.textContent = "Copied";
+      setTimeout(() => {
+        refs.btnCopy.textContent = "Copy Brief";
+      }, 1000);
+    } catch (_err) {
+      refs.btnCopy.textContent = "Copy Failed";
+    }
+  }
+
+  function initVoiceRecognition() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      refs.voiceState.textContent = "Voice unsupported in this browser";
+      refs.btnVoiceStart.disabled = true;
+      refs.btnVoiceStop.disabled = true;
+      setSystemStatus("voice unsupported in this browser", "warn");
+      return;
+    }
+
+    const recognition = new SR();
     recognition.lang = "en-US";
     recognition.continuous = true;
     recognition.interimResults = true;
@@ -583,65 +440,110 @@
     let finalText = "";
 
     recognition.onstart = function () {
-      voiceStatus.textContent = "Voice: listening";
+      refs.voiceState.textContent = "Listening...";
+      setSystemStatus("voice listening", "ok");
     };
 
     recognition.onresult = function (event) {
       let interim = "";
       for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        const transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
-          finalText += transcript + " ";
-        } else {
-          interim += transcript;
-        }
+        const t = event.results[i][0].transcript;
+        if (event.results[i].isFinal) finalText += `${t} `;
+        else interim += t;
       }
-      questionInput.value = (finalText + interim).trim();
+      refs.transcriptInput.value = `${finalText}${interim}`.trim();
+      STATE.transcript = refs.transcriptInput.value;
     };
 
     recognition.onerror = function () {
-      voiceStatus.textContent = "Voice: error";
+      refs.voiceState.textContent = "Voice error";
+      setSystemStatus("voice capture error", "error");
     };
 
     recognition.onend = function () {
-      voiceStatus.textContent = "Voice: idle";
+      refs.voiceState.textContent = "Voice idle";
+      setSystemStatus("voice capture complete", "ok");
+      const translated = translateNaturalInput(refs.transcriptInput.value, STATE.structured);
+      renderStructuredPrompt(translated);
     };
 
-    voiceStart.addEventListener("click", function () {
+    refs.btnVoiceStart.addEventListener("click", function () {
       try {
-        finalText = questionInput.value ? questionInput.value + " " : "";
+        finalText = refs.transcriptInput.value ? `${refs.transcriptInput.value} ` : "";
         recognition.start();
       } catch (_err) {
-        voiceStatus.textContent = "Voice: unavailable";
+        refs.voiceState.textContent = "Voice unavailable";
+        setSystemStatus("microphone unavailable", "error");
       }
     });
 
-    voiceStop.addEventListener("click", function () {
+    refs.btnVoiceStop.addEventListener("click", function () {
       recognition.stop();
-      voiceStatus.textContent = "Voice: stopped";
+      refs.voiceState.textContent = "Stopping...";
     });
   }
 
-  function initWaitlist() {
-    const form = document.getElementById("waitlistForm");
-    if (!form) return;
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const data = new FormData(form);
-      const name = data.get("name") || "";
-      const email = data.get("email") || "";
-      const goal = data.get("goal") || "";
-
-      const subject = encodeURIComponent("MissionCanvas Waitlist Request - " + name);
-      const body = encodeURIComponent("Name: " + name + "\n" + "Email: " + email + "\n\n" + "Goal:\n" + goal + "\n");
-
-      window.location.href = "mailto:hello@missioncanvas.ai?subject=" + subject + "&body=" + body;
+  function initEvents() {
+    refs.presetChips.forEach((chip) => {
+      chip.addEventListener("click", function () {
+        const text = chip.getAttribute("data-preset") || "";
+        refs.transcriptInput.value = text;
+        const translated = translateNaturalInput(text, STATE.structured);
+        renderStructuredPrompt(translated);
+        setSystemStatus("preset loaded", "ok");
+      });
     });
+
+    refs.btnTranslate.addEventListener("click", function () {
+      const translated = translateNaturalInput(refs.transcriptInput.value, STATE.structured);
+      renderStructuredPrompt(translated);
+      setSystemStatus("translation generated", "ok");
+    });
+
+    refs.btnManualTranslate.addEventListener("click", function () {
+      refs.transcriptInput.value = String(refs.manualInput.value || "").trim();
+      const translated = translateNaturalInput(refs.transcriptInput.value, STATE.structured);
+      renderStructuredPrompt(translated);
+      setSystemStatus("manual text translated", "ok");
+    });
+
+    refs.btnRoute.addEventListener("click", async function () {
+      const structured = readStructuredPrompt();
+      if (!structured.objective) {
+        refs.resultStatus.textContent = "Add objective first (voice or text).";
+        setSystemStatus("missing objective", "warn");
+        return;
+      }
+      const response = await fetchRoute(structured);
+      renderResponse(response);
+      if (refs.autoLog.checked) await appendDecisionLog();
+    });
+
+    refs.btnStream.addEventListener("click", async function () {
+      const structured = readStructuredPrompt();
+      if (!structured.objective) return;
+      await fetchStream(structured);
+    });
+
+    refs.btnRefine.addEventListener("click", async function () {
+      const followup = String(refs.followupInput.value || "").trim();
+      if (!followup) return;
+      const combined = `${refs.transcriptInput.value || ""}\n${followup}`.trim();
+      refs.transcriptInput.value = combined;
+      const translated = translateNaturalInput(combined, readStructuredPrompt());
+      renderStructuredPrompt(translated);
+      const response = await fetchRoute(readStructuredPrompt());
+      renderResponse(response);
+      setSystemStatus("self-refinement reroute complete", "ok");
+    });
+
+    refs.btnSpeak.addEventListener("click", speakBrief);
+    refs.btnCopy.addEventListener("click", copyBrief);
+    refs.btnAppendLog.addEventListener("click", appendDecisionLog);
+    refs.btnConfirmOwd.addEventListener("click", confirmOneWayDoor);
   }
 
-  initAskForm();
-  initHeroAsk();
-  initVoiceInput();
-  initWaitlist();
+  initVoiceRecognition();
+  initEvents();
+  setSystemStatus("ready", "ok");
 })();

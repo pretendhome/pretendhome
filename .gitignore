@@ -1,0 +1,16 @@
+# Compiled binaries
+raptor/raptor
+
+# Credentials and secrets
+password-manager/
+.env
+.env.production
+.env.local
+*.env
+
+# Debug dumps
+missioncanvas-site/raptor-to-debug
+
+# OS
+.DS_Store
+Thumbs.db
