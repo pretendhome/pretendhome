@@ -1,0 +1,105 @@
+{
+  "payload": {
+    "id": "coreregression_001",
+    "category": "core_regression",
+    "input": {
+      "objective": "Create a 30-day business plan for a small operator",
+      "context": "Small team with active customers and limited process documentation",
+      "desired_outcome": "One-page operating plan with weekly milestones",
+      "constraints": "Limited budget and no immediate hiring"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "baseline": {
+    "request": {
+      "request_id": "984a9a19-e871-4c47-ba51-cf9a0d0f0406",
+      "timestamp": "2026-02-19T16:45:04.052Z",
+      "session_id": "lens-eval-v1-coreregression_001",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Create a 30-day business plan for a small operator",
+        "context": "Small team with active customers and limited process documentation",
+        "desired_outcome": "One-page operating plan with weekly milestones",
+        "constraints": "Limited budget and no immediate hiring",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      }
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  },
+  "lens": {
+    "request": {
+      "request_id": "de8c8cdf-da11-4a8f-9bbe-e5c1190a9979",
+      "timestamp": "2026-02-19T16:45:04.052Z",
+      "session_id": "lens-eval-v1-coreregression_001",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Create a 30-day business plan for a small operator",
+        "context": "Small team with active customers and limited process documentation",
+        "desired_outcome": "One-page operating plan with weekly milestones",
+        "constraints": "Limited budget and no immediate hiring",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      },
+      "lens_id": "LENS-PM-001"
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  }
+}

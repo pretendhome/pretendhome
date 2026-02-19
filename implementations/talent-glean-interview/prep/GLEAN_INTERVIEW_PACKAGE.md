@@ -525,6 +525,103 @@ If validation fails, the agent gets demoted and we iterate on the prompt or retr
 
 ---
 
+## WHAT I BUILT TODAY — Feb 18, 2026 (Use for Interview Answers)
+
+A full Palette v2.0 sprint, shipped and pushed to GitHub in one session. Use these as concrete proof points.
+
+---
+
+### 1. Telegram Bridge + Voice Interface
+**What**: Built `@palette_ai_bot` — a live phone interface to Palette via Telegram.
+- Long-polling bot (no server required), per-chat state, commands: `/interview josh`, `/interview avril`, `/feedback`, `/reset`
+- Interview simulation modes: Josh Rutberg (VP Customer Outcomes, Bain background) and Avril (AI Outcomes Specialist, Singapore)
+- Voice input: sent a voice message → Whisper transcribes OGG/Opus audio → routes to Palette as text input
+- First contact: opened Telegram, sent a message, Palette responded. Voice working same session.
+
+**How to use it in an answer**:
+- "I shipped a live phone interface to an agentic system in one session — BotFather token to working voice input."
+- "I used OpenAI Whisper locally (base model, ~140MB) for transcription. Lazy-loaded so it only runs when needed."
+- "Interview simulation runs entirely through the phone. Avril can conduct a mock interview via Telegram voice messages."
+
+---
+
+### 2. 100-Payload Evaluation Suite (MissionCanvas Eval Loop)
+**What**: Built and ran a full eval framework against the live MissionCanvas endpoint.
+- 100 payloads across 10 categories (business planning, debugging, ambiguous intents, one-way doors, adversarial stress tests, etc.)
+- 6 scored dimensions: convergence completeness, routing accuracy, actionability, safety (OWD detection), uncertainty handling, expansion
+- Hard pass threshold: 24/30 per payload
+- Auto-prune (FIFO + TTL), PM decision note generation, status board, triage queue
+
+**First run results**: 92% pass rate. OWD recall = 20% (safety cluster = 8 failures).
+
+**How to use it in an answer**:
+- "I don't just build AI agents — I build eval frameworks that measure them. 6 dimensions, hard pass threshold, kill criteria."
+- "First run: 92% pass, 20% safety recall. I knew exactly where it was failing and why within minutes."
+- "This is the methodology I'd bring to Glean: instrument first, measure everything, iterate on data."
+
+---
+
+### 3. OWD Recall Fix: 20% → 100%
+**What**: The eval revealed that one-way-door detection (safety gate for irreversible decisions) was failing on business-level signals.
+- Root cause: `OWD_TERMS` array only covered technical irreversibility (database deletes, deploys). Payloads like "Migrate all customer workflows to one AI provider" had no match.
+- Fix: Expanded from 6 technical terms to 16, adding business-level signals: `decommission`, `multi-year contract`, `replace human`, `single provider`, `centralize all`, `automated decisions`, etc.
+- Verified with a node test before applying. Reran eval: OWD recall 100%, precision 76.9% (3 false positives — acceptable).
+
+**How to use it in an answer**:
+- "The eval found it. Without measurement, I'd have shipped a safety gap into production."
+- "The fix was surgical: 10 new terms, no restructuring, 100% recall improvement."
+- "This is what I mean by human-in-the-loop: the AI flags the decision, but the human decides. Broken detection = no gate."
+
+---
+
+### 4. Auto-Recursive Feedback Agent
+**What**: Built `generate_feedback_v1.mjs` — a Claude-powered agent that closes the improvement loop automatically.
+- Reads the latest eval summary + failure cluster file + raw failing responses + adapter source code
+- Calls Claude (claude-sonnet-4-6) to diagnose root causes and propose specific fixes
+- Output: `owd_terms_to_add`, `route_keywords_to_add`, `diagnosis`, `next_action`, `safe_to_auto_apply`
+- `--auto-apply` flag patches `openclaw_adapter_core.mjs` directly — no human needed for additive changes
+- Wired into `run_cycle_v1.sh` as step 4. Skips cleanly when pass rate is 100%.
+
+**Demonstrated the full loop**:
+1. Stripped OWD terms → eval: 94% pass, OWD recall 0%
+2. Ran feedback agent → Claude diagnosed: "OWD detection missing business-level signals"
+3. `--auto-apply` patched the adapter, added 10 terms
+4. Reran eval → 100% pass, 100% OWD recall
+
+**How to use it in an answer**:
+- "The system now improves itself. Eval fails → Claude diagnoses → agent patches → eval reruns. No human touch needed for additive fixes."
+- "I built kill criteria into the agent: `safe_to_auto_apply: false` if proposed changes include deletions or restructuring — those require human review."
+- "This is the agentic loop Glean talks about — I've built a working version of it."
+
+---
+
+### 5. Infrastructure Hardening (v2.0 Closeout)
+**What**: Closed out all open audit items in one session.
+- **Server null bug**: `proxyToOpenClaw()` returned `null` (not threw) when proxy URL was empty — silent failure, server sent literal `"null"`. Fixed with null-coalescing in two handlers.
+- **pm2 persistence**: MissionCanvas server now runs under pm2 — auto-restarts on crash, persists across reboots.
+- **Duplicate LIB IDs**: Three separate append events to the knowledge library all started at LIB-089, creating 9 colliding IDs. Fixed with a Python script that renumbered duplicates to LIB-101 through LIB-109. Validator passes clean.
+- **CHANGELOG v2.0**: Fully documented milestone entry.
+- **Git commit + push**: All shipped to GitHub in one commit.
+
+**How to use it in an answer**:
+- "I don't just build features — I maintain the system. Found a null response bug from an audit, fixed it same session."
+- "The LIB ID dedup shows the compounding problem of unstructured append-only logs. Built a validator, found it, fixed it."
+- "pm2 is the difference between a demo server and a production server. Set it up, tested crash recovery, done."
+
+---
+
+### Numbers to Drop in the Interview
+| Metric | Before | After |
+|---|---|---|
+| OWD recall | 20% | 100% |
+| Eval pass rate | 92% | 100% |
+| OWD terms | 6 (technical only) | 16 (technical + business) |
+| LIB entries (deduplicated) | 97 (with 9 duplicates) | 109 (all unique) |
+| Telegram voice → text | 0 | Working (Whisper, same session) |
+| Feedback loop | Manual | Auto-recursive with --auto-apply |
+
+---
+
 ## RED FLAGS TO WATCH FOR
 
 1. **No clear success metrics**: If they can't define what "good" looks like, the role is ambiguous

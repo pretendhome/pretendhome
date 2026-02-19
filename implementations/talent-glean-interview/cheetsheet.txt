@@ -2,11 +2,97 @@
 interview cheet sheet
 
 
+“I started my career in linguistics and systems thinking, which shaped how I think about complexity and structure. I spent eight years in academia before moving to AWS, where I’ve spent the last eleven years building and scaling AI-enabled enterprise systems.
+
+At AWS, I was brought in to solve what I saw as a distribution problem, not a creation problem. We were generating massive amounts of enablement content, but sellers weren’t using it because it wasn’t aligned to their workflows or incentives.
+
+I shifted the strategy from top-down broadcast to targeted activation — mapping incentives, personas, and job-level workflows before introducing tools. We built agentic systems and lightweight “recipes” that sellers could use immediately, and adoption followed behavior change.
+
+My core belief is that AI should either enable something that wasn’t previously possible or meaningfully enhance the human interaction at the center of the work. For Gap, that means starting with merchandisers, planners, and store managers — understanding their incentives and workflows before prescribing platforms — and designing AI around their reality, not the other way around.”
+
+
+
+
+## 3 OUT-OF-THE-BOX IDEAS (DIFFERENTIATORS)
+
+### 1. Seams Theory — Where the $50-100M Waste Comes From
+
+Not a people problem; it's a seams problem between teams and systems. Forecasting, markdown, supply, and stores optimize individually. No one agent sees end-to-end: demand → buy → allocate → markdown → replenishment.
+
+**Anchor scenario**: "Old Navy store #247 has 200 extra units of a jacket. Today, forecasting, markdown, and replenishment react separately. By the time everything syncs, margin is gone. One agentic system can simultaneously: mark down 15% in that store, reduce the next buy by 30%, and reroute inbound units to the store that's selling out — one decision, coordinated."
+
+**Layer 1**: this level of coordination is impossible without AI at Gap's scale.
+
+### 2. Staffing Inversion — 2 People Doing What 5 Couldn't
+
+Not arguing to cut heads. Arguing to invert what the same heads can do. From "ring transactions and tidy shelves" to:
+- "We can see every nearby store's inventory in real time"
+- "We can recognize a returning customer and pull things they're likely to love"
+- "We can notice a micro-trend (rain jackets) and trigger a floor set shift"
+
+> "The question isn't 'can we run stores with fewer people?' It's 'what new capabilities do those same people have when an assistant shows them cross-store inventory, demand signals, and next best actions in real time?'"
+
+### 3. Data That Doesn't Exist Yet
+
+Biggest forecasting gains don't come from re-analyzing old data; they come from data you don't have yet:
+- TikTok/Instagram trend velocity 4-6 weeks before POS
+- Micro-demand by weather and local events
+- Cross-brand cannibalization (Old Navy vs Gap vs Athleta)
+- Structured return reasons (fit, quality, expectation mismatch)
+- Foot-traffic intent: not just counts, but what people looked at and walked away from
+
+> "Everyone is trying to squeeze more out of yesterday's data. The real advantage is in creating new information streams Gap doesn't have today — intent, cross-brand cannibalization, micro-trends — and feeding them into the same system."
+
+---
+
+## TWO-LAYER FRAMEWORK
+
+**Layer 1 — Impossible Without AI**
+- Cross-system coordination (seams theory)
+- Real-time cross-store and cross-brand views
+- Trend velocity detection
+- Cannibalization and intent detection
+
+**Layer 2 — Augment Humans**
+- More time with customers
+- Faster, more confident decisions
+- Better merch and pricing choices
+- Champions teaching peers
+
+---
+
+## CLOSING LINE
+
+"We're not building AI for AI's sake. We're making 10,000+ Gap employees more capable at their specific jobs. The budget shrinks because we did it right."
+
+
+
+
+
+
+
+
 🔹 Where the Name Comes From
 
 “Glean” is an English verb meaning:
 
 To gather information bit by bit from different sources.
+
+
+Why AI Fails:
+
+AI adoption fails in large enterprises when the technology is introduced before the behavior and incentive structure is understood.
+
+It fails when tools are layered onto existing workflows instead of embedded into them.
+
+It fails when there’s fragmentation — multiple overlapping initiatives without clear differentiation.
+
+It fails when value isn’t measurable at the job level.
+
+And it fails when fear isn’t addressed — when employees aren’t given safe, practical ways to experiment.
+
+In my experience, adoption succeeds when you align incentives, embed into workflows, start small with measurable wins, and treat trust as a design constraint — not an afterthought.
+
 
 
 
@@ -251,3 +337,271 @@ For high-risk workflows — pricing decisions, policy interpretation, customer-f
 
 The same model behaves differently depending on the business consequence of error.”
 
+
+
+AI adoption fails in large enterprises when the technology is introduced before the behavior and incentive structure is understood.
+
+It fails when tools are layered onto existing workflows instead of embedded into them.
+
+It fails when there’s fragmentation — multiple overlapping initiatives without clear differentiation.
+
+It fails when value isn’t measurable at the job level.
+
+And it fails when fear isn’t addressed — when employees aren’t given safe, practical ways to experiment.
+
+In my experience, adoption succeeds when you align incentives, embed into workflows, start small with measurable wins, and treat trust as a design constraint — not an afterthought.
+
+
+----How would you prioritize AI use cases across merchandising, HR, supply chain, and stores?
+
+Executive Answer:
+
+I would prioritize using a three-part lens: measurable business impact, workflow integration feasibility, and risk profile.
+
+First, I look for areas where the economic signal is clear — margin, inventory accuracy, markdown optimization, or time spent on repetitive tasks.
+
+Second, I assess whether the AI solution can embed directly into existing workflows. If it requires behavior change without workflow integration, adoption will stall.
+
+Third, I evaluate risk — brand, compliance, operational. In Year 1, I would focus on internal and operational use cases where ROI is measurable and brand exposure is low.
+
+That typically means starting with merchandising analytics, forecasting support, and associate-facing internal assistants before customer-facing automation.
+
+I believe in earning the right to scale by proving value in tightly scoped pilots with explicit success metrics and kill criteria.
+
+
+---What would your first 90 days look like in this role?
+
+Executive Answer:
+
+The first 30 days would be diagnostic. I would meet stakeholders across merchandising, stores, HR, technology, and data to map current AI initiatives, tool sprawl, and friction points in employee workflows.
+
+Days 30–60 would focus on prioritization. I’d identify two to three high-impact, low-risk pilot candidates, define measurable KPIs, and align on governance and ownership upfront.
+
+Days 60–90 would be about disciplined pilot execution — small scope, clear success criteria, embedded feedback loops, and visible executive reporting.
+
+My goal in the first 90 days wouldn’t be scale — it would be clarity, alignment, and one tangible win that demonstrates the operating model works.
+
+
+How do you ensure responsible, human-centered AI enablement?
+
+Executive Answer:
+
+Responsible AI starts with scope discipline. Not every workflow should be automated.
+
+I focus on augmentation over replacement — designing systems that enhance decision-making rather than remove human judgment.
+
+I build guardrails early: clear data boundaries, human-in-the-loop controls, auditability, and measurable performance metrics.
+
+I also treat trust as a design requirement. Employees need safe ways to experiment, clear understanding of what the system can and cannot do, and confidence that AI supports their role rather than threatens it.
+
+In my experience, responsible design accelerates adoption because it builds credibility with both operators and executives.
+
+
+
+1️⃣ How would you prioritize AI use cases across merchandising, HR, supply chain, and stores?
+
+Executive Answer:
+
+I prioritize using three lenses: measurable business impact, workflow integration feasibility, and risk profile.
+
+First, I look for areas with clear economic signals — margin, inventory accuracy, markdown optimization, or time spent on repetitive tasks.
+
+Second, I assess whether the AI can embed directly into existing workflows. If it requires behavior change without integration, adoption will stall.
+
+Third, I evaluate brand, compliance, and operational risk. In Year 1, I focus on internal use cases where ROI is measurable and exposure is low.
+
+I believe in proving value through tightly scoped pilots with explicit success metrics before scaling.
+
+2️⃣ What would your first 90 days look like?
+
+Executive Answer:
+
+Days 1–30: Diagnose. Map stakeholders, tool sprawl, data readiness, and workflow friction.
+
+Days 30–60: Prioritize. Identify two to three pilots with measurable KPIs and clear ownership.
+
+Days 60–90: Execute disciplined pilots with feedback loops and executive visibility.
+
+The goal isn’t scale in 90 days — it’s clarity, alignment, and one tangible proof point that the operating model works.
+
+3️⃣ How do you ensure responsible, human-centered AI enablement?
+
+Executive Answer:
+
+Responsible AI starts with scope discipline. Not every workflow should be automated.
+
+I design for augmentation over replacement, embed human-in-the-loop controls, establish clear data boundaries, and measure performance transparently.
+
+Trust is a design constraint. When employees understand what the system can and cannot do, adoption accelerates.
+
+4️⃣ How do you measure ROI for enterprise AI initiatives?
+
+Executive Answer:
+
+I measure ROI across three categories: cost reduction, productivity lift, and revenue or margin impact.
+
+For operational use cases, that might mean reduced manual time or improved forecast accuracy. For merchandising, improved sell-through or reduced markdown intensity.
+
+I always define baseline metrics before launching pilots and track realized impact, not theoretical gains.
+
+ROI should be visible, measurable, and tied to business KPIs — not just usage metrics.
+
+5️⃣ How do you handle executive pushback on AI investment?
+
+Executive Answer:
+
+I frame AI investment as a portfolio decision, not a moonshot.
+
+Start small. Define measurable outcomes. Fund in phases.
+
+If the pilot doesn’t hit predefined thresholds, we stop. If it does, we scale.
+
+That discipline reduces risk and builds executive confidence.
+
+6️⃣ How do you prevent tool sprawl?
+
+Executive Answer:
+
+Tool sprawl happens when experimentation isn’t governed.
+
+I recommend a centralized platform strategy with federated use-case ownership.
+
+That means shared standards, observability, and security — but brand-level autonomy in prioritization.
+
+We sunset overlapping tools as successful patterns emerge.
+
+7️⃣ How do you drive AI adoption among non-technical employees?
+
+Executive Answer:
+
+Adoption succeeds when AI is embedded into existing workflows and tied to incentives.
+
+I focus on small, practical workflows — not large training sessions.
+
+Champions at the team level are critical. When peers demonstrate value, adoption spreads organically.
+
+8️⃣ When should you NOT use AI?
+
+Executive Answer:
+
+When the workflow lacks clean data, when risk outweighs value, or when automation removes necessary human judgment.
+
+AI should solve meaningful problems, not create novelty.
+
+If a deterministic system works better, use it.
+
+9️⃣ How would you evaluate ChatGPT vs Copilot vs Claude for enterprise use?
+
+Executive Answer:
+
+I evaluate across four dimensions: capability, integration into existing enterprise systems, governance and compliance, and cost structure.
+
+The right platform depends on workflow fit and ecosystem integration — not model hype.
+
+Platform choice should follow operating model strategy.
+
+🔟 How do you balance centralization vs brand autonomy?
+
+Executive Answer:
+
+Centralize standards, security, and core platform infrastructure.
+
+Federate use-case prioritization and adoption within brands.
+
+This allows scale without suppressing brand differentiation.
+
+11️⃣ What are the biggest risks of AI in retail?
+
+Executive Answer:
+
+Brand safety, pricing errors, biased decision-making, and over-automation.
+
+Retail margins are tight — small errors scale quickly.
+
+Risk management and guardrails must precede scale.
+
+12️⃣ How do you embed AI into Workday or HR systems?
+
+Executive Answer:
+
+Start with employee-facing workflows — onboarding support, policy Q&A, learning recommendations.
+
+Integrate via APIs, maintain clear data boundaries, and avoid creating shadow systems.
+
+AI should enhance the system of record, not replace it.
+
+13️⃣ How do you ensure AI improves margin, not just productivity?
+
+Executive Answer:
+
+Tie AI directly to margin-linked KPIs — sell-through rate, markdown percentage, inventory turns.
+
+If the use case doesn’t connect to economic drivers, it shouldn’t be prioritized.
+
+14️⃣ How do you scale from pilot to enterprise rollout?
+
+Executive Answer:
+
+Define success upfront. Measure impact. Document lessons.
+
+Standardize governance and rollout playbooks.
+
+Then scale deliberately — not emotionally.
+
+15️⃣ How do you handle resistance from middle management?
+
+Executive Answer:
+
+Resistance often reflects fear of loss of control.
+
+I involve managers early, define success metrics collaboratively, and show how AI supports their team’s performance.
+
+Ownership reduces resistance.
+
+16️⃣ What does “AI enablement” mean to you?
+
+Executive Answer:
+
+It means making employees more capable at their specific jobs.
+
+Not more tools. Not automation for its own sake.
+
+Capability amplification.
+
+17️⃣ How do you prioritize across competing stakeholder demands?
+
+Executive Answer:
+
+Use a transparent scoring framework: impact, feasibility, risk, and data readiness.
+
+Publish criteria. Make trade-offs visible.
+
+That builds trust in prioritization decisions.
+
+18️⃣ How do you monitor AI system performance over time?
+
+Executive Answer:
+
+Track model performance metrics, usage trends, business impact metrics, and drift indicators.
+
+AI isn’t “launch and forget.” It’s monitor and iterate.
+
+19️⃣ How do you manage vendor relationships?
+
+Executive Answer:
+
+Avoid single-vendor dependence when possible.
+
+Negotiate flexibility, ensure data portability, and align contracts to performance.
+
+Vendor strategy should support long-term operating flexibility.
+
+20️⃣ What differentiates you from other AI strategists?
+
+Executive Answer:
+
+I’ve built and debugged production AI systems inside large enterprises.
+
+I understand not just strategy, but adoption, governance, and real-world friction.
+
+I design operating models that make AI usable — not just impressive.

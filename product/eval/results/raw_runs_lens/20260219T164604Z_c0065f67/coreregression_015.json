@@ -1,0 +1,161 @@
+{
+  "payload": {
+    "id": "coreregression_015",
+    "category": "core_regression",
+    "input": {
+      "objective": "Convert scattered notes into one execution roadmap",
+      "context": "Team needs faster planning cadence without losing quality",
+      "desired_outcome": "Measurable KPI targets for first month",
+      "constraints": "Need audit-friendly rationale for key decisions"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "baseline": {
+    "request": {
+      "request_id": "0976ebf5-8a7b-4fb1-9241-1d68e0c4f8da",
+      "timestamp": "2026-02-19T16:46:04.740Z",
+      "session_id": "lens-eval-v1-coreregression_015",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Convert scattered notes into one execution roadmap",
+        "context": "Team needs faster planning cadence without losing quality",
+        "desired_outcome": "Measurable KPI targets for first month",
+        "constraints": "Need audit-friendly rationale for key decisions",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      }
+    },
+    "response": {
+      "ok": true,
+      "status": 200,
+      "json": {
+        "status": "ok",
+        "source": "dry_run_mock",
+        "routing": {
+          "selected_rius": [
+            {
+              "riu_id": "RIU-014"
+            }
+          ],
+          "agent_map": [
+            {
+              "task": "mock-task"
+            }
+          ]
+        },
+        "artifacts": {
+          "to_create": [
+            "mock-artifact"
+          ]
+        },
+        "one_way_door": {
+          "detected": false,
+          "items": []
+        },
+        "convergence": {
+          "complete": true,
+          "missing_fields": []
+        },
+        "action_brief_markdown": "# Brief\nRoute: RIU-014\nLens ID: None",
+        "lens": {
+          "requested": null,
+          "applied": false,
+          "mode": "contract_only"
+        }
+      }
+    }
+  },
+  "lens": {
+    "request": {
+      "request_id": "335b0fe6-f78e-4be9-9cd8-a09082dfe54c",
+      "timestamp": "2026-02-19T16:46:04.740Z",
+      "session_id": "lens-eval-v1-coreregression_015",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Convert scattered notes into one execution roadmap",
+        "context": "Team needs faster planning cadence without losing quality",
+        "desired_outcome": "Measurable KPI targets for first month",
+        "constraints": "Need audit-friendly rationale for key decisions",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      },
+      "lens_id": "LENS-PM-001"
+    },
+    "response": {
+      "ok": true,
+      "status": 200,
+      "json": {
+        "status": "ok",
+        "source": "dry_run_mock",
+        "routing": {
+          "selected_rius": [
+            {
+              "riu_id": "RIU-014"
+            }
+          ],
+          "agent_map": [
+            {
+              "task": "mock-task"
+            }
+          ]
+        },
+        "artifacts": {
+          "to_create": [
+            "mock-artifact"
+          ]
+        },
+        "one_way_door": {
+          "detected": false,
+          "items": []
+        },
+        "convergence": {
+          "complete": true,
+          "missing_fields": []
+        },
+        "action_brief_markdown": "# Brief\nRoute: RIU-014\nLens ID: LENS-PM-001",
+        "lens": {
+          "requested": "LENS-PM-001",
+          "applied": false,
+          "mode": "contract_only"
+        }
+      }
+    }
+  }
+}

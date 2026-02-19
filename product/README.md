@@ -27,3 +27,10 @@ This runs:
 /home/mical/fde/product/eval/run_cycle_v1.sh --limit=20
 /home/mical/fde/product/eval/run_cycle_v1.sh --dry-run --limit=10
 ```
+
+## Lens Artifact Eval (A/B)
+```bash
+/home/mical/fde/product/eval/run_lens_eval_v1.mjs --lens-id=LENS-PM-001
+```
+
+This compares baseline vs lens-enabled requests per payload and reports drift/safety plus lens contract integrity.

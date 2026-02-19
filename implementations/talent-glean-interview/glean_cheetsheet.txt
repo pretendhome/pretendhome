@@ -1,0 +1,167 @@
+═══════════════════════════════════════════════════════════════
+GLEAN — AI OUTCOMES MANAGER — QUICK REFERENCE
+Version 2 (revised)
+═══════════════════════════════════════════════════════════════
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INTRODUCTION (2 min — tailored to Glean)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"I started in computational linguistics — eight years studying how knowledge
+gets structured, retrieved, and made useful. That foundation is why Glean
+caught my attention: it's the same core problem, at enterprise scale.
+
+At Amazon, I spent eleven years at the intersection of knowledge architecture
+and AI deployment. I started as a knowledge engineer and ontologist on a
+25-billion-node knowledge graph, then moved into GTM and partnerships —
+launching 27+ AI models on Bedrock, growing Stability AI 5X year-over-year,
+enabling 500+ sellers.
+
+The project that shaped me most: I built a multi-agent AI enablement system
+at AWS that reduced seller prep time by 25%. But the real insight wasn't the
+tech — we had a distribution and adoption problem, not a creation problem.
+That reframe is what made it work. +67% sales play coverage. +50% high-CSAT.
+
+I also built Palette — a three-tier agentic system with 105 validated
+problem-solution pairs, 7 production agents, and a self-improving eval loop.
+Live and shipping real outcomes today.
+
+What I bring to Glean: I know what it takes to move from 'this works in a
+demo' to 'this is embedded in how people work.' That gap is exactly what this
+role is about."
+
+30-SECOND VERSION:
+"I spent 11 years at Amazon at the intersection of knowledge systems and AI
+deployment. I built a multi-agent enablement system used by 500+ sellers,
+and a personal agentic framework — Palette — with 7 production agents and a
+self-improving eval loop. My specialty is closing the gap between AI demos
+and measurable business outcomes. That's the job."
+
+─────────────────────────────────────────────────────────────
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TALKING POINTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. SHIPPED AI OUTCOMES — NOT DEMOS
+   A: The difference is instrumentation, iteration, and human accountability.
+   - Production = measurable + iterated on + embedded in workflow
+   - Palette: promotion/demotion logic (UNVALIDATED → WORKING → PRODUCTION)
+   - AWS system: usage-tracked, cohort-analyzed, iterated through 3 versions
+   - Eval loop: 100 payloads, 6 dimensions, auto-patching via Claude feedback
+
+2. ADOPTION IS THE REAL PROBLEM
+   A: We had a distribution problem, not a creation problem — that reframe changed everything.
+   - Content was being produced. Sellers weren't using it because it wasn't in their workflow.
+   - Fix: generate account-specific assets that meet sellers where they are
+   - Result: +17% attendance, +50% high-CSAT, +67% sales play coverage
+   - At Glean: same dynamic — usage mandated vs. usage because it genuinely helps
+
+3. 4-QUESTION USE CASE FILTER (use this in any customer conversation)
+   A: Before designing anything, filter the use case with four questions.
+   - Is there a pattern? (same problem across multiple users)
+   - Is there data? (past examples, documents, structured sources)
+   - Is it repetitive? (frequent enough to justify automation)
+   - Can you measure success? (time, accuracy, satisfaction — not "feels better")
+   - All four yes → build. Any no → scope down or stop.
+
+4. HOW I MEASURE AI OUTCOMES
+   A: Three layers — usage, behavioral shift, then revenue correlation.
+   - Layer 1: adoption (DAU, retention, frequency — are they coming back?)
+   - Layer 2: behavioral shift (prep time, content engagement, cycle speed)
+   - Layer 3: cohort analysis (users vs. non-users, controlling for territory/deal size)
+   - "High adoption alone is not success. If revenue doesn't move, we diagnose."
+
+5. WHEN THE CIO SAYS "I'M NOT RENEWING"
+   A: Agree with them, then reframe around what success should have been defined as.
+   - "That's fair. If you're not seeing ROI, you shouldn't renew."
+   - "What outcome did you expect to move, and what threshold counts as success?"
+   - Propose: two-week ROI closeout, one workflow, agreed pass/fail in writing
+   - Commercial structure: success-based — miss threshold, extension fee waived
+
+6. HUMAN-IN-THE-LOOP PHILOSOPHY
+   A: AI reduces friction on the path to a decision — the human owns the decision.
+   - Not "AI decides" — "AI surfaces, human confirms"
+   - High-stakes outputs (pricing, policy, customer-facing) require explicit human approval
+   - Where I draw the line: any output that creates an irreversible consequence
+   - In Palette: one-way door detection — system flags, human confirms before execution
+
+7. RETRIEVAL QUALITY AND HALLUCINATION PREVENTION
+   A: Confident mis-citation is the main failure mode — prevent it with layered controls.
+   - Whitelist + version-controlled corpus: no crawling unknown sources
+   - Claim-to-source tracing: every assertion maps to a retrieved span
+   - Abstention threshold: weak retrieval → "insufficient evidence", not a guess
+   - Weekly sampling + audit logs to catch silent drift before it compounds
+
+8. RISK-TIERED RELIABILITY
+   A: Same model behaves differently depending on the cost of being wrong.
+   - Low-risk (knowledge lookup, draft gen): lower threshold, best-effort + citation
+   - High-risk (pricing, policy, external comms): multi-source corroboration required
+   - "The confidence dial is tuned to the business consequence of an error"
+
+9. WHY GLEAN, SPECIFICALLY
+   A: Glean is where knowledge architecture meets enterprise-grade AI deployment — my exact career.
+   - Arvind's Google Search lineage → semantic retrieval done right from the start
+   - Permission-aware grounding → the gap that breaks every other enterprise AI deployment
+   - $200M ARR doubled in 9 months → PMF proven, not theoretical
+   - Agent builder → Glean becomes a platform, not just a tool
+   - This role: outcomes + customers + product influence. I've been building toward all three.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OBJECTION HANDLERS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"We already have Microsoft Copilot / Gemini"
+→ "Those work inside one ecosystem. Glean works across all of them.
+   If your workflows span Slack, Drive, Salesforce, and Jira — Copilot
+   can't follow you. Glean can."
+
+"Our data is too sensitive for AI"
+→ "Glean is permission-aware — users only see what they already have access
+   to. SOC 2, GDPR, HIPAA. The governance is the product, not an afterthought."
+
+"We're not seeing ROI"
+→ "That's fair — let's define it. What outcome were you expecting to move?
+   Let's do a two-week closeout with an agreed pass/fail threshold in writing."
+
+"Adoption is high but my team says it's adding work"
+→ "Mandated adoption doesn't count. I'll sit with 5 power users and 5
+   skeptics this week. It's one of three things: retrieval quality, review
+   UX, or a mismatch with the job-to-be-done. Bounded fix, measurable result."
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NUMBERS (mine / Glean's — drop naturally)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GLEAN:  $7.2B valuation | $610M raised | $200M+ ARR (2x in 9 months)
+        100M+ agent actions/yr | 1,000+ employees | 27+ countries | 100+ integrations
+
+MINE:   11 yrs Amazon/AWS | 27+ models launched | Stability AI 5X YoY
+        500+ sellers enabled | 25% prep time ↓ | 67% sales play coverage ↑
+        50% high-CSAT ↑ | 291+ data leaders, 98+ CxOs
+        Palette: 105 RIUs | 93 library entries | 7 agents | 100% eval pass rate
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CLOSING STATEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+"The through-line in my career is this: I start from how knowledge should be
+structured, and I work forward to how people actually use it. That's what
+Glean is. I've spent 11 years building toward this role, and I'm ready to
+bring it to your customers."
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUESTIONS TO ASK THEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- "What separates a deployment you'd call transformational from one that's just used?"
+- "Where do most pilots fail — is it retrieval quality, workflow fit, or adoption?"
+- "How does the AI Outcomes team feed back into the product roadmap?"
+- "What does the first 90 days look like — shadow, then lead, or straight in?"
+- "What's the biggest thing customers misunderstand about Glean before they buy?"

@@ -1,0 +1,28 @@
+{
+  "run_id": "20260219T164632Z_64658a0d",
+  "started_at": "2026-02-19T16:46:32.241Z",
+  "lens_id": "LENS-PM-001",
+  "base_url": "http://localhost:8787",
+  "route_path": "/v1/missioncanvas/route",
+  "dry_run": false,
+  "limit": 20,
+  "metrics": {
+    "total_pairs": 20,
+    "route_delta_rate": 0,
+    "status_delta_rate": 0,
+    "owd_delta_rate": 0,
+    "lens_contract_ok_rate": 0,
+    "lens_brief_ok_rate": 0,
+    "baseline_transport_ok_rate": 0,
+    "lens_transport_ok_rate": 0,
+    "baseline_total_avg": 0,
+    "lens_total_avg": 0,
+    "total_score_delta_avg": 0
+  },
+  "conclusion": "Run invalid for lens impact analysis: transport failures detected. Start MissionCanvas server and rerun.",
+  "files": {
+    "csv": "/home/mical/fde/product/eval/results/lens_eval_results_v1.csv",
+    "aggregate": "/home/mical/fde/product/eval/results/lens_eval_aggregate_v1.md",
+    "raw_pairs": "/home/mical/fde/product/eval/results/raw_runs_lens/20260219T164632Z_64658a0d"
+  }
+}

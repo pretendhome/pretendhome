@@ -77,6 +77,14 @@ export function validateRoutePayload(payload) {
     errors.push('input.risk_posture must be low|medium|high');
   }
 
+  if (payload.lens_id !== undefined) {
+    if (typeof payload.lens_id !== 'string' || !payload.lens_id.trim()) {
+      errors.push('lens_id must be a non-empty string when provided');
+    } else if (!/^LENS-[A-Z]+-\d{3}$/.test(payload.lens_id.trim())) {
+      errors.push('lens_id must match pattern LENS-<DOMAIN>-<NNN> (example: LENS-PM-001)');
+    }
+  }
+
   return errors;
 }
 
@@ -104,7 +112,7 @@ export function detectOneWay(input) {
   return OWD_TERMS.some((x) => text.includes(x));
 }
 
-export function makeBrief(input, route, oneWay) {
+export function makeBrief(input, route, oneWay, lensId = null) {
   const date = new Date().toISOString().slice(0, 10);
   return [
     '# MissionCanvas Action Brief',
@@ -118,6 +126,7 @@ export function makeBrief(input, route, oneWay) {
     `Context: ${input.context || 'N/A'}`,
     `Desired Outcome: ${input.desired_outcome || 'N/A'}`,
     `Constraints: ${input.constraints || 'N/A'}`,
+    `Lens ID: ${lensId || 'None'}`,
     '',
     '## Execution',
     `One-Way Door: ${oneWay ? 'DETECTED - HUMAN CONFIRMATION REQUIRED' : 'None detected'}`,
@@ -133,9 +142,10 @@ export function makeBrief(input, route, oneWay) {
 
 export function localRouteResponse(payload, source = 'local_fallback') {
   const input = payload.input || {};
+  const lensId = typeof payload.lens_id === 'string' ? payload.lens_id.trim() : null;
   const { route } = pickRoute(input);
   const oneWay = detectOneWay(input);
-  const brief = makeBrief(input, route, oneWay);
+  const brief = makeBrief(input, route, oneWay, lensId);
 
   return {
     request_id: payload.request_id || makeRequestId(),
@@ -192,9 +202,15 @@ export function localRouteResponse(payload, source = 'local_fallback') {
       to_create: [route.artifact],
       to_update: []
     },
+    lens: {
+      requested: lensId,
+      applied: false,
+      mode: 'contract_only',
+      note: lensId ? 'Lens accepted at contract layer; routing unchanged.' : 'No lens requested.'
+    },
     validation_checks: ['Verify convergence', 'Check reversibility', 'Validate artifact'],
     action_brief_markdown: brief,
-    decision_log_payload: `Route=${route.id}; Agent=${route.agent}; OWD=${oneWay}`,
+    decision_log_payload: `Route=${route.id}; Agent=${route.agent}; OWD=${oneWay}; Lens=${lensId || 'none'}`,
     knowledge_gap: {
       detected: false,
       what_is_missing: [],

@@ -1,0 +1,161 @@
+{
+  "payload": {
+    "id": "coreregression_003",
+    "category": "core_regression",
+    "input": {
+      "objective": "Design a grant readiness plan for a community project",
+      "context": "Current planning is ad hoc and decisions are not logged",
+      "desired_outcome": "Clear route and artifact list for first 30 days",
+      "constraints": "Vendor-neutral and reversible decisions first"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "baseline": {
+    "request": {
+      "request_id": "b1ea6e2a-f6ba-434d-a705-380ef4e04a4e",
+      "timestamp": "2026-02-19T16:46:04.739Z",
+      "session_id": "lens-eval-v1-coreregression_003",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Design a grant readiness plan for a community project",
+        "context": "Current planning is ad hoc and decisions are not logged",
+        "desired_outcome": "Clear route and artifact list for first 30 days",
+        "constraints": "Vendor-neutral and reversible decisions first",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      }
+    },
+    "response": {
+      "ok": true,
+      "status": 200,
+      "json": {
+        "status": "ok",
+        "source": "dry_run_mock",
+        "routing": {
+          "selected_rius": [
+            {
+              "riu_id": "RIU-039"
+            }
+          ],
+          "agent_map": [
+            {
+              "task": "mock-task"
+            }
+          ]
+        },
+        "artifacts": {
+          "to_create": [
+            "mock-artifact"
+          ]
+        },
+        "one_way_door": {
+          "detected": false,
+          "items": []
+        },
+        "convergence": {
+          "complete": true,
+          "missing_fields": []
+        },
+        "action_brief_markdown": "# Brief\nRoute: RIU-039\nLens ID: None",
+        "lens": {
+          "requested": null,
+          "applied": false,
+          "mode": "contract_only"
+        }
+      }
+    }
+  },
+  "lens": {
+    "request": {
+      "request_id": "dccd7f5a-2dc2-4749-a074-27a0a56697f4",
+      "timestamp": "2026-02-19T16:46:04.739Z",
+      "session_id": "lens-eval-v1-coreregression_003",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Design a grant readiness plan for a community project",
+        "context": "Current planning is ad hoc and decisions are not logged",
+        "desired_outcome": "Clear route and artifact list for first 30 days",
+        "constraints": "Vendor-neutral and reversible decisions first",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      },
+      "lens_id": "LENS-PM-001"
+    },
+    "response": {
+      "ok": true,
+      "status": 200,
+      "json": {
+        "status": "ok",
+        "source": "dry_run_mock",
+        "routing": {
+          "selected_rius": [
+            {
+              "riu_id": "RIU-039"
+            }
+          ],
+          "agent_map": [
+            {
+              "task": "mock-task"
+            }
+          ]
+        },
+        "artifacts": {
+          "to_create": [
+            "mock-artifact"
+          ]
+        },
+        "one_way_door": {
+          "detected": false,
+          "items": []
+        },
+        "convergence": {
+          "complete": true,
+          "missing_fields": []
+        },
+        "action_brief_markdown": "# Brief\nRoute: RIU-039\nLens ID: LENS-PM-001",
+        "lens": {
+          "requested": "LENS-PM-001",
+          "applied": false,
+          "mode": "contract_only"
+        }
+      }
+    }
+  }
+}

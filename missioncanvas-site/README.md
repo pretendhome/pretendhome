@@ -68,6 +68,28 @@ If upstream fails or is unavailable, adapter automatically falls back to local P
 Contract reference:
 - `palette/docs/openclaw_application_prompt_missioncanvas_api_contract_v1.0.md`
 
+### Optional Lens Selector (Contract-Only v1)
+
+`POST /v1/missioncanvas/route` accepts optional top-level `lens_id`:
+
+```json
+{
+  "lens_id": "LENS-PM-001",
+  "input": {
+    "objective": "Decide product launch scope",
+    "desired_outcome": "Go/no-go decision",
+    "context": "2-week deadline",
+    "constraints": "small team"
+  }
+}
+```
+
+Current behavior:
+- Validates format: `LENS-<DOMAIN>-<NNN>` (example: `LENS-ENG-001`)
+- Echoes lens metadata in response (`response.lens`)
+- Includes lens in action brief and decision-log payload
+- Does **not** change routing logic yet (safe, reversible contract layer only)
+
 ## Voice Experience
 
 ### Web voice

@@ -13,6 +13,7 @@ function run() {
 
   const goodPayload = {
     request_id: 'test-1',
+    lens_id: 'LENS-PM-001',
     input: {
       objective: 'I need a business plan and grant strategy',
       context: 'small retail store',
@@ -41,9 +42,24 @@ function run() {
   const response = localRouteResponse(goodPayload, 'local_fallback');
   assert.equal(response.status, 'ok');
   assert.equal(response.source, 'local_fallback');
+  assert.equal(response.lens.requested, 'LENS-PM-001', 'Expected lens_id to be echoed in response metadata');
+  assert.equal(response.lens.applied, false, 'Lens should be contract-only for now');
+  assert.ok(response.action_brief_markdown.includes('Lens ID: LENS-PM-001'));
   assert.ok(response.routing.selected_rius.length >= 1, 'Expected selected RIUs');
   assert.ok(response.routing.agent_map.length >= 1, 'Expected agent map');
   assert.ok(typeof response.action_brief_markdown === 'string' && response.action_brief_markdown.length > 50);
+
+  const badLens = validateRoutePayload({
+    input: {
+      objective: 'Need roadmap',
+      desired_outcome: 'Decide next quarter plan'
+    },
+    lens_id: 'product-manager'
+  });
+  assert.ok(
+    badLens.some((e) => e.includes('lens_id must match pattern')),
+    'Expected lens_id format validation error'
+  );
 
   const owdResp = localRouteResponse(
     {

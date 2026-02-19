@@ -1,0 +1,105 @@
+{
+  "payload": {
+    "id": "coreregression_018",
+    "category": "core_regression",
+    "input": {
+      "objective": "Design a grant readiness plan for a community project",
+      "context": "Current planning is ad hoc and decisions are not logged",
+      "desired_outcome": "Clear route and artifact list for first 30 days",
+      "constraints": "Vendor-neutral and reversible decisions first"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "baseline": {
+    "request": {
+      "request_id": "13a0fbbd-28ae-4e38-8cb1-bd81bfe7f946",
+      "timestamp": "2026-02-19T16:45:04.095Z",
+      "session_id": "lens-eval-v1-coreregression_018",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Design a grant readiness plan for a community project",
+        "context": "Current planning is ad hoc and decisions are not logged",
+        "desired_outcome": "Clear route and artifact list for first 30 days",
+        "constraints": "Vendor-neutral and reversible decisions first",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      }
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  },
+  "lens": {
+    "request": {
+      "request_id": "f814f286-e81a-45c1-ac57-b717134a5b90",
+      "timestamp": "2026-02-19T16:45:04.095Z",
+      "session_id": "lens-eval-v1-coreregression_018",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Design a grant readiness plan for a community project",
+        "context": "Current planning is ad hoc and decisions are not logged",
+        "desired_outcome": "Clear route and artifact list for first 30 days",
+        "constraints": "Vendor-neutral and reversible decisions first",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      },
+      "lens_id": "LENS-PM-001"
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  }
+}

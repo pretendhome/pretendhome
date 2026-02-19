@@ -1,0 +1,105 @@
+{
+  "payload": {
+    "id": "coreregression_017",
+    "category": "core_regression",
+    "input": {
+      "objective": "Build a launch strategy for a new local service",
+      "context": "Founder is doing product and operations simultaneously",
+      "desired_outcome": "Prioritized action brief with owners and deadlines",
+      "constraints": "30-day timeline with weekly check-ins"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "baseline": {
+    "request": {
+      "request_id": "5d3f2efa-29e4-4386-8c69-c53b5c486745",
+      "timestamp": "2026-02-19T16:46:32.280Z",
+      "session_id": "lens-eval-v1-coreregression_017",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Build a launch strategy for a new local service",
+        "context": "Founder is doing product and operations simultaneously",
+        "desired_outcome": "Prioritized action brief with owners and deadlines",
+        "constraints": "30-day timeline with weekly check-ins",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      }
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  },
+  "lens": {
+    "request": {
+      "request_id": "485bb4ba-1826-43cd-8b29-43cb9ddded5c",
+      "timestamp": "2026-02-19T16:46:32.280Z",
+      "session_id": "lens-eval-v1-coreregression_017",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Build a launch strategy for a new local service",
+        "context": "Founder is doing product and operations simultaneously",
+        "desired_outcome": "Prioritized action brief with owners and deadlines",
+        "constraints": "30-day timeline with weekly check-ins",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      },
+      "lens_id": "LENS-PM-001"
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  }
+}

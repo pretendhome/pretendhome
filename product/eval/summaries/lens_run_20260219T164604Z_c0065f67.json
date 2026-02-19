@@ -1,0 +1,28 @@
+{
+  "run_id": "20260219T164604Z_c0065f67",
+  "started_at": "2026-02-19T16:46:04.737Z",
+  "lens_id": "LENS-PM-001",
+  "base_url": "http://localhost:8787",
+  "route_path": "/v1/missioncanvas/route",
+  "dry_run": true,
+  "limit": 20,
+  "metrics": {
+    "total_pairs": 20,
+    "route_delta_rate": 0,
+    "status_delta_rate": 0,
+    "owd_delta_rate": 0,
+    "lens_contract_ok_rate": 1,
+    "lens_brief_ok_rate": 1,
+    "baseline_transport_ok_rate": 1,
+    "lens_transport_ok_rate": 1,
+    "baseline_total_avg": 24,
+    "lens_total_avg": 24,
+    "total_score_delta_avg": 0
+  },
+  "conclusion": "Lens contract integrated cleanly with zero routing/safety drift (expected for contract-only mode).",
+  "files": {
+    "csv": "/home/mical/fde/product/eval/results/lens_eval_results_v1.csv",
+    "aggregate": "/home/mical/fde/product/eval/results/lens_eval_aggregate_v1.md",
+    "raw_pairs": "/home/mical/fde/product/eval/results/raw_runs_lens/20260219T164604Z_c0065f67"
+  }
+}

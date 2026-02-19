@@ -1,0 +1,105 @@
+{
+  "payload": {
+    "id": "coreregression_009",
+    "category": "core_regression",
+    "input": {
+      "objective": "Prioritize weekly operating actions for a founder-led team",
+      "context": "Several initiatives exist but no clear prioritization framework",
+      "desired_outcome": "Decision log baseline and review cadence defined",
+      "constraints": "Minimal tooling changes in first month"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "baseline": {
+    "request": {
+      "request_id": "787cae09-a37e-412c-a682-5d9283d1c228",
+      "timestamp": "2026-02-19T16:46:32.273Z",
+      "session_id": "lens-eval-v1-coreregression_009",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Prioritize weekly operating actions for a founder-led team",
+        "context": "Several initiatives exist but no clear prioritization framework",
+        "desired_outcome": "Decision log baseline and review cadence defined",
+        "constraints": "Minimal tooling changes in first month",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      }
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  },
+  "lens": {
+    "request": {
+      "request_id": "71ac6657-6f4d-41fe-aeb0-ae58fb518c10",
+      "timestamp": "2026-02-19T16:46:32.273Z",
+      "session_id": "lens-eval-v1-coreregression_009",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Prioritize weekly operating actions for a founder-led team",
+        "context": "Several initiatives exist but no clear prioritization framework",
+        "desired_outcome": "Decision log baseline and review cadence defined",
+        "constraints": "Minimal tooling changes in first month",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      },
+      "lens_id": "LENS-PM-001"
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  }
+}

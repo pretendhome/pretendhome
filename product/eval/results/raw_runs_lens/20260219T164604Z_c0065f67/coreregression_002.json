@@ -1,0 +1,161 @@
+{
+  "payload": {
+    "id": "coreregression_002",
+    "category": "core_regression",
+    "input": {
+      "objective": "Build a launch strategy for a new local service",
+      "context": "Founder is doing product and operations simultaneously",
+      "desired_outcome": "Prioritized action brief with owners and deadlines",
+      "constraints": "30-day timeline with weekly check-ins"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "baseline": {
+    "request": {
+      "request_id": "f34f8d24-be69-45d5-9188-1c8a3751c839",
+      "timestamp": "2026-02-19T16:46:04.739Z",
+      "session_id": "lens-eval-v1-coreregression_002",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Build a launch strategy for a new local service",
+        "context": "Founder is doing product and operations simultaneously",
+        "desired_outcome": "Prioritized action brief with owners and deadlines",
+        "constraints": "30-day timeline with weekly check-ins",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      }
+    },
+    "response": {
+      "ok": true,
+      "status": 200,
+      "json": {
+        "status": "ok",
+        "source": "dry_run_mock",
+        "routing": {
+          "selected_rius": [
+            {
+              "riu_id": "RIU-014"
+            }
+          ],
+          "agent_map": [
+            {
+              "task": "mock-task"
+            }
+          ]
+        },
+        "artifacts": {
+          "to_create": [
+            "mock-artifact"
+          ]
+        },
+        "one_way_door": {
+          "detected": false,
+          "items": []
+        },
+        "convergence": {
+          "complete": true,
+          "missing_fields": []
+        },
+        "action_brief_markdown": "# Brief\nRoute: RIU-014\nLens ID: None",
+        "lens": {
+          "requested": null,
+          "applied": false,
+          "mode": "contract_only"
+        }
+      }
+    }
+  },
+  "lens": {
+    "request": {
+      "request_id": "42593097-ecf5-4bdf-b7f3-fd1f816fcfb6",
+      "timestamp": "2026-02-19T16:46:04.739Z",
+      "session_id": "lens-eval-v1-coreregression_002",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Build a launch strategy for a new local service",
+        "context": "Founder is doing product and operations simultaneously",
+        "desired_outcome": "Prioritized action brief with owners and deadlines",
+        "constraints": "30-day timeline with weekly check-ins",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      },
+      "lens_id": "LENS-PM-001"
+    },
+    "response": {
+      "ok": true,
+      "status": 200,
+      "json": {
+        "status": "ok",
+        "source": "dry_run_mock",
+        "routing": {
+          "selected_rius": [
+            {
+              "riu_id": "RIU-014"
+            }
+          ],
+          "agent_map": [
+            {
+              "task": "mock-task"
+            }
+          ]
+        },
+        "artifacts": {
+          "to_create": [
+            "mock-artifact"
+          ]
+        },
+        "one_way_door": {
+          "detected": false,
+          "items": []
+        },
+        "convergence": {
+          "complete": true,
+          "missing_fields": []
+        },
+        "action_brief_markdown": "# Brief\nRoute: RIU-014\nLens ID: LENS-PM-001",
+        "lens": {
+          "requested": "LENS-PM-001",
+          "applied": false,
+          "mode": "contract_only"
+        }
+      }
+    }
+  }
+}

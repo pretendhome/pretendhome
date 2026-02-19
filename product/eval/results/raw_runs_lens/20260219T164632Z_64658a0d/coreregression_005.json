@@ -1,0 +1,105 @@
+{
+  "payload": {
+    "id": "coreregression_005",
+    "category": "core_regression",
+    "input": {
+      "objective": "Convert scattered notes into one execution roadmap",
+      "context": "Team needs faster planning cadence without losing quality",
+      "desired_outcome": "Measurable KPI targets for first month",
+      "constraints": "Need audit-friendly rationale for key decisions"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "baseline": {
+    "request": {
+      "request_id": "893a9dd1-9685-4513-abd1-d299f17f0019",
+      "timestamp": "2026-02-19T16:46:32.267Z",
+      "session_id": "lens-eval-v1-coreregression_005",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Convert scattered notes into one execution roadmap",
+        "context": "Team needs faster planning cadence without losing quality",
+        "desired_outcome": "Measurable KPI targets for first month",
+        "constraints": "Need audit-friendly rationale for key decisions",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      }
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  },
+  "lens": {
+    "request": {
+      "request_id": "099f032a-11f7-41af-bc39-13e66a10a1a8",
+      "timestamp": "2026-02-19T16:46:32.267Z",
+      "session_id": "lens-eval-v1-coreregression_005",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Convert scattered notes into one execution roadmap",
+        "context": "Team needs faster planning cadence without losing quality",
+        "desired_outcome": "Measurable KPI targets for first month",
+        "constraints": "Need audit-friendly rationale for key decisions",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      },
+      "lens_id": "LENS-PM-001"
+    },
+    "response": {
+      "ok": false,
+      "status": 0,
+      "json": {
+        "status": "error",
+        "error": {
+          "code": "TypeError",
+          "message": "fetch failed"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "payload": {
+    "id": "coreregression_016",
+    "category": "core_regression",
+    "input": {
+      "objective": "Create a 30-day business plan for a small operator",
+      "context": "Small team with active customers and limited process documentation",
+      "desired_outcome": "One-page operating plan with weekly milestones",
+      "constraints": "Limited budget and no immediate hiring"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "baseline": {
+    "request": {
+      "request_id": "580e4127-b2df-4715-b482-d5a3e99a75e1",
+      "timestamp": "2026-02-19T16:46:04.741Z",
+      "session_id": "lens-eval-v1-coreregression_016",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Create a 30-day business plan for a small operator",
+        "context": "Small team with active customers and limited process documentation",
+        "desired_outcome": "One-page operating plan with weekly milestones",
+        "constraints": "Limited budget and no immediate hiring",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      }
+    },
+    "response": {
+      "ok": true,
+      "status": 200,
+      "json": {
+        "status": "ok",
+        "source": "dry_run_mock",
+        "routing": {
+          "selected_rius": [
+            {
+              "riu_id": "RIU-014"
+            }
+          ],
+          "agent_map": [
+            {
+              "task": "mock-task"
+            }
+          ]
+        },
+        "artifacts": {
+          "to_create": [
+            "mock-artifact"
+          ]
+        },
+        "one_way_door": {
+          "detected": false,
+          "items": []
+        },
+        "convergence": {
+          "complete": true,
+          "missing_fields": []
+        },
+        "action_brief_markdown": "# Brief\nRoute: RIU-014\nLens ID: None",
+        "lens": {
+          "requested": null,
+          "applied": false,
+          "mode": "contract_only"
+        }
+      }
+    }
+  },
+  "lens": {
+    "request": {
+      "request_id": "49a06811-b432-4ae5-9d17-296400d57a21",
+      "timestamp": "2026-02-19T16:46:04.741Z",
+      "session_id": "lens-eval-v1-coreregression_016",
+      "user": {
+        "id": "lens-eval-runner",
+        "role": "operator"
+      },
+      "input": {
+        "objective": "Create a 30-day business plan for a small operator",
+        "context": "Small team with active customers and limited process documentation",
+        "desired_outcome": "One-page operating plan with weekly milestones",
+        "constraints": "Limited budget and no immediate hiring",
+        "risk_posture": "medium"
+      },
+      "policy": {
+        "enforce_convergence": true,
+        "enforce_one_way_gate": true,
+        "max_selected_rius": 5,
+        "require_validation_checks": true
+      },
+      "runtime": {
+        "mode": "planning",
+        "allow_execution": false,
+        "tool_whitelist": [
+          "research",
+          "planning"
+        ],
+        "log_target": "lens_evaluation"
+      },
+      "lens_id": "LENS-PM-001"
+    },
+    "response": {
+      "ok": true,
+      "status": 200,
+      "json": {
+        "status": "ok",
+        "source": "dry_run_mock",
+        "routing": {
+          "selected_rius": [
+            {
+              "riu_id": "RIU-014"
+            }
+          ],
+          "agent_map": [
+            {
+              "task": "mock-task"
+            }
+          ]
+        },
+        "artifacts": {
+          "to_create": [
+            "mock-artifact"
+          ]
+        },
+        "one_way_door": {
+          "detected": false,
+          "items": []
+        },
+        "convergence": {
+          "complete": true,
+          "missing_fields": []
+        },
+        "action_brief_markdown": "# Brief\nRoute: RIU-014\nLens ID: LENS-PM-001",
+        "lens": {
+          "requested": "LENS-PM-001",
+          "applied": false,
+          "mode": "contract_only"
+        }
+      }
+    }
+  }
+}
