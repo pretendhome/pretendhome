@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "ambiguousintents_008",
+    "category": "ambiguous_intents",
+    "input": {
+      "objective": "Help us do this right now",
+      "context": "Leadership alignment is weak and priorities are shifting",
+      "desired_outcome": "",
+      "constraints": "Need low risk"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "9039436e-74e5-4a73-86e0-99b905a8f545",
+    "timestamp": "2026-02-18T23:35:18.056Z",
+    "session_id": "eval-v1-ambiguousintents_008",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Help us do this right now",
+      "context": "Leadership alignment is weak and priorities are shifting",
+      "desired_outcome": "",
+      "constraints": "Need low risk",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "9039436e-74e5-4a73-86e0-99b905a8f545",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": false,
+        "goal": "UNKNOWN",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "Need low risk",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-001",
+            "name": "Convergence & Scope Clarification",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-001",
+            "name": "Convergence & Scope Clarification",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Yuty (Narrative) -> Rex (Architecture)",
+            "task": "Define target outcome, non-goals, and first success metric.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Convergence Brief"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-001 - Convergence & Scope Clarification\nPrimary Agent: Yuty (Narrative) -> Rex (Architecture)\n\n## Input\nObjective: Help us do this right now\nContext: Leadership alignment is weak and priorities are shifting\nDesired Outcome: N/A\nConstraints: Need low risk\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Convergence Brief\nImmediate Action: Define target outcome, non-goals, and first success metric.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-001; Agent=Yuty (Narrative) -> Rex (Architecture); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

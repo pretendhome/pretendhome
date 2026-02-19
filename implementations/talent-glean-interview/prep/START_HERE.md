@@ -26,7 +26,7 @@ Your Glean interview prep is complete. Here's what I built for you last night:
 - Closing statement
 
 ### 3. **GLEAN_RESEARCH_BRIEF.md** (Deep Dive)
-- Company overview (Arvind Jain, $360M+ raised, $2.2B valuation)
+- Company overview (Arvind Jain, $610M+ raised, $7.2B valuation)
 - Product architecture (search, assistant, agent builder)
 - Market position (vs. Microsoft Copilot, Google Duet AI, Notion AI)
 - Customer insights (top 5 use cases, success metrics)
@@ -154,11 +154,13 @@ If yes to all four → good fit for AI
 ## GLEAN QUICK FACTS
 
 - **Founded**: 2019 by Arvind Jain (ex-Google search infrastructure)
-- **Funding**: $360M+ raised, $2.2B valuation (Series D, 2024)
+- **Funding**: $610M+ raised, $7.2B valuation (Series F, June 2025)
+- **ARR**: $200M+ (doubled in 9 months), 100M+ agent actions annually
+- **Team**: 1,000+ employees, customers in 27+ countries
 - **Product**: AI-powered enterprise search + AI assistant + agent builder
 - **Customers**: 500-5,000 employees (sweet spot), tech/financial services/healthcare
 - **Top use cases**: Sales enablement (30%), customer support (25%), engineering (20%)
-- **Competitors**: Microsoft Copilot, Google Duet AI, Notion AI, Perplexity
+- **Competitors**: Microsoft Copilot, Gemini for Google Workspace, Notion AI, Perplexity
 - **Differentiation**: Best-in-class search across all tools, agent builder, enterprise-grade
 
 ---
@@ -278,7 +280,7 @@ I followed the same process we used for Gap, but adapted it for Glean:
 
 ---
 
-**All materials are in**: `/home/mical/fde/projects/job-search/glean/prep/`
+**All materials are in**: `/home/mical/fde/implementations/talent-glean-interview/prep/`
 
 **Start with**: `README.md`
 

@@ -252,6 +252,7 @@ async function writeStreamedRoute(req, res) {
   let routed;
   try {
     routed = await proxyToOpenClaw(payload);
+    if (!routed) routed = localRouteResponse(payload, 'local_fallback');
   } catch (_err) {
     routed = localRouteResponse(payload, 'local_fallback');
   }
@@ -328,7 +329,7 @@ const server = createServer(async (req, res) => {
 
       try {
         const proxied = await proxyToOpenClaw(payload);
-        json(res, 200, proxied);
+        json(res, 200, proxied ?? localRouteResponse(payload, 'local_fallback'));
       } catch (_proxyErr) {
         json(res, 200, localRouteResponse(payload, 'local_fallback'));
       }

@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "ambiguousintents_011",
+    "category": "ambiguous_intents",
+    "input": {
+      "objective": "I need to fix this quickly",
+      "context": "Team is overwhelmed and decisions keep changing",
+      "desired_outcome": "",
+      "constraints": "ASAP"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "d112bba9-34e2-447f-868f-64b42106ee5c",
+    "timestamp": "2026-02-18T23:45:29.710Z",
+    "session_id": "eval-v1-ambiguousintents_011",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "I need to fix this quickly",
+      "context": "Team is overwhelmed and decisions keep changing",
+      "desired_outcome": "",
+      "constraints": "ASAP",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "d112bba9-34e2-447f-868f-64b42106ee5c",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": false,
+        "goal": "UNKNOWN",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "ASAP",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-073",
+            "name": "Debug & Recovery",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-073",
+            "name": "Debug & Recovery",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Raptor (Debug)",
+            "task": "Identify failure point and define minimal corrective action.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Root-Cause + Fix Plan"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-073 - Debug & Recovery\nPrimary Agent: Raptor (Debug)\n\n## Input\nObjective: I need to fix this quickly\nContext: Team is overwhelmed and decisions keep changing\nDesired Outcome: N/A\nConstraints: ASAP\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Root-Cause + Fix Plan\nImmediate Action: Identify failure point and define minimal corrective action.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-073; Agent=Raptor (Debug); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

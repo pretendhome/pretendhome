@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "coreregression_013",
+    "category": "core_regression",
+    "input": {
+      "objective": "Design a grant readiness plan for a community project",
+      "context": "Current planning is ad hoc and decisions are not logged",
+      "desired_outcome": "Clear route and artifact list for first 30 days",
+      "constraints": "Vendor-neutral and reversible decisions first"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "fd148694-4c71-4b00-8f8e-15ced749a480",
+    "timestamp": "2026-02-18T23:35:17.958Z",
+    "session_id": "eval-v1-coreregression_013",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Design a grant readiness plan for a community project",
+      "context": "Current planning is ad hoc and decisions are not logged",
+      "desired_outcome": "Clear route and artifact list for first 30 days",
+      "constraints": "Vendor-neutral and reversible decisions first",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "fd148694-4c71-4b00-8f8e-15ced749a480",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": true,
+        "goal": "Clear route and artifact list for first 30 days",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "Vendor-neutral and reversible decisions first",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-039",
+            "name": "Funding & Grants",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-039",
+            "name": "Funding & Grants",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Argy (Research) + Theri (Build)",
+            "task": "Generate funding list, eligibility matrix, and first application draft.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Funding Pipeline + Draft Applications"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-039 - Funding & Grants\nPrimary Agent: Argy (Research) + Theri (Build)\n\n## Input\nObjective: Design a grant readiness plan for a community project\nContext: Current planning is ad hoc and decisions are not logged\nDesired Outcome: Clear route and artifact list for first 30 days\nConstraints: Vendor-neutral and reversible decisions first\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Funding Pipeline + Draft Applications\nImmediate Action: Generate funding list, eligibility matrix, and first application draft.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-039; Agent=Argy (Research) + Theri (Build); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

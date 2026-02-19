@@ -16,7 +16,8 @@
 **Product Evolution**:
 - 2019-2021: AI-powered enterprise search
 - 2021-2023: AI assistant and knowledge management
-- 2023-Present: Work AI platform (search + assistant + agent builder)
+- 2023-2024: Work AI platform (search + assistant + agent builder)
+- 2025-Present: Autonomous agents, unified agent builder (graph-based + conversational), Fast/Thinking modes
 
 ---
 
@@ -51,18 +52,22 @@
 
 ## FUNDING & VALUATION
 
-**Total Raised**: $360M+
+**Total Raised**: $610M+
 
-**Series D** (2024):
-- Amount: $200M
-- Valuation: $2.2B
-- Lead: Kleiner Perkins
-- Investors: Lightspeed, Sequoia, General Catalyst
+**Series F** (June 2025):
+- Amount: $150M
+- Valuation: $7.2B
+- Lead: Wellington Management
+- Investors: Khosla Ventures, Altimeter, Coatue, DST Global, General Catalyst, ICONIQ, IVP, Kleiner Perkins, Lightspeed, Sequoia
 
 **Previous Rounds**:
+- Series E (2024): $260M at $4.6B valuation
+- Series D (2024): $200M at $2.2B valuation
 - Series C (2023): $100M at $1B valuation
 - Series B (2022): $45M
 - Series A (2021): $15M
+
+**Revenue**: $200M+ ARR (doubled in 9 months), 100M+ agent actions annually
 
 ---
 
@@ -85,7 +90,7 @@
    - Strength: Built into Microsoft 365, massive distribution
    - Weakness: Limited to Microsoft ecosystem, less customizable
    
-2. **Google Duet AI**
+2. **Gemini for Google Workspace**
    - Strength: Built into Google Workspace, strong AI capabilities
    - Weakness: Limited to Google ecosystem, less enterprise-focused
    
@@ -154,7 +159,7 @@
 - **Satisfaction**: 4.5+ out of 5 (average customer rating)
 
 ### Common Objections:
-1. "We already have Microsoft Copilot / Google Duet AI"
+1. "We already have Microsoft Copilot / Gemini for Google Workspace"
    - Response: Glean works across all tools, not just one ecosystem
    
 2. "Our data is too sensitive for AI"
@@ -170,7 +175,7 @@
 
 ## TEAM & CULTURE
 
-### Team Size: ~300 employees (estimated)
+### Team Size: 1,000+ employees, customers in 27+ countries
 
 **Key Executives**:
 - **Arvind Jain** (Founder & CEO) — ex-Google, led search infrastructure

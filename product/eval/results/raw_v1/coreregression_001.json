@@ -1,0 +1,82 @@
+{
+  "payload": {
+    "id": "coreregression_001",
+    "category": "core_regression",
+    "input": {
+      "objective": "Create a 30-day business plan for a small operator",
+      "context": "Small team with active customers and limited process documentation",
+      "desired_outcome": "One-page operating plan with weekly milestones",
+      "constraints": "Limited budget and no immediate hiring"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "3ccfb7ac-5c3c-4eed-9357-7f25129d5779",
+    "timestamp": "2026-02-18T18:30:53.565Z",
+    "session_id": "eval-v1-coreregression_001",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Create a 30-day business plan for a small operator",
+      "context": "Small team with active customers and limited process documentation",
+      "desired_outcome": "One-page operating plan with weekly milestones",
+      "constraints": "Limited budget and no immediate hiring",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "status": "ok",
+      "routing": {
+        "selected_rius": [
+          {
+            "riu_id": "DRY",
+            "name": "Dry Run"
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "dry",
+            "task": "dry task"
+          }
+        ]
+      },
+      "artifacts": {
+        "to_create": [
+          "dry_artifact"
+        ]
+      },
+      "convergence": {
+        "complete": false,
+        "missing_fields": []
+      },
+      "action_brief_markdown": "dry brief",
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      }
+    }
+  }
+}

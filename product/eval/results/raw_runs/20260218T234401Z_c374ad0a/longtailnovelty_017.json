@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "longtailnovelty_017",
+    "category": "long_tail_novelty",
+    "input": {
+      "objective": "Build a strategy for multilingual legal-aid intake triage",
+      "context": "Budget planning cycles are irregular and grant-driven",
+      "desired_outcome": "Decision-grade operating model tailored to local constraints",
+      "constraints": "Limited staffing and intermittent internet access"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "3ce83a83-1400-4ce7-938a-7ab9eca9242c",
+    "timestamp": "2026-02-18T23:44:01.169Z",
+    "session_id": "eval-v1-longtailnovelty_017",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Build a strategy for multilingual legal-aid intake triage",
+      "context": "Budget planning cycles are irregular and grant-driven",
+      "desired_outcome": "Decision-grade operating model tailored to local constraints",
+      "constraints": "Limited staffing and intermittent internet access",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "3ce83a83-1400-4ce7-938a-7ab9eca9242c",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": true,
+        "goal": "Decision-grade operating model tailored to local constraints",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "Limited staffing and intermittent internet access",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-014",
+            "name": "Business Planning & Positioning",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-014",
+            "name": "Business Planning & Positioning",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Rex (Architecture) + Yuty (Narrative)",
+            "task": "Build a one-page strategy, priorities, and 30-day execution plan.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Operating Plan v1"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-014 - Business Planning & Positioning\nPrimary Agent: Rex (Architecture) + Yuty (Narrative)\n\n## Input\nObjective: Build a strategy for multilingual legal-aid intake triage\nContext: Budget planning cycles are irregular and grant-driven\nDesired Outcome: Decision-grade operating model tailored to local constraints\nConstraints: Limited staffing and intermittent internet access\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Operating Plan v1\nImmediate Action: Build a one-page strategy, priorities, and 30-day execution plan.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-014; Agent=Rex (Architecture) + Yuty (Narrative); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

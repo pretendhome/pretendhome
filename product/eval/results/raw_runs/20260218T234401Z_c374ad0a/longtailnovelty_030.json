@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "longtailnovelty_030",
+    "category": "long_tail_novelty",
+    "input": {
+      "objective": "Create a planning system for an artisan manufacturing cooperative",
+      "context": "Stakeholders include public sector, nonprofits, and private partners",
+      "desired_outcome": "Stack recommendation with fallback options",
+      "constraints": "Need reversible implementation path before scale"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "b7972433-74d9-4228-abcf-ff3fbc0ee8f9",
+    "timestamp": "2026-02-18T23:44:01.202Z",
+    "session_id": "eval-v1-longtailnovelty_030",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Create a planning system for an artisan manufacturing cooperative",
+      "context": "Stakeholders include public sector, nonprofits, and private partners",
+      "desired_outcome": "Stack recommendation with fallback options",
+      "constraints": "Need reversible implementation path before scale",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "b7972433-74d9-4228-abcf-ff3fbc0ee8f9",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": true,
+        "goal": "Stack recommendation with fallback options",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "Need reversible implementation path before scale",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-062",
+            "name": "Build & Implementation",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-062",
+            "name": "Build & Implementation",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Theri (Build) with Rex (Architecture)",
+            "task": "Convert plan into build tickets and delivery sequence.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Implementation Spec + Build Tasks"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-062 - Build & Implementation\nPrimary Agent: Theri (Build) with Rex (Architecture)\n\n## Input\nObjective: Create a planning system for an artisan manufacturing cooperative\nContext: Stakeholders include public sector, nonprofits, and private partners\nDesired Outcome: Stack recommendation with fallback options\nConstraints: Need reversible implementation path before scale\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Implementation Spec + Build Tasks\nImmediate Action: Convert plan into build tickets and delivery sequence.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-062; Agent=Theri (Build) with Rex (Architecture); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

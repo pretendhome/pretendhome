@@ -43,7 +43,14 @@ export const ROUTES = [
   }
 ];
 
-const OWD_TERMS = ['production deploy', 'delete database', 'drop table', 'delete data', 'irreversible', 'migrate live'];
+const OWD_TERMS = [
+  // Technical irreversibility
+  'production deploy', 'delete database', 'drop table', 'delete data', 'irreversible', 'migrate live',
+  'no rollback',
+  // Business-level irreversibility
+  'migrate all', 'decommission', 'multi-year contract', 'auto-execution', 'replace human',
+  'single provider', 'one ai provider', 'centralize all', 'automated decisions', 'commit to a multi',
+];
 
 export function makeRequestId() {
   return randomUUID();

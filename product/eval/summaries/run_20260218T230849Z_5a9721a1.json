@@ -1,0 +1,27 @@
+{
+  "run_id": "20260218T230849Z_5a9721a1",
+  "started_at": "2026-02-18T23:08:49.643Z",
+  "base_url": "http://localhost:8787",
+  "route_path": "/v1/missioncanvas/route",
+  "dry_run": false,
+  "limit": null,
+  "metrics": {
+    "total": 100,
+    "pass_rate": 0.6,
+    "owd_precision_proxy": 0.7692307692307693,
+    "owd_recall": 1,
+    "novelty_score": 3.5454545454545454
+  },
+  "top_clusters": [
+    {
+      "name": "convergence|routing|actionability|expansion",
+      "count": 40
+    }
+  ],
+  "files": {
+    "csv": "/home/mical/fde/product/eval/results/eval_results_v1.csv",
+    "aggregate": "/home/mical/fde/product/eval/results/aggregate_metrics_v1.md",
+    "clusters": "/home/mical/fde/product/eval/failure_clusters/failure_clusters_v1.md",
+    "raw_run": "/home/mical/fde/product/eval/results/raw_runs/20260218T230849Z_5a9721a1"
+  }
+}

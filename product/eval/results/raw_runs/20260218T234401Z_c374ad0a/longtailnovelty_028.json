@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "longtailnovelty_028",
+    "category": "long_tail_novelty",
+    "input": {
+      "objective": "Plan an AI-assisted logistics process for remote humanitarian hubs",
+      "context": "No single system of record and high turnover in frontline staff",
+      "desired_outcome": "First 90-day roadmap with measurable service outcomes",
+      "constraints": "Must support multilingual operations with human review gates"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "d79b1ab6-b199-4c4f-8069-17072c054859",
+    "timestamp": "2026-02-18T23:44:01.199Z",
+    "session_id": "eval-v1-longtailnovelty_028",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Plan an AI-assisted logistics process for remote humanitarian hubs",
+      "context": "No single system of record and high turnover in frontline staff",
+      "desired_outcome": "First 90-day roadmap with measurable service outcomes",
+      "constraints": "Must support multilingual operations with human review gates",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "d79b1ab6-b199-4c4f-8069-17072c054859",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": true,
+        "goal": "First 90-day roadmap with measurable service outcomes",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "Must support multilingual operations with human review gates",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-014",
+            "name": "Business Planning & Positioning",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-014",
+            "name": "Business Planning & Positioning",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Rex (Architecture) + Yuty (Narrative)",
+            "task": "Build a one-page strategy, priorities, and 30-day execution plan.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Operating Plan v1"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-014 - Business Planning & Positioning\nPrimary Agent: Rex (Architecture) + Yuty (Narrative)\n\n## Input\nObjective: Plan an AI-assisted logistics process for remote humanitarian hubs\nContext: No single system of record and high turnover in frontline staff\nDesired Outcome: First 90-day roadmap with measurable service outcomes\nConstraints: Must support multilingual operations with human review gates\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Operating Plan v1\nImmediate Action: Build a one-page strategy, priorities, and 30-day execution plan.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-014; Agent=Rex (Architecture) + Yuty (Narrative); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

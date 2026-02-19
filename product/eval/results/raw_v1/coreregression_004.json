@@ -1,0 +1,82 @@
+{
+  "payload": {
+    "id": "coreregression_004",
+    "category": "core_regression",
+    "input": {
+      "objective": "Prioritize weekly operating actions for a founder-led team",
+      "context": "Several initiatives exist but no clear prioritization framework",
+      "desired_outcome": "Decision log baseline and review cadence defined",
+      "constraints": "Minimal tooling changes in first month"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "f5e67dc6-7663-40ab-b293-e7bcaf56f939",
+    "timestamp": "2026-02-18T18:30:53.566Z",
+    "session_id": "eval-v1-coreregression_004",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Prioritize weekly operating actions for a founder-led team",
+      "context": "Several initiatives exist but no clear prioritization framework",
+      "desired_outcome": "Decision log baseline and review cadence defined",
+      "constraints": "Minimal tooling changes in first month",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "status": "ok",
+      "routing": {
+        "selected_rius": [
+          {
+            "riu_id": "DRY",
+            "name": "Dry Run"
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "dry",
+            "task": "dry task"
+          }
+        ]
+      },
+      "artifacts": {
+        "to_create": [
+          "dry_artifact"
+        ]
+      },
+      "convergence": {
+        "complete": false,
+        "missing_fields": []
+      },
+      "action_brief_markdown": "dry brief",
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      }
+    }
+  }
+}

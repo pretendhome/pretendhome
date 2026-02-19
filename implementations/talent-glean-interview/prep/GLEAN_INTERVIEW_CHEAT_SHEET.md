@@ -100,8 +100,9 @@ If yes to all four → good fit for AI
 
 ### Company:
 - Founded: 2019 by Arvind Jain (ex-Google search infrastructure)
-- Funding: $360M+ raised, $2.2B valuation (Series D, 2024)
-- Team: ~300 employees
+- Funding: $610M+ raised, $7.2B valuation (Series F, June 2025)
+- ARR: $200M+ (doubled in 9 months), 100M+ agent actions annually
+- Team: 1,000+ employees, customers in 27+ countries
 - Product: AI-powered enterprise search + AI assistant + agent builder
 
 ### Customers:
@@ -111,7 +112,7 @@ If yes to all four → good fit for AI
 
 ### Competitors:
 - Microsoft Copilot (built into Microsoft 365)
-- Google Duet AI (built into Google Workspace)
+- Gemini for Google Workspace (built into Google Workspace)
 - Notion AI (strong with knowledge workers)
 - Perplexity for Enterprise (best-in-class search)
 
@@ -171,7 +172,7 @@ Each agent has:
 ### About Glean:
 5. "What are the top 3 customer use cases right now?"
 6. "What's the biggest challenge customers face when adopting Glean?"
-7. "How do you differentiate from Microsoft Copilot and Google Duet AI?"
+7. "How do you differentiate from Microsoft Copilot and Gemini for Google Workspace?"
 8. "What's the product roadmap for the next 12 months?"
 
 ### About the Team:

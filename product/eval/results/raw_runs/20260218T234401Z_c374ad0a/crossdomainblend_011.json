@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "crossdomainblend_011",
+    "category": "cross_domain_blend",
+    "input": {
+      "objective": "Build an education-to-employer pathway strategy with compliance and GTM",
+      "context": "At least three stakeholder groups with competing priorities",
+      "desired_outcome": "Cross-domain execution plan with phase gates and ownership",
+      "constraints": "Vendor-neutral architecture and explicit human gates"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "40fb09f8-f223-40a9-991e-181f3cc1e6de",
+    "timestamp": "2026-02-18T23:44:01.243Z",
+    "session_id": "eval-v1-crossdomainblend_011",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Build an education-to-employer pathway strategy with compliance and GTM",
+      "context": "At least three stakeholder groups with competing priorities",
+      "desired_outcome": "Cross-domain execution plan with phase gates and ownership",
+      "constraints": "Vendor-neutral architecture and explicit human gates",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "40fb09f8-f223-40a9-991e-181f3cc1e6de",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": true,
+        "goal": "Cross-domain execution plan with phase gates and ownership",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "Vendor-neutral architecture and explicit human gates",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-014",
+            "name": "Business Planning & Positioning",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-014",
+            "name": "Business Planning & Positioning",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Rex (Architecture) + Yuty (Narrative)",
+            "task": "Build a one-page strategy, priorities, and 30-day execution plan.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Operating Plan v1"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-014 - Business Planning & Positioning\nPrimary Agent: Rex (Architecture) + Yuty (Narrative)\n\n## Input\nObjective: Build an education-to-employer pathway strategy with compliance and GTM\nContext: At least three stakeholder groups with competing priorities\nDesired Outcome: Cross-domain execution plan with phase gates and ownership\nConstraints: Vendor-neutral architecture and explicit human gates\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Operating Plan v1\nImmediate Action: Build a one-page strategy, priorities, and 30-day execution plan.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-014; Agent=Rex (Architecture) + Yuty (Narrative); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

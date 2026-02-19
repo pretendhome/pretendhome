@@ -1,0 +1,253 @@
+
+interview cheet sheet
+
+
+🔹 Where the Name Comes From
+
+“Glean” is an English verb meaning:
+
+To gather information bit by bit from different sources.
+
+
+
+🔹 Company Snapshot
+
+Founded: 2019
+
+Founder/CEO: Arvind Jain (former Google Search engineering leader)
+
+Headquarters: Palo Alto, CA
+
+Category: Enterprise AI + knowledge search + agent platform
+
+That Google Search lineage is powerful if used subtly:
+
+“Given Arvind’s background in search, it makes sense that Glean’s differentiation starts with knowledge graph + permissions.”
+----- Arvind Jain, Glean’s founder and former Google Search engineering leader, helped advance large-scale search relevance systems that combined ranking algorithms with contextual and behavioral signals to return more accurate, intent-aware results at web scale.
+
+
+🔹 Why Enterprises Buy Glean
+
+Knowledge fragmentation across tools (Slack, Drive, Jira, etc.)
+
+AI without governance is risky
+
+Need permission-aware grounding
+
+Want productivity lift without building internal infra
+
+Want ROI from AI, not just pilots
+
+That ties directly to your story:
+
+“closing the gap between demo-stage AI and measurable business impact”
+
+🔹 Growth & Market Position
+
+~$200M ARR (recent milestone)
+
+Rapid enterprise expansion
+
+Recognized in Gartner Magic Quadrant for Enterprise Search
+
+Customers include large enterprises (Fortune 500 scale)
+
+You can casually say:
+
+“Hitting $200M ARR signals strong product-market fit.”
+
+
+Backrond stong
+screen questions 
+
+hybrid 
+
+
+Post sales - customer outcomes --- LIVE --- Delivery execlence manager 
+
+Partnerning after that 
+
+What can make things better faster
+
+
+
+Use case cateloges
+
+
+Handful of different customers. 
+
+
+next steps  - awesome 
+
+
+“I build applied AI systems that move from demo to production by solving adoption friction, retrieval reliability, and workflow alignment. I operate at the intersection of technical debugging and behavioral change.”
+
+
+“I started my career in compatitive linguistics and systems thinking, which shaped how I approach complexity and structure. After eight years in academia, I moved to Amazon, where I’ve spent the last eleven + years building applied AI systems in enterprise environments.  Amazon has been an amazing place to lean skills in real time as Ive constantly been pushed to be at the very edge of Tech capacity.  That's also my favorite part.
+
+Across roles like knowledge engineer, ontologist, and TPM, I’ve worked at the intersection of knowledge architecture and AI deployment.
+
+Most recently at AWS, I built and deployed an agentic AI enablement system designed for the broader seller community. It reduced seller prep time by about 25% and improved adoption and execution indicators across the org.
+When I started, I realized we didn’t have a creation problem — we had a distribution and adoption problem. We were generating massive enablement content, but sellers weren’t using it because it wasn’t aligned to their workflows or incentives.
+
+
+What consistently motivates me is closing the gap between AI demos and measurable business impact — and that’s why the AI Outcomes role at Glean feels like a natural next step.”
+
+
+
+
+“Just today, for example, I led an end-to-end integration of a multi-agent web runtime with an upstream gateway on a live VPS. We traced a production connectivity issue across Docker bindings, gateway config, and firewall synchronization. The issue turned out to be loopback binding keeping the system in fallback mode. We isolated it, documented the runbook, and now have a near-production path. That’s the kind of ambiguity I’m comfortable operating in.”
+
+
+
+
+2️⃣ “Why are you interested in Glean / this AI Outcomes role?”
+What they’re really evaluating:
+
+
+“What stands out about Glean is that it’s not just enterprise search — it’s becoming a unified AI work layer with agent-building capability embedded into workflow.
+
+The AI Outcomes role is particularly compelling because it sits at the intersection of adoption, time-to-value, and ROI. That’s the space I’ve been operating in — not just building AI systems, but making them actually drive measurable change inside organizations.
+
+I’m especially excited about partnering with executive sponsors and power users to translate AI capability into real business outcomes.”
+
+
+
+3  “Give me an example of an AI outcome you shipped.”
+What they’re really evaluating:
+
+
+“At AWS, I built a multi-agent AI enablement system that generated role- and account-specific sales plays and trusted, sourced guidance for GTM teams.
+
+The difference from a demo was post-launch hardening. We instrumented usage, monitored outputs, and fixed retrieval and citation issues until it was reliable in live workflows.
+
+The system reduced prep time by about 25% and improved sales play coverage and high-CSAT indicators.
+
+It wasn’t just a chatbot — it became embedded in seller workflow.”
+
+
+🔹 Why Enterprises Buy Glean
+
+Knowledge fragmentation across tools (Slack, Drive, Jira, etc.)
+
+AI without governance is risky
+
+Need permission-aware grounding
+
+Want productivity lift without building internal infra
+
+Want ROI from AI, not just pilots
+
+That ties directly to your story:
+
+“closing the gap between demo-stage AI and measurable business impact”
+
+
+
+
+
+
+
+
+ou said you reduced turnaround time by 25% and improved adoption in your AWS GTM agentic system.
+
+Let’s be precise.
+
+If I were your CFO and I asked:
+
+“How much money did this system generate or save?”
+
+
+“The system served roughly 180 GTM sellers globally on a recurring basis, with assets reused asynchronously by another ~500. We reduced preparation time by about 25% by istantly generating account-specific sales plays and directing sellers to the exact content they needed, whether it be video chunks, 5 min use and play excersises called recipes, elevator pitches or full sales plays. All directly prepared for a specific client. 
+
+The economic impact is leverage. For enterprise sellers managing multi-million-dollar pipelines, reclaiming 3–5 hours per week translates into more customer-facing time and improved cycle velocity.
+
+I don’t claim direct revenue ownership, but we saw leading indicators move — sales play coverage increased 67% and high-CSAT sessions increased 50%. At that population scale, even modest improvements in cycle time or execution quality translate into meaningful pipeline acceleration.”
+
+
+## “If you were redesigning this today, how would you instrument it so you could show direct revenue attribution instead of leading indicators?”
+
+“I’d instrument it in three layers.
+
+First, adoption attribution — track usage at the individual seller level and link it to specific sales plays or motions inside CRM.
+
+Second, behavioral shift — measure leading indicators like SPIF enrollment, content engagement depth, and deal-stage progression speed relative to baseline.
+
+Third, revenue correlation — run cohort analysis comparing sellers who actively used the system versus those who didn’t, controlling for territory and deal size. That gives you a defensible estimate of cycle-time improvement or win-rate delta attributable to the tool.
+
+Over time, I’d move from leading indicators to lagging ones — pipeline velocity, win rate, and average deal size — tied back to usage data. Already now I have divided the seller poplation into cohorts and am targeting 3 groups: sellers that did use the tool and do have increased sales; those who have increased sales but do use our tool(to find out what they do instead); and those that do not use the tool and do not have any sales increase.
+
+## What if usage is high but revenue doesn’t move?
+
+“If usage is high but revenue doesn’t move, I diagnose in three dimensions.
+
+First, workflow impact — are we influencing the revenue-critical behavior, or just making something easier? Adoption without impact means we optimized convenience.
+
+Second, external variables — pricing shifts, territory mix, or macro conditions may be masking performance. I normalize against broader business trends before drawing conclusions.
+
+Third, execution quality — is the tool shaping deal strategy, or is it being used passively?
+
+If after isolating those variables there’s no measurable delta, we redesign or sunset. High adoption alone is not success.”
+
+
+##You run a 12-week pilot at Glean.
+
+Adoption: 85%.
+Users love it.
+CIO says:
+
+“We’re not seeing ROI. I’m not renewing.”
+
+“That’s fair — if you’re not seeing ROI, you shouldn’t renew.
+What outcome did you expect to move, and what threshold would make this a clear yes?
+
+What I can show today is 85% adoption and consistent weekly usage, plus exactly where time is being saved — and where it isn’t. What we owe you is a clean line to the KPI you care about.
+
+Let’s do a two-week ROI closeout: one workflow, tight baseline, pass/fail threshold we agree on. If we hit it, we expand with confidence. If we don’t, we stop — and you walk away with a documented analysis on exactly what worked and why.
+
+
+###“Fine. Two weeks. But I want a written commitment: if you don’t hit the ROI threshold, we don’t pay for the pilot extension.”
+
+“I’m open to that, with two conditions. First, we define the KPI, baseline, and pass/fail threshold in writing. Second, you commit the inputs that make the measurement valid: data access, a named business owner, and weekly checkpoints.
+
+Commercially, we’ll structure it as a success-based closeout: if we miss the agreed threshold, the extension fee is waived or fully credited. If we hit it, we convert to renewal and the fee applies to the contract. That keeps incentives aligned and removes ambiguity.”
+
+
+
+###“Fine. But my team says your system is creating more work — they have to verify answers. Adoption is high because it’s mandated, not because it’s useful.”
+
+“I hear that. If the workflow is net adding work, we’re not delivering value — and mandated usage doesn’t count.
+
+This week I’ll sit with 5 power users and 5 skeptics, using both session logs and live observation to isolate the friction. In my experience it’s one of three things: retrieval quality, review UX, or a mismatch between the tool and the job-to-be-done.
+
+Then we’ll ship a bounded fix — tighten sources, raise citation confidence, and remove steps that don’t change decisions. We’ll measure net time saved and task completion. If we can’t get net-positive within two weeks on the core workflow, we pause expansion.”
+
+
+###You keep mentioning “tighten sources” and “citation confidence. How do you prevent the system from confidently citing the wrong thing?
+
+“We prevent confident mis-citation with layered controls.
+First, retrieval constraints: responses are limited to a whitelisted, version-controlled corpus with clear ownership and deprecation rules.
+Second, claim-to-source alignment: every assertion must map to retrieved spans, not just a document link; if we can’t trace it, we don’t say it.
+Third, confidence thresholds and abstention: if retrieval scores are weak, evidence is contradictory, or coverage is too narrow, the system returns ‘insufficient evidence’ and asks for clarifying input instead of guessing.
+Fourth, monitoring and audit: we log retrieval→output traces, run weekly sampling, and actively detect source skew and drift so issues don’t silently accumulate.”
+
+
+##You’re proposing “abstain rather than guess.” Good.
+
+But customers hate friction.
+
+How do you balance:
+
+reliability (abstain)
+with
+
+usability (getting work done)
+
+“The operating principle is risk-tiered reliability. We don’t use one global confidence threshold — we tune by workflow impact.
+
+For low-risk workflows like internal knowledge lookup or draft generation, we allow lower confidence thresholds and return best-effort answers with citation because human review cost is low and speed matters.
+
+For high-risk workflows — pricing decisions, policy interpretation, customer-facing outputs — we raise similarity thresholds, require multi-source corroboration, and enforce structured citation with abstention if grounding is weak. In some cases, we require explicit human approval before release.
+
+The same model behaves differently depending on the business consequence of error.”
+

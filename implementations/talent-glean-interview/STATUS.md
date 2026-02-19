@@ -17,6 +17,10 @@ Interview preparation for Glean AI Outcomes Manager role. Complete prep package 
 - ✅ Interview cheat sheet (quick reference)
 - ✅ Palette demo script (if they ask)
 - ✅ Methodology comparison (Gap vs Glean process)
+- ✅ LEARNINGS.md populated with patterns, agent notes, metrics
+- ✅ Research data refreshed (Glean: $7.2B valuation, $200M ARR, 1K+ employees)
+- ✅ Fixed stale references (Google Duet AI → Gemini for Google Workspace)
+- ✅ Fixed incorrect file path in START_HERE.md
 
 ### In Progress
 - ⏳ Awaiting interview scheduling
@@ -30,8 +34,8 @@ Interview preparation for Glean AI Outcomes Manager role. Complete prep package 
 
 1. [ ] Conduct interview when scheduled
 2. [ ] Debrief and document what worked
-3. [ ] Extract learnings to LEARNINGS.md
-4. [ ] Compare with Gap interview prep (what was different?)
+3. [x] Extract learnings to LEARNINGS.md
+4. [x] Compare with Gap interview prep (METHODOLOGY_GAP_VS_GLEAN.md)
 
 ---
 

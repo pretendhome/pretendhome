@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "coreregression_012",
+    "category": "core_regression",
+    "input": {
+      "objective": "Build a launch strategy for a new local service",
+      "context": "Founder is doing product and operations simultaneously",
+      "desired_outcome": "Prioritized action brief with owners and deadlines",
+      "constraints": "30-day timeline with weekly check-ins"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "d5f7fec5-6535-4cd5-9a8e-bd0356d5d8a0",
+    "timestamp": "2026-02-18T23:43:53.274Z",
+    "session_id": "eval-v1-coreregression_012",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Build a launch strategy for a new local service",
+      "context": "Founder is doing product and operations simultaneously",
+      "desired_outcome": "Prioritized action brief with owners and deadlines",
+      "constraints": "30-day timeline with weekly check-ins",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "d5f7fec5-6535-4cd5-9a8e-bd0356d5d8a0",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": true,
+        "goal": "Prioritized action brief with owners and deadlines",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "30-day timeline with weekly check-ins",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-062",
+            "name": "Build & Implementation",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-062",
+            "name": "Build & Implementation",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Theri (Build) with Rex (Architecture)",
+            "task": "Convert plan into build tickets and delivery sequence.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Implementation Spec + Build Tasks"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-062 - Build & Implementation\nPrimary Agent: Theri (Build) with Rex (Architecture)\n\n## Input\nObjective: Build a launch strategy for a new local service\nContext: Founder is doing product and operations simultaneously\nDesired Outcome: Prioritized action brief with owners and deadlines\nConstraints: 30-day timeline with weekly check-ins\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Implementation Spec + Build Tasks\nImmediate Action: Convert plan into build tickets and delivery sequence.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-062; Agent=Theri (Build) with Rex (Architecture); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

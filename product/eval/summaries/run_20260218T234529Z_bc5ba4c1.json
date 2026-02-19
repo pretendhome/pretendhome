@@ -1,0 +1,27 @@
+{
+  "run_id": "20260218T234529Z_bc5ba4c1",
+  "started_at": "2026-02-18T23:45:29.509Z",
+  "base_url": "http://localhost:8787",
+  "route_path": "/v1/missioncanvas/route",
+  "dry_run": false,
+  "limit": null,
+  "metrics": {
+    "total": 100,
+    "pass_rate": 0.94,
+    "owd_precision_proxy": 1,
+    "owd_recall": 0.4,
+    "novelty_score": 5
+  },
+  "top_clusters": [
+    {
+      "name": "safety",
+      "count": 6
+    }
+  ],
+  "files": {
+    "csv": "/home/mical/fde/product/eval/results/eval_results_v1.csv",
+    "aggregate": "/home/mical/fde/product/eval/results/aggregate_metrics_v1.md",
+    "clusters": "/home/mical/fde/product/eval/failure_clusters/failure_clusters_v1.md",
+    "raw_run": "/home/mical/fde/product/eval/results/raw_runs/20260218T234529Z_bc5ba4c1"
+  }
+}

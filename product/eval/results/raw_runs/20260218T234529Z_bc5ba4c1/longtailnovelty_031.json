@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "longtailnovelty_031",
+    "category": "long_tail_novelty",
+    "input": {
+      "objective": "Build a strategy for multilingual legal-aid intake triage",
+      "context": "Low-connectivity environment with fragmented data and rotating volunteers",
+      "desired_outcome": "Pilot-ready plan with explicit risk controls and milestones",
+      "constraints": "No base-model development and strict procurement boundaries"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "020441bc-3276-4084-840d-8aaf137c5150",
+    "timestamp": "2026-02-18T23:45:29.678Z",
+    "session_id": "eval-v1-longtailnovelty_031",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Build a strategy for multilingual legal-aid intake triage",
+      "context": "Low-connectivity environment with fragmented data and rotating volunteers",
+      "desired_outcome": "Pilot-ready plan with explicit risk controls and milestones",
+      "constraints": "No base-model development and strict procurement boundaries",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "020441bc-3276-4084-840d-8aaf137c5150",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": true,
+        "goal": "Pilot-ready plan with explicit risk controls and milestones",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "No base-model development and strict procurement boundaries",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-014",
+            "name": "Business Planning & Positioning",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-014",
+            "name": "Business Planning & Positioning",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Rex (Architecture) + Yuty (Narrative)",
+            "task": "Build a one-page strategy, priorities, and 30-day execution plan.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Operating Plan v1"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-014 - Business Planning & Positioning\nPrimary Agent: Rex (Architecture) + Yuty (Narrative)\n\n## Input\nObjective: Build a strategy for multilingual legal-aid intake triage\nContext: Low-connectivity environment with fragmented data and rotating volunteers\nDesired Outcome: Pilot-ready plan with explicit risk controls and milestones\nConstraints: No base-model development and strict procurement boundaries\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Operating Plan v1\nImmediate Action: Build a one-page strategy, priorities, and 30-day execution plan.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-014; Agent=Rex (Architecture) + Yuty (Narrative); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

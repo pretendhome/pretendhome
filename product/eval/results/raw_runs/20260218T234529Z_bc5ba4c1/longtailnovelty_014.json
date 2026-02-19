@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "longtailnovelty_014",
+    "category": "long_tail_novelty",
+    "input": {
+      "objective": "Plan an AI-assisted logistics process for remote humanitarian hubs",
+      "context": "Operations span multiple regions with different compliance requirements",
+      "desired_outcome": "Governance-ready action plan with escalation paths",
+      "constraints": "High accountability and public-facing transparency requirements"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "b55f3b40-a2e7-4c57-b39e-31169f38ae90",
+    "timestamp": "2026-02-18T23:45:29.637Z",
+    "session_id": "eval-v1-longtailnovelty_014",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Plan an AI-assisted logistics process for remote humanitarian hubs",
+      "context": "Operations span multiple regions with different compliance requirements",
+      "desired_outcome": "Governance-ready action plan with escalation paths",
+      "constraints": "High accountability and public-facing transparency requirements",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "b55f3b40-a2e7-4c57-b39e-31169f38ae90",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": true,
+        "goal": "Governance-ready action plan with escalation paths",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "High accountability and public-facing transparency requirements",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-001",
+            "name": "Convergence & Scope Clarification",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-001",
+            "name": "Convergence & Scope Clarification",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Yuty (Narrative) -> Rex (Architecture)",
+            "task": "Define target outcome, non-goals, and first success metric.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Convergence Brief"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-001 - Convergence & Scope Clarification\nPrimary Agent: Yuty (Narrative) -> Rex (Architecture)\n\n## Input\nObjective: Plan an AI-assisted logistics process for remote humanitarian hubs\nContext: Operations span multiple regions with different compliance requirements\nDesired Outcome: Governance-ready action plan with escalation paths\nConstraints: High accountability and public-facing transparency requirements\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Convergence Brief\nImmediate Action: Define target outcome, non-goals, and first success metric.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-001; Agent=Yuty (Narrative) -> Rex (Architecture); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

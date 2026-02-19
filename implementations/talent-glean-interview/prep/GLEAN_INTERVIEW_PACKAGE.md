@@ -346,7 +346,7 @@ If validation fails, the agent gets demoted and we iterate on the prompt or retr
 **Answer**:
 "Three reasons:
 
-1. **Glean is solving the right problem**: Enterprise search and knowledge management are broken. Employees waste hours searching for information across fragmented tools. Glean's AI-powered search and Work AI platform fix this.
+1. **Glean is solving the right problem — and winning**: Enterprise search and knowledge management are broken. Glean's at $200M+ ARR, $7.2B valuation, 1,000+ employees, and 100M+ agent actions annually. They're not just promising — they're shipping.
 
 2. **This role is the perfect fit**: I've spent 2.5 years building agentic systems (Palette), 4 years enabling AI adoption at AWS (500+ sellers, 27+ models), and 3 years driving enterprise GTM (24% YoY growth). This role combines all three: design AI agents, work with customers, ship measurable outcomes.
 
@@ -403,7 +403,7 @@ If validation fails, the agent gets demoted and we iterate on the prompt or retr
 
 ### Competitors:
 1. **Microsoft Copilot**: Built into Microsoft 365, strong distribution
-2. **Google Duet AI**: Built into Google Workspace, strong distribution
+2. **Gemini for Google Workspace**: Built into Google Workspace, strong distribution
 3. **Notion AI**: Built into Notion, strong with knowledge workers
 4. **Perplexity for Enterprise**: AI-powered search and research
 5. **Guru**: Knowledge management and search
@@ -416,12 +416,14 @@ If validation fails, the agent gets demoted and we iterate on the prompt or retr
 - **Founder pedigree**: Arvind Jain led Google search infrastructure
 
 ### Funding:
-- **Series D**: $200M at $2.2B valuation (2024)
-- **Total raised**: $360M+
-- **Investors**: Kleiner Perkins, Lightspeed, Sequoia, General Catalyst
+- **Series F**: $150M at $7.2B valuation (June 2025)
+- **Total raised**: $610M+
+- **ARR**: $200M+ (doubled in 9 months), 100M+ agent actions annually
+- **Investors**: Wellington Management, Kleiner Perkins, Lightspeed, Sequoia, General Catalyst, Khosla Ventures
 
 ### Team Size:
-- ~300 employees (estimated)
+- 1,000+ employees, customers in 27+ countries
+- Named to Fast Company's 2025 World's Most Innovative Companies
 - Hiring heavily: Engineering, Product, Sales, Customer Success
 
 ---
@@ -505,7 +507,7 @@ If validation fails, the agent gets demoted and we iterate on the prompt or retr
 ### About Glean:
 6. "What are the top 3 customer use cases right now? (Sales, support, engineering?)"
 7. "What's the biggest challenge customers face when adopting Glean?"
-8. "How do you differentiate from Microsoft Copilot and Google Duet AI?"
+8. "How do you differentiate from Microsoft Copilot and Gemini for Google Workspace?"
 9. "What's the product roadmap for the next 12 months?"
 10. "How do you think about agent builder vs. pre-built assistants?"
 

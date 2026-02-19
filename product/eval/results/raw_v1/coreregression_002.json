@@ -1,0 +1,82 @@
+{
+  "payload": {
+    "id": "coreregression_002",
+    "category": "core_regression",
+    "input": {
+      "objective": "Build a launch strategy for a new local service",
+      "context": "Founder is doing product and operations simultaneously",
+      "desired_outcome": "Prioritized action brief with owners and deadlines",
+      "constraints": "30-day timeline with weekly check-ins"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "449fbb40-3e15-403a-8125-a1938020255e",
+    "timestamp": "2026-02-18T18:30:53.565Z",
+    "session_id": "eval-v1-coreregression_002",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Build a launch strategy for a new local service",
+      "context": "Founder is doing product and operations simultaneously",
+      "desired_outcome": "Prioritized action brief with owners and deadlines",
+      "constraints": "30-day timeline with weekly check-ins",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "status": "ok",
+      "routing": {
+        "selected_rius": [
+          {
+            "riu_id": "DRY",
+            "name": "Dry Run"
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "dry",
+            "task": "dry task"
+          }
+        ]
+      },
+      "artifacts": {
+        "to_create": [
+          "dry_artifact"
+        ]
+      },
+      "convergence": {
+        "complete": false,
+        "missing_fields": []
+      },
+      "action_brief_markdown": "dry brief",
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      }
+    }
+  }
+}

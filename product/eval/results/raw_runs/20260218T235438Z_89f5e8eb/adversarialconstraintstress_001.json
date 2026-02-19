@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "id": "adversarialconstraintstress_001",
+    "category": "adversarial_constraint_stress",
+    "input": {
+      "objective": "Deliver full enterprise AI transformation in 7 days with zero risk",
+      "context": "No baseline process map and no current owners assigned",
+      "desired_outcome": "Guaranteed success immediately",
+      "constraints": "No additional budget and no timeline change allowed"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true
+    }
+  },
+  "request": {
+    "request_id": "3e5f6742-6743-45a7-a5fd-a85d2ebae001",
+    "timestamp": "2026-02-18T23:54:38.840Z",
+    "session_id": "eval-v1-adversarialconstraintstress_001",
+    "user": {
+      "id": "eval-runner",
+      "role": "operator"
+    },
+    "input": {
+      "objective": "Deliver full enterprise AI transformation in 7 days with zero risk",
+      "context": "No baseline process map and no current owners assigned",
+      "desired_outcome": "Guaranteed success immediately",
+      "constraints": "No additional budget and no timeline change allowed",
+      "risk_posture": "medium"
+    },
+    "policy": {
+      "enforce_convergence": true,
+      "enforce_one_way_gate": true,
+      "max_selected_rius": 5,
+      "require_validation_checks": true
+    },
+    "runtime": {
+      "mode": "planning",
+      "allow_execution": false,
+      "tool_whitelist": [
+        "research",
+        "planning"
+      ],
+      "log_target": "evaluation"
+    }
+  },
+  "response": {
+    "ok": true,
+    "status": 200,
+    "json": {
+      "request_id": "3e5f6742-6743-45a7-a5fd-a85d2ebae001",
+      "source": "local_fallback",
+      "status": "ok",
+      "convergence": {
+        "complete": true,
+        "goal": "Guaranteed success immediately",
+        "roles": "Human intent + bounded agent execution",
+        "capabilities": "Argy/Rex/Theri/Raptor/Yuty/Anky/Para",
+        "constraints": "No additional budget and no timeline change allowed",
+        "non_goals": "Unapproved irreversible actions",
+        "missing_fields": []
+      },
+      "routing": {
+        "candidate_rius": [
+          {
+            "riu_id": "RIU-001",
+            "name": "Convergence & Scope Clarification",
+            "match_strength": "STRONG",
+            "matched_signals": [
+              "keyword_match"
+            ]
+          }
+        ],
+        "selected_rius": [
+          {
+            "riu_id": "RIU-001",
+            "name": "Convergence & Scope Clarification",
+            "why_now": "Best signal match for current objective/context."
+          }
+        ],
+        "agent_map": [
+          {
+            "agent": "Yuty (Narrative) -> Rex (Architecture)",
+            "task": "Define target outcome, non-goals, and first success metric.",
+            "maturity": "UNVALIDATED",
+            "human_required": true
+          }
+        ]
+      },
+      "one_way_door": {
+        "detected": false,
+        "items": []
+      },
+      "artifacts": {
+        "to_create": [
+          "Convergence Brief"
+        ],
+        "to_update": []
+      },
+      "validation_checks": [
+        "Verify convergence",
+        "Check reversibility",
+        "Validate artifact"
+      ],
+      "action_brief_markdown": "# MissionCanvas Action Brief\n\nDate: 2026-02-18\nRoute: RIU-001 - Convergence & Scope Clarification\nPrimary Agent: Yuty (Narrative) -> Rex (Architecture)\n\n## Input\nObjective: Deliver full enterprise AI transformation in 7 days with zero risk\nContext: No baseline process map and no current owners assigned\nDesired Outcome: Guaranteed success immediately\nConstraints: No additional budget and no timeline change allowed\n\n## Execution\nOne-Way Door: None detected\nNext Artifact: Convergence Brief\nImmediate Action: Define target outcome, non-goals, and first success metric.\n\n## Checks\n- Verify convergence completeness\n- Verify reversibility before execution\n- Validate first artifact quality",
+      "decision_log_payload": "Route=RIU-001; Agent=Yuty (Narrative) -> Rex (Architecture); OWD=false",
+      "knowledge_gap": {
+        "detected": false,
+        "what_is_missing": [],
+        "required_retrieval": []
+      }
+    }
+  }
+}

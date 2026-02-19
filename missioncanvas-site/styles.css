@@ -72,6 +72,51 @@ body {
   grid-column: 1 / span 2;
 }
 
+.persona-panel {
+  grid-column: 1 / span 2;
+}
+
+.persona-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.persona-chip {
+  border: 1px solid #2d4461;
+  color: #c6e6ff;
+  background: #122032;
+  border-radius: 10px;
+  padding: 10px 9px;
+  font: inherit;
+  font-size: 0.83rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.persona-chip:hover {
+  border-color: #5f90c5;
+}
+
+.persona-chip.active {
+  border-color: #73e3ff;
+  background: #173450;
+  color: #e6f7ff;
+}
+
+.persona-hint {
+  margin: 8px 0 0;
+  color: #98b8d9;
+  font-size: 0.86rem;
+}
+
+.persona-checklist {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: #b5cbe5;
+  font-size: 0.85rem;
+}
+
 .onboarding-list {
   margin: 8px 0 10px;
   padding: 0;
@@ -172,6 +217,22 @@ body {
 .confidence {
   font-size: 0.88rem;
   color: var(--muted);
+}
+
+.mode-hint {
+  border: 1px solid #315177;
+  border-radius: 10px;
+  background: #112236;
+  color: #b9d7f6;
+  font-size: 0.85rem;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+
+.translation-notes {
+  margin: 0;
+  color: #99bfdf;
+  font-size: 0.84rem;
 }
 
 .sample-missions {
@@ -304,6 +365,26 @@ textarea {
   padding: 10px;
 }
 
+.qa-box {
+  margin-top: 10px;
+  border: 1px solid #325073;
+  border-radius: 10px;
+  background: #101d2d;
+  padding: 10px;
+}
+
+.qa-box h3 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+}
+
+#qualityChecks {
+  margin: 0;
+  padding-left: 18px;
+  color: #cde3fb;
+  font-size: 0.85rem;
+}
+
 #streamOutput {
   margin: 0;
   white-space: pre-wrap;
@@ -333,6 +414,10 @@ textarea {
   .form-grid,
   .result-grid {
     grid-template-columns: 1fr;
+  }
+
+  .persona-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .topbar {

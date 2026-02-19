@@ -19,12 +19,14 @@
     lastRequestId: null,
     lastOneWayItems: [],
     lastBrief: "",
-    lastDecisionLogPayload: ""
+    lastDecisionLogPayload: "",
+    activePersona: null
   };
 
   const $ = (id) => document.getElementById(id);
 
   const refs = {
+    btnHealth: $("btnHealth"),
     systemStatus: $("systemStatus"),
     btnVoiceStart: $("btnVoiceStart"),
     btnVoiceStop: $("btnVoiceStop"),
@@ -55,9 +57,82 @@
     autoLog: $("autoLog"),
     followupInput: $("followupInput"),
     btnRefine: $("btnRefine"),
+    personaChips: Array.from(document.querySelectorAll(".persona-chip")),
+    personaHint: $("personaHint"),
+    personaChecklist: $("personaChecklist"),
+    translationNotes: $("translationNotes"),
+    qualityChecks: $("qualityChecks"),
     presetChips: Array.from(document.querySelectorAll(".preset-chip")),
     streamBox: $("streamBox"),
     streamOutput: $("streamOutput")
+  };
+
+  const PERSONAS = {
+    mythfall: {
+      name: "Game Builder",
+      hint: "Prioritize scope clarity, build sequencing, and fast test loops.",
+      checklist: [
+        "Name the core game loop and target player.",
+        "Set a 2-week playable milestone.",
+        "Constrain features to MVP."
+      ],
+      defaults: {
+        context: "Indie game project with limited team capacity.",
+        constraints: "Time-constrained, budget-sensitive, MVP-first."
+      }
+    },
+    rossi: {
+      name: "Business Owner",
+      hint: "Prioritize revenue, operations, and execution constraints.",
+      checklist: [
+        "Define revenue target and timeline.",
+        "Include budget and staffing constraints.",
+        "Identify first operating artifact to build."
+      ],
+      defaults: {
+        context: "Owner-operator business environment with active customers.",
+        constraints: "Limited budget, small team, 30-90 day horizon."
+      }
+    },
+    scuola: {
+      name: "Education",
+      hint: "Prioritize student outcomes, educator workflow, and policy constraints.",
+      checklist: [
+        "State learner/teacher outcome clearly.",
+        "Include implementation and training constraints.",
+        "Include compliance or governance needs."
+      ],
+      defaults: {
+        context: "Education setting with multiple stakeholders and approval gates.",
+        constraints: "Policy-sensitive, adoption-risk managed."
+      }
+    },
+    job: {
+      name: "Job Seeker",
+      hint: "Prioritize positioning, proof, and targeted outreach.",
+      checklist: [
+        "Define target role and timeline.",
+        "Specify strengths and evidence to highlight.",
+        "Set weekly cadence for applications/networking."
+      ],
+      defaults: {
+        context: "Active career transition with existing resume/work history.",
+        constraints: "Time-boxed outreach and interview prep."
+      }
+    },
+    exec: {
+      name: "Enterprise AI Operator",
+      hint: "Prioritize reversible decisions, ROI, and stakeholder alignment.",
+      checklist: [
+        "State pilot objective and success metric.",
+        "Define risk tolerance and one-way-door conditions.",
+        "Name the first decision artifact."
+      ],
+      defaults: {
+        context: "Cross-functional initiative requiring decision quality and speed.",
+        constraints: "High-visibility outcomes, governance expectations."
+      }
+    }
   };
 
   function setSystemStatus(message, level = "warn") {
@@ -65,6 +140,71 @@
     refs.systemStatus.textContent = `System status: ${message}`;
     refs.systemStatus.classList.remove("ok", "warn", "error");
     refs.systemStatus.classList.add(level);
+  }
+
+  function renderList(el, items) {
+    if (!el) return;
+    el.innerHTML = "";
+    items.forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      el.appendChild(li);
+    });
+  }
+
+  function applyPersona(personaId) {
+    const persona = PERSONAS[personaId];
+    if (!persona) return;
+
+    STATE.activePersona = personaId;
+    refs.personaChips.forEach((chip) => {
+      chip.classList.toggle("active", chip.getAttribute("data-persona") === personaId);
+    });
+
+    refs.personaHint.textContent = `${persona.name}: ${persona.hint}`;
+    renderList(refs.personaChecklist, persona.checklist);
+
+    if (!refs.tContext.value.trim() && persona.defaults.context) refs.tContext.value = persona.defaults.context;
+    if (!refs.tConstraints.value.trim() && persona.defaults.constraints) refs.tConstraints.value = persona.defaults.constraints;
+    setSystemStatus(`persona selected: ${persona.name}`, "ok");
+  }
+
+  function evaluatePromptQuality(structured) {
+    const checks = [];
+    if (structured.objective) checks.push("Objective is clear.");
+    else checks.push("Add a clear objective.");
+
+    if (structured.context) checks.push("Context is present.");
+    else checks.push("Add current context.");
+
+    if (structured.desired_outcome) checks.push("Desired outcome is specified.");
+    else checks.push("Add a measurable desired outcome.");
+
+    if (structured.constraints) checks.push("Constraints are specified.");
+    else checks.push("Add at least one key constraint (time, budget, risk).");
+
+    if (STATE.activePersona) {
+      checks.push(`Persona in use: ${PERSONAS[STATE.activePersona].name}.`);
+    } else {
+      checks.push("Select a persona for better routing defaults.");
+    }
+    return checks;
+  }
+
+  async function checkConnection() {
+    const url = `${CONFIG.apiBase}/health`;
+    try {
+      const res = await fetch(url, { method: "GET" });
+      if (res.ok) {
+        setSystemStatus("health endpoint reachable", "ok");
+      } else if (res.status === 404) {
+        setSystemStatus("server reachable (no /health endpoint)", "ok");
+      } else {
+        setSystemStatus(`health check returned ${res.status}`, "warn");
+      }
+    } catch (_err) {
+      setSystemStatus("health endpoint unreachable", "error");
+    }
   }
 
   function splitSentences(text) {
@@ -125,12 +265,20 @@
     if (desiredOutcome) confidence += 15;
     if (constraints) confidence += 10;
 
+    const notes = [];
+    if (!objective) notes.push("objective_missing");
+    if (!context) notes.push("context_missing");
+    if (!desiredOutcome) notes.push("outcome_missing");
+    if (!constraints) notes.push("constraints_missing");
+    if (STATE.activePersona) notes.push(`persona_${STATE.activePersona}`);
+
     return {
       objective,
       context,
       desired_outcome: desiredOutcome,
       constraints,
-      confidence: Math.min(100, confidence)
+      confidence: Math.min(100, confidence),
+      notes: notes.length ? notes.join(", ") : "complete"
     };
   }
 
@@ -140,6 +288,7 @@
     refs.tOutcome.value = data.desired_outcome || "";
     refs.tConstraints.value = data.constraints || "";
     refs.translateConfidence.textContent = `Confidence: ${data.confidence || 0}%`;
+    refs.translationNotes.textContent = `Translator notes: ${data.notes || "No notes."}`;
 
     STATE.structured = {
       objective: data.objective || "",
@@ -147,6 +296,8 @@
       desired_outcome: data.desired_outcome || "",
       constraints: data.constraints || ""
     };
+
+    renderList(refs.qualityChecks, evaluatePromptQuality(STATE.structured));
   }
 
   function readStructuredPrompt() {
@@ -484,6 +635,14 @@
   }
 
   function initEvents() {
+    refs.personaChips.forEach((chip) => {
+      chip.addEventListener("click", function () {
+        applyPersona(chip.getAttribute("data-persona"));
+      });
+    });
+
+    refs.btnHealth.addEventListener("click", checkConnection);
+
     refs.presetChips.forEach((chip) => {
       chip.addEventListener("click", function () {
         const text = chip.getAttribute("data-preset") || "";
@@ -509,6 +668,7 @@
 
     refs.btnRoute.addEventListener("click", async function () {
       const structured = readStructuredPrompt();
+      renderList(refs.qualityChecks, evaluatePromptQuality(structured));
       if (!structured.objective) {
         refs.resultStatus.textContent = "Add objective first (voice or text).";
         setSystemStatus("missing objective", "warn");
@@ -521,6 +681,7 @@
 
     refs.btnStream.addEventListener("click", async function () {
       const structured = readStructuredPrompt();
+      renderList(refs.qualityChecks, evaluatePromptQuality(structured));
       if (!structured.objective) return;
       await fetchStream(structured);
     });
